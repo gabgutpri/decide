@@ -152,7 +152,13 @@
             document.getElementById("text").style.color = "white"
         }
 
-        //window.onload = activateDarkMode();
+        function popUp() {
+            if (confirm("¿Quiere activar el modo oscuro? Podrá cambiarlo más adelante si lo desea.")) {
+                activateDarkMode();
+            } 
+        }
+
+        window.onload = popUp();
     </script>
 
 {% endblock %}
