@@ -3,15 +3,14 @@
 
 {% block title %} - Visualización{% endblock %}
 {% block extrahead %}
-    <link type="text/css" rel="stylesheet"
-         href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet"
-         href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
     <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <link type="text/css" rel="stylesheet" href="{% static 'css/footer.css' %}" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/mfb.css' %}" >
 {% endblock %}
 
 {% block content %}
@@ -21,12 +20,6 @@
             <b-navbar-brand tag="h1">Decide Visualización</b-navbar-brand>
             
             <b-navbar-nav class="ml-auto">
-                <!-- Choose de language -->
-                <b-nav-item-dropdown text="Lang" right>
-                    <b-dropdown-item href="#">ES</b-dropdown-item>
-                    <b-dropdown-item href="#">EN</b-dropdown-item>
-                </b-nav-item-dropdown>
-
                 <!-- Dark mode and light mode buttons -->
                 <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
                     onclick="activateLightMode()">Modo claro</button>
@@ -34,34 +27,8 @@
                     onclick="activateDarkMode()">Modo oscuro</button>
             </b-navbar-nav>
         </b-navbar>
-        <!-- Visualizacion por defecto de decide
-        <div class="voting container">
-            <h1>[[ voting.id ]] - [[ voting.name ]]</h1>
 
-            <h2 v-if="!voting.start_date">Votación no comenzada</h2>
-            <h2 v-else-if="!voting.end_date">Votación en curso</h2>
-            <div v-else>
-                <h2 class="heading">Resultados:</h2>
-
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Opción</th>
-                            <th>Puntuación</th>
-                            <th>Votos</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="opt in voting.postproc" :key="opt.number">
-                            <th>[[opt.option]]</th>
-                            <td>[[opt.postproc]]</td>
-                            <td class="text-muted">[[opt.votes]]</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        -->
+        <!-- Footer -->
         <footer class="footer">
             <nav class="navbar navbar-default navbar-fixed-bottom">
                 <div class="container">
@@ -70,6 +37,29 @@
                 </div>
             </nav>
         </footer>
+
+        <!-- Floating action button to select language -->
+        <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
+            <li class="mfb-component__wrap">
+                <a href="#" class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary">
+                    <i class="fa fa-globe"></i>
+                </a>
+                <ul class="mfb-component__list">
+                    <li>
+                        <a class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
+                            data-title="English" data-mfb-label="Inglés"> 
+                            <img width="30" src="{% static '/images/england.jpg' %}"> 
+                        </a> 
+                    </li>
+                    <li>
+                        <a class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light" 
+                            data-title="Spanish" data-mfb-label="Español"> 
+                            <img width="30" src="{% static '/images/spain.jpg' %}"> 
+                        </a> 
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 {% endblock %}
 
@@ -90,6 +80,8 @@
         })
     </script>
 
+    <script src="{% static 'js/mfb.js' %}"></script>
+    
     <script>
         function activateLightMode() {
             document.body.className = "bg-light"
