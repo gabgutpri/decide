@@ -1,21 +1,40 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
+{% block title %} - Visualización{% endblock %}
 {% block extrahead %}
     <link type="text/css" rel="stylesheet"
          href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet"
          href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static "booth/style.css" %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/footer.css' %}" />
+    
 {% endblock %}
 
 {% block content %}
     <div id="app-visualizer">
         <!-- Navbar -->
         <b-navbar type="dark" variant="secondary">
-            <b-navbar-brand tag="h1">Decide</b-navbar-brand>
-        </b-navbar>
+            <b-navbar-brand tag="h1">Decide Visualización</b-navbar-brand>
+            
+            <b-navbar-nav class="ml-auto">
+                <!-- Choose de language -->
+                <b-nav-item-dropdown text="Lang" right>
+                    <b-dropdown-item href="#">ES</b-dropdown-item>
+                    <b-dropdown-item href="#">EN</b-dropdown-item>
+                </b-nav-item-dropdown>
 
+                <!-- Dark mode and light mode buttons -->
+                <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
+                    onclick="activateLightMode()">Modo claro</button>
+                <button id="darkButton" type="button" class="btn btn-dark btn-sm pull-xs-right" style="display: inline"
+                    onclick="activateDarkMode()">Modo oscuro</button>
+            </b-navbar-nav>
+        </b-navbar>
+        <!-- Visualizacion por defecto de decide
         <div class="voting container">
             <h1>[[ voting.id ]] - [[ voting.name ]]</h1>
 
@@ -41,8 +60,16 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
+        -->
+        <footer class="footer">
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container">
+                    <p class="navbar-text">Evolución y Gestión de la Configuración · <em>Decide</em></p>
+                    <p class="navbar-text navbar-right">Decide Pícaro - Visualización &copy; 2021</p>
+                </div>
+            </nav>
+        </footer>
     </div>
 {% endblock %}
 
@@ -62,5 +89,20 @@
             }
         })
     </script>
-</body>
+
+    <script>
+        function activateLightMode() {
+            document.body.className = "bg-light"
+            document.getElementById("lightButton").style.display = "none"
+            document.getElementById("darkButton").style.display = "inline"
+        }
+
+        function activateDarkMode() {
+            document.body.className = "bg-dark"
+            document.getElementById("lightButton").style.display = "inline"
+            document.getElementById("darkButton").style.display = "none"
+        }
+
+        //window.onload = activateDarkMode();
+    </script>
 {% endblock %}
