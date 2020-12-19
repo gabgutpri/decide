@@ -8,14 +8,14 @@
     <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/footer.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/mfb.css' %}" >
 {% endblock %}
 
 {% block content %}
     <div id="app-visualizer">
-        <!-- Navbar -->
+
+        <!-- Header -->
         <b-navbar type="dark" variant="secondary">
             <b-navbar-brand tag="h1">Decide Visualización</b-navbar-brand>
             
@@ -28,46 +28,45 @@
             </b-navbar-nav>
         </b-navbar>
 
-        
-
-
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Opción</th>
-                            <th>Puntuación</th>
-                            <th>Votos</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="opt in voting.postproc" :key="opt.number">
-                            <th>[[opt.option]]</th>
-                            <td>[[opt.postproc]]</td>
-                            <td class="text-muted">[[opt.votes]]</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <canvas id="myChart" ></canvas>
-                
+        <div class="voting container">
+            <h2 id="text" v-if="!voting.start_date">Votación no comenzada</h2>
+            <h2 id="text" v-else-if="!voting.end_date">Votación en curso</h2>
+            <div v-else>
+                <h2 id="text" class="heading">Resultados</h2>
+                <div>
+                    <table class="table table-bordered table-striped">
+                        <thead style="text-align:center;">
+                            <tr>
+                                <th><u>Opción</u></th>
+                                <th><u>Puntuación</u></th>
+                                <th><u>Votos</u></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="opt in voting.postproc" :key="opt.number">
+                                <th>[[opt.option]]</th>
+                                <td style="text-align:center;">[[opt.postproc]]</td>
+                                <td class="text-muted" style="text-align:center;">[[opt.votes]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
+            <canvas id="myChart"></canvas>
         </div>
 
         <!-- Footer -->
-        <footer class="footer">
-            <nav class="navbar navbar-default navbar-fixed-bottom">
-                <div class="container">
-                    <p class="navbar-text">Evolución y Gestión de la Configuración · <em>Decide</em></p>
-                    <p class="navbar-text navbar-right">Decide Pícaro - Visualización &copy; 2021</p>
-                </div>
-            </nav>
-        </footer>
+        <b-navbar type="dark" variant="secondary" style="margin-top: 20px;">
+            <div class="container">
+                <span class="navbar-text" style="color: white;">Evolución y Gestión de la Configuración · <em>Decide</em></span>
+                <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro - Visualización &copy; 2021</span>
+            </div>
+        </b-navbar>
 
         <!-- Floating action button to select language -->
         <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
             <li class="mfb-component__wrap">
-                <a href="#" class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary">
+                <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary">
                     <i class="fa fa-globe"></i>
                 </a>
                 <ul class="mfb-component__list">
@@ -136,21 +135,21 @@
                     labels: labels},
             options: {responsive: true}
             });
-    </script>
-</body>
-   
+    </script>   
     
     <script>
         function activateLightMode() {
             document.body.className = "bg-light"
             document.getElementById("lightButton").style.display = "none"
             document.getElementById("darkButton").style.display = "inline"
+            document.getElementById("text").style.color = "black"
         }
 
         function activateDarkMode() {
             document.body.className = "bg-dark"
             document.getElementById("lightButton").style.display = "inline"
             document.getElementById("darkButton").style.display = "none"
+            document.getElementById("text").style.color = "white"
         }
 
         //window.onload = activateDarkMode();
