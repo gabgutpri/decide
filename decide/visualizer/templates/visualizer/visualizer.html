@@ -18,29 +18,29 @@
 
         <!-- Header -->
         <b-navbar type="dark" variant="secondary">
-            <b-navbar-brand tag="h1">Decide Visualización</b-navbar-brand>
+            <b-navbar-brand tag="h1">{% trans "Decide Visualization" %}</b-navbar-brand>
             
             <b-navbar-nav class="ml-auto">
                 <!-- Dark mode and light mode buttons -->
                 <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
-                    onclick="activateLightMode()">Modo claro</button>
+                    onclick="activateLightMode()">{% trans "Light mode" %}</button>
                 <button id="darkButton" type="button" class="btn btn-dark btn-sm pull-xs-right" style="display: inline"
-                    onclick="activateDarkMode()">Modo oscuro</button>
+                    onclick="activateDarkMode()">{% trans "Dark mode" %}</button>
             </b-navbar-nav>
         </b-navbar>
 
         <div class="voting container">
-            <h2 id="text" v-if="!voting.start_date">Votación no comenzada</h2>
-            <h2 id="text" v-else-if="!voting.end_date">Votación en curso</h2>
+            <h2 id="text" v-if="!voting.start_date">{% trans "Voting not started" %}</h2>
+            <h2 id="text" v-else-if="!voting.end_date">{% trans "Voting in progress" %}</h2>
             <div v-else>
-                <h2 id="text" class="heading">Resultados</h2>
+                <h2 id="text" class="heading">{% trans "Results" %}</h2>
                 <div>
                     <table class="table table-bordered table-striped">
                         <thead style="text-align:center;">
                             <tr>
-                                <th><u>Opción</u></th>
-                                <th><u>Puntuación</u></th>
-                                <th><u>Votos</u></th>
+                                <th><u>{% trans "Option" %}</u></th>
+                                <th><u>{% trans "Punctuation" %}</u></th>
+                                <th><u>{% trans "Votes" %}</u></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,33 +59,34 @@
         <!-- Footer -->
         <b-navbar type="dark" variant="secondary" style="margin-top: 20px;">
             <div class="container">
-                <span class="navbar-text" style="color: white;">Evolución y Gestión de la Configuración · <em>Decide</em></span>
+                <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro - Visualización &copy; 2021</span>
             </div>
         </b-navbar>
 
         <!-- Floating action button to select language -->
-        <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
-            <li class="mfb-component__wrap">
-                <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary">
-                    <i class="fa fa-globe"></i>
-                </a>
-                <ul class="mfb-component__list">
-                    <li>
-                        <a class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
-                            data-title="English" data-mfb-label="Inglés"> 
-                            <img width="30" src="{% static '/images/england.jpg' %}"> 
-                        </a> 
-                    </li>
-                    <li>
-                        <a class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light" 
-                            data-title="Spanish" data-mfb-label="Español"> 
-                            <img width="30" src="{% static '/images/spain.jpg' %}"> 
-                        </a> 
-                    </li>
-                </ul>
-            </li>
-        </ul>
+
+            <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
+                <li class="mfb-component__wrap">
+                    <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary">
+                        <i class="fa fa-globe"></i>
+                    </a>
+                    <ul class="mfb-component__list">
+                        <li>
+                            <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
+                                data-title="English" data-mfb-label="Inglés" type="submit">
+                                <img width="30" src="{% static '/images/england.jpg' %}"> 
+                            </button>
+                        </li>
+                        <li>
+                            <a class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light" 
+                                data-title="Spanish" data-mfb-label="Español"> 
+                                <img width="30" src="{% static '/images/spain.jpg' %}"> 
+                            </a> 
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
     </div>
 {% endblock %}
