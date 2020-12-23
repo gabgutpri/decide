@@ -136,12 +136,43 @@
     </script>
     
     <script>
+       function setCookie(cookieName, cookieValue, expiresDays) {
+            var today = new Date();
+            today.setTime(today.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + today.toGMTString();
+            document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookies = decodedCookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var c = cookies[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var activatedTheme = getCookie("theme");
+
+            if (activatedTheme == "dark") {
+                activateDarkMode();
+            }
+        }
         // Light mode and dark mode scripts
         function activateLightMode() {
             document.body.className = "bg-light"
             document.getElementById("lightButton").style.display = "none"
             document.getElementById("darkButton").style.display = "inline"
             document.getElementById("text").style.color = "black"
+            setCookie("theme", "light", 365);
         }
 
         function activateDarkMode() {
@@ -149,7 +180,9 @@
             document.getElementById("lightButton").style.display = "inline"
             document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
+            setCookie("theme", "dark", 365);
         }
+        window.onload = checkCookie();
     </script>
     
     <script>

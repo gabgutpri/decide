@@ -22,12 +22,6 @@
                 <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
                     <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
                 </div>
-
-                <!-- Dark mode and light mode buttons -->
-                <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
-                    onclick="activateLightMode()">{% trans "Light mode" %}</button>
-                <button id="darkButton" type="button" class="btn btn-dark btn-sm pull-xs-right" style="display: inline"
-                    onclick="activateDarkMode()">{% trans "Dark mode" %}</button>
             </b-navbar-nav>
         </b-navbar>
 
@@ -88,42 +82,36 @@
             options: {responsive: true}
             });
     </script>   
-
     <script>
-        function getURLContactUs() {
-            var url = document.location.href; 
-            partes = url.split('/');
-            var page = partes[partes.length-2];
-            var newURL = url.replace(page,"contactUs")
-            return newURL
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookies = decodedCookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var c = cookies[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
         }
-    </script>
+        function checkCookie() {
+            var activatedTheme = getCookie("theme");
 
-    <script>
-        function getURLAboutUs() {
-            var url = document.location.href; 
-            partes = url.split('/');
-            var page = partes[partes.length-2];
-            var newURL = url.replace(page,"aboutUs")
-            return newURL
+            if (activatedTheme == "dark") {
+                activateDarkMode();
+            }
         }
-    </script>
-    
-    <script>
-        // Light mode and dark mode scripts
-        function activateLightMode() {
-            document.body.className = "bg-light"
-            document.getElementById("lightButton").style.display = "none"
-            document.getElementById("darkButton").style.display = "inline"
-            document.getElementById("text").style.color = "black"
-        }
-
         function activateDarkMode() {
             document.body.className = "bg-dark"
             document.getElementById("lightButton").style.display = "inline"
             document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
+            setCookie("theme", "dark", 365);
         }
+        window.onload = checkCookie();
     </script>
-
 {% endblock %}
