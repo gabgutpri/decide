@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-21 11:16+0000\n"
+"POT-Creation-Date: 2020-12-22 17:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,44 +49,60 @@ msgstr "Error: "
 msgid "Conglatulations. Your vote has been sent"
 msgstr "Enhorabuena. Tu voto ha sido enviado"
 
+#: decide/settings.py:162
+msgid "English"
+msgstr ""
+
+#: decide/settings.py:163
+msgid "Spanish"
+msgstr ""
+
 #: visualizer/templates/visualizer/visualizer.html:21
 msgid "Decide Visualization"
 msgstr "Decide Visualización"
 
-#: visualizer/templates/visualizer/visualizer.html:26
+#: visualizer/templates/visualizer/visualizer.html:24
+msgid "Contact us"
+msgstr "Contáctanos"
+
+#: visualizer/templates/visualizer/visualizer.html:25
+msgid "About us"
+msgstr "Sobre nosotros"
+
+#: visualizer/templates/visualizer/visualizer.html:29
 msgid "Light mode"
 msgstr "Modo claro"
 
-#: visualizer/templates/visualizer/visualizer.html:28
+#: visualizer/templates/visualizer/visualizer.html:31
 msgid "Dark mode"
 msgstr "Modo oscuro"
 
-#: visualizer/templates/visualizer/visualizer.html:33
+#: visualizer/templates/visualizer/visualizer.html:36
 msgid "Voting not started"
 msgstr "Votación no comenzada"
 
-#: visualizer/templates/visualizer/visualizer.html:34
+#: visualizer/templates/visualizer/visualizer.html:37
 msgid "Voting in progress"
 msgstr "Votación en curso"
 
-#: visualizer/templates/visualizer/visualizer.html:36
+#: visualizer/templates/visualizer/visualizer.html:39
 msgid "Results"
 msgstr "Resultados"
 
-#: visualizer/templates/visualizer/visualizer.html:41
+#: visualizer/templates/visualizer/visualizer.html:44
 msgid "Option"
 msgstr "Opción"
 
-#: visualizer/templates/visualizer/visualizer.html:42
+#: visualizer/templates/visualizer/visualizer.html:45
 msgid "Punctuation"
 msgstr "Puntuación"
 
-#: visualizer/templates/visualizer/visualizer.html:43
+#: visualizer/templates/visualizer/visualizer.html:46
 #, fuzzy
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Voto"
 
-#: visualizer/templates/visualizer/visualizer.html:62
+#: visualizer/templates/visualizer/visualizer.html:65
 msgid "Evolution and Configuration Management"
 msgstr "Evolución y Gestión de la Configuración"
