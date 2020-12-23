@@ -14,14 +14,13 @@
     <div id="app-visualizer">
 
         <!-- Header -->
-        <b-navbar type="dark" variant="secondary">
-            <b-navbar-brand tag="h1">{% trans "Decide Visualization" %}</b-navbar-brand>
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
+            <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
             
             <b-navbar-nav class="ml-auto">
                 <!-- Links to contactUs and aboutUs views -->
                 <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
-                    <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLContactUs();">{% trans "Contact us" %}</button>
-                    <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLAboutUs();">{% trans "About us" %}</button>
+                    <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
                 </div>
 
                 <!-- Dark mode and light mode buttons -->
@@ -33,7 +32,7 @@
         </b-navbar>
 
         <!-- Footer -->
-        <b-navbar type="dark" variant="secondary" style="margin-top: 20px;">
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
             <div class="container">
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
@@ -125,16 +124,6 @@
             document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
         }
-    </script>
-    
-    <script>
-        function popUp() {
-            if (confirm("La página de visualización es demasiado chula. ¿Quiere continuar?")) {   
-            } else {
-                window.onload = popUp();
-            }
-        }
-        window.onload = popUp();
     </script>
 
 {% endblock %}

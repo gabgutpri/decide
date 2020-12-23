@@ -14,8 +14,8 @@
     <div id="app-visualizer">
 
         <!-- Header -->
-        <b-navbar type="dark" variant="secondary">
-            <b-navbar-brand tag="h1">{% trans "Decide Visualization" %}</b-navbar-brand>
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
+            <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
             
             <b-navbar-nav class="ml-auto">
                 <!-- Links to contactUs and aboutUs views -->
@@ -60,7 +60,7 @@
         </div>
 
         <!-- Footer -->
-        <b-navbar type="dark" variant="secondary" style="margin-top: 20px;">
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
             <div class="container">
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
@@ -118,6 +118,7 @@
     </script>   
 
     <script>
+        // URLs to ContactUs and AboutUs views
         function getURLContactUs() {
             var url = document.location.href; 
             partes = url.split('/');
@@ -125,9 +126,6 @@
             var newURL = url.replace(page,"contactUs")
             return newURL
         }
-    </script>
-
-    <script>
         function getURLAboutUs() {
             var url = document.location.href; 
             partes = url.split('/');

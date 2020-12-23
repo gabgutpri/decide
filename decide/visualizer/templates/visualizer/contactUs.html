@@ -8,19 +8,20 @@
     <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block content %}
+    <div id="app-visualizer">
 
         <!-- Header -->
-        <b-navbar type="dark" variant="secondary">
-            <b-navbar-brand tag="h1">{% trans "Decide Visualization" %}</b-navbar-brand>
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
+            <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
             
             <b-navbar-nav class="ml-auto">
                 <!-- Links to contactUs and aboutUs views -->
-                <!--<a class="nav-link nav-item active" onclick="window.location.href=getURLContactUs();">{% trans "Contact us" %}</a>
-                <a class="nav-link nav-item active" onclick="window.location.href=getURLAboutUs();">{% trans "About us" %}</a>-->
+                <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
+                    <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
+                </div>
 
                 <!-- Dark mode and light mode buttons -->
                 <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
@@ -31,13 +32,13 @@
         </b-navbar>
 
         <!-- Footer -->
-        <b-navbar type="dark" variant="secondary" style="margin-top: 20px;">
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
             <div class="container">
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
             </div>
         </b-navbar> 
-
+    </div>
 {% endblock %}
 
 {% block extrabody %}
@@ -58,7 +59,55 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="{% static 'js/mfb.js' %}"></script> 
+    <script src="{% static 'js/mfb.js' %}"></script>
+
+    <script>
+        var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
+        var postproc=voting.postproc;
+
+        function getColoresRandom(){
+            var colorRandom='#'+Math.random().toString(16).substr(-6);
+           return colorRandom;
+        }
+
+        for(var i=0;i<postproc.length;i++){
+            data.push(postproc[i].votes)
+            labels.push(postproc[i].option)
+            color= getColoresRandom()
+            colores.push(color)
+        }
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'doughnut',
+            data:{
+                datasets: [{
+                    data: data,
+                    backgroundColor: colores,
+                    label: 'Número de votos'}],
+                    labels: labels},
+            options: {responsive: true}
+            });
+    </script>   
+
+    <script>
+        function getURLContactUs() {
+            var url = document.location.href; 
+            partes = url.split('/');
+            var page = partes[partes.length-2];
+            var newURL = url.replace(page,"contactUs")
+            return newURL
+        }
+    </script>
+
+    <script>
+        function getURLAboutUs() {
+            var url = document.location.href; 
+            partes = url.split('/');
+            var page = partes[partes.length-2];
+            var newURL = url.replace(page,"aboutUs")
+            return newURL
+        }
+    </script>
     
     <script>
         // Light mode and dark mode scripts
@@ -76,5 +125,5 @@
             document.getElementById("text").style.color = "white"
         }
     </script>
-    
+
 {% endblock %}
