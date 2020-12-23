@@ -10,6 +10,22 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/mfb.css' %}" >
+
+    <!--Librerias necesarias para exportar a PDF y PNG-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="http://java.sun.com/jsp/jstl/core"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="{% static 'js/mfb.js' %}"></script>
+
+     
 {% endblock %}
 
 {% block content %}
@@ -28,32 +44,38 @@
             </b-navbar-nav>
         </b-navbar>
 
-        <div class="voting container">
-            <h2 id="text" v-if="!voting.start_date">Votación no comenzada</h2>
-            <h2 id="text" v-else-if="!voting.end_date">Votación en curso</h2>
-            <div v-else>
-                <h2 id="text" class="heading">Resultados</h2>
-                <div>
-                    <table class="table table-bordered table-striped">
-                        <thead style="text-align:center;">
-                            <tr>
-                                <th><u>Opción</u></th>
-                                <th><u>Puntuación</u></th>
-                                <th><u>Votos</u></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="opt in voting.postproc" :key="opt.number">
-                                <th>[[opt.option]]</th>
-                                <td style="text-align:center;">[[opt.postproc]]</td>
-                                <td class="text-muted" style="text-align:center;">[[opt.votes]]</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <h2 class="heading">Resultados:</h2>
+                <div id="exportarTab">
+                <table id="tabla" class="table table-bordered table-striped" width="480" height="320">
+                    <thead>
+                        <tr>
+                            <th>Opción</th>
+                            <th>Puntuación</th>
+                            <th>Votos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="opt in voting.postproc" :key="opt.number">
+                            <th>[[opt.option]]</th>
+                            <td>[[opt.postproc]]</td>
+                            <td class="text-muted">[[opt.votes]]</td>
+                        </tr>
+                    </tbody>
+                </table>
                 </div>
+                <div>
+                   <canvas id="myChart" width="500" height="500"></canvas> 
+                   <button onclick="saveAsPNG();">Save as PNG</button>
+                </div>
+                <div>  
+                   <canvas id="myChart2" width="500" height="500"></canvas>
+                   <button onclick="saveAsPNG2();">Save as PNG</button>
+                   
+                </div> 
             </div>
-            <canvas id="myChart"></canvas>
-        </div>
+        
+        <button onclick="saveAsPDF();">Save as PDF</button>
+
 
         <!-- Footer -->
         <b-navbar type="dark" variant="secondary" style="margin-top: 20px;">
@@ -91,10 +113,7 @@
 
 {% block extrabody %}
     <!-- Vuejs -->
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-    <script src="http://java.sun.com/jsp/jstl/core"></script>
+    
     <script>
         var voting = {{voting|safe}};
         var app = new Vue({
@@ -105,9 +124,6 @@
             }
         })
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="{% static 'js/mfb.js' %}"></script>
 
     <script>
         var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
@@ -125,17 +141,112 @@
             colores.push(color)
         }
         var ctx = document.getElementById('myChart').getContext('2d');
+        
         var chart = new Chart(ctx, {
             type: 'doughnut',
+            //element:'graficaDonut',
             data:{
                 datasets: [{
                     data: data,
                     backgroundColor: colores,
                     label: 'Número de votos'}],
                     labels: labels},
-            options: {responsive: true}
+            options: {responsive: false}
             });
-    </script>   
+
+        
+        var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
+        var postproc=voting.postproc;
+
+        function getColoresRandom(){
+            var colorRandom='#'+Math.random().toString(16).substr(-6);
+           return colorRandom;
+        }
+
+        for(var i=0;i<postproc.length;i++){
+            data.push(postproc[i].votes)
+            labels.push(postproc[i].option)
+            color= getColoresRandom()
+            colores.push(color)
+        }
+        var ctx = document.getElementById('myChart2').getContext('2d');
+        
+        var chart = new Chart(ctx, {
+            type: 'doughnut',
+            //element:'graficaDonut',
+            data:{
+                datasets: [{
+                    data: data,
+                    backgroundColor: colores,
+                    label: 'Número de votos'}],
+                    labels: labels},
+            options: {responsive: false}
+            });
+    </script>       
+    <script> 
+           
+        function saveAsPDF() {
+            //Creo el documento PDF (jsPDF)
+            var doc = new jsPDF('p', 'mm');
+            //Paso la tabla a tipo html
+            var elementHTML = $('#exportarTab').html();
+            var specialElementHandlers = {
+            '#elementH': function (element, renderer) {
+                    return true;
+            }
+            };
+
+            //Añade las propiedades basicas del pdf
+            doc.setProperties({
+            title: 'Datos votaciones',
+            subject: 'Votaciones',		
+            author: 'Decide-Picaro-Visualizacion',
+            });
+
+            margins = {
+                    top: 15,
+                    bottom: 60,
+                    left: 15,
+                    width: 522
+                };
+            //Modifico algunas características sobre como se verá la tabla en el documento
+            doc.setFont("times");
+            doc.setTextColor(0,0,0);
+
+            doc.fromHTML(elementHTML, margins.left, margins.top, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+            
+            var canvas = document.getElementById('myChart');
+            var dataURL2 = canvas.toDataURL();
+            var canvas = document.getElementById('myChart2');
+            var dataURL3 = canvas.toDataURL();
+            //Añado las gráficas al documento, insertando antes de cada gráfica una nueva página             
+            doc.addPage();
+            doc.addImage(dataURL2,'PNG', 8, 8);
+            doc.addPage();
+            doc.addImage( dataURL3, 'PNG', 10, 10);
+            //Guardo el documento
+            doc.save('Datos-Votacion.pdf');
+            }
+    </script>
+    <script>  
+        function saveAsPNG() {
+            var canvas = document.getElementById('myChart');
+            Canvas2Image.saveAsPNG(canvas);
+        }
+    </script>
+    <script>  
+        function saveAsPNG2() {
+            var canvas = document.getElementById('myChart2');
+            Canvas2Image.saveAsPNG(canvas);
+        }
+    </script>
+    
+
+   
+
     
     <script>
         function activateLightMode() {
@@ -154,5 +265,6 @@
 
         //window.onload = activateDarkMode();
     </script>
+    
 
 {% endblock %}
