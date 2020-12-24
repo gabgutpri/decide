@@ -81,12 +81,13 @@
                     labels: labels},
             options: {responsive: true}
             });
-    </script>   
+    </script>
+    
     <script>
+        // Web site cookies
         function getCookie(cookieName) {
             var name = cookieName + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var cookies = decodedCookie.split(';');
+            var cookies = decodeURIComponent(document.cookie).split(';');
             for (var i = 0; i < cookies.length; i++) {
                 var c = cookies[i];
                 while (c.charAt(0) == ' ') {
@@ -98,13 +99,13 @@
             }
             return "";
         }
-        function checkCookie() {
-            var activatedTheme = getCookie("theme");
 
-            if (activatedTheme == "dark") {
+        function checkCookie() {
+            if (getCookie("theme") == "dark") {
                 activateDarkMode();
             }
         }
+
         function activateDarkMode() {
             document.body.className = "bg-dark"
             document.getElementById("lightButton").style.display = "inline"
@@ -113,5 +114,5 @@
             setCookie("theme", "dark", 365);
         }
         window.onload = checkCookie();
-    </script>
+    </script> 
 {% endblock %}

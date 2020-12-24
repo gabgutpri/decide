@@ -145,8 +145,7 @@
 
         function getCookie(cookieName) {
             var name = cookieName + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var cookies = decodedCookie.split(';');
+            var cookies = decodeURIComponent(document.cookie).split(';');
             for (var i = 0; i < cookies.length; i++) {
                 var c = cookies[i];
                 while (c.charAt(0) == ' ') {
@@ -160,12 +159,12 @@
         }
 
         function checkCookie() {
-            var activatedTheme = getCookie("theme");
-
-            if (activatedTheme == "dark") {
+            if (getCookie("theme") == "dark") {
                 activateDarkMode();
             }
         }
+        window.onload = checkCookie();
+        
         // Light mode and dark mode scripts
         function activateLightMode() {
             document.body.className = "bg-light"
@@ -182,7 +181,6 @@
             document.getElementById("text").style.color = "white"
             setCookie("theme", "dark", 365);
         }
-        window.onload = checkCookie();
     </script>
     
     <script>

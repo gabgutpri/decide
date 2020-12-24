@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-22 17:58+0000\n"
+"POT-Creation-Date: 2020-12-24 00:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,21 +51,74 @@ msgstr "Enhorabuena. Tu voto ha sido enviado"
 
 #: decide/settings.py:162
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: decide/settings.py:163
 msgid "Spanish"
-msgstr ""
+msgstr "Español"
 
-#: visualizer/templates/visualizer/visualizer.html:21
+#: visualizer/templates/visualizer/aboutUs.html:18
+#: visualizer/templates/visualizer/contactUs.html:20
+#: visualizer/templates/visualizer/visualizer.html:18
 msgid "Decide Visualization"
 msgstr "Decide Visualización"
 
-#: visualizer/templates/visualizer/visualizer.html:24
+#: visualizer/templates/visualizer/aboutUs.html:23
+#: visualizer/templates/visualizer/contactUs.html:25
+msgid "Return"
+msgstr "Volver"
+
+#: visualizer/templates/visualizer/aboutUs.html:31
+#: visualizer/templates/visualizer/contactUs.html:98
+#: visualizer/templates/visualizer/visualizer.html:65
+msgid "Evolution and Configuration Management"
+msgstr "Evolución y Gestión de la Configuración"
+
+#: visualizer/templates/visualizer/contactUs.html:35
+msgid "Contact Info"
+msgstr "Contáctanos"
+
+#: visualizer/templates/visualizer/contactUs.html:39
+msgid "Higher Technical School of Computer Engineering,"
+msgstr "Escuela Técnica Superior de Ingeniería Informática,"
+
+#: visualizer/templates/visualizer/contactUs.html:40
+msgid "Sevilla University, 41012"
+msgstr "Universidad de Sevilla, 41012"
+
+#: visualizer/templates/visualizer/contactUs.html:65
+msgid "Send a Message"
+msgstr "Enviar un mensaje"
+
+#: visualizer/templates/visualizer/contactUs.html:69
+msgid "First name"
+msgstr "Nombre"
+
+#: visualizer/templates/visualizer/contactUs.html:73
+msgid "Last name"
+msgstr "Apellidos"
+
+#: visualizer/templates/visualizer/contactUs.html:77
+msgid "Email address"
+msgstr "Dirección de correo"
+
+#: visualizer/templates/visualizer/contactUs.html:81
+msgid "Mobile number"
+msgstr "Número de teléfono"
+
+#: visualizer/templates/visualizer/contactUs.html:85
+msgid "Write your message here"
+msgstr "Escriba aquí su mensaje"
+
+#: visualizer/templates/visualizer/contactUs.html:88
+msgid "Send"
+msgstr "Enviar"
+
+#: visualizer/templates/visualizer/visualizer.html:23
 msgid "Contact us"
 msgstr "Contáctanos"
 
-#: visualizer/templates/visualizer/visualizer.html:25
+#: visualizer/templates/visualizer/visualizer.html:24
 msgid "About us"
 msgstr "Sobre nosotros"
 
@@ -102,7 +155,3 @@ msgstr "Puntuación"
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Voto"
-
-#: visualizer/templates/visualizer/visualizer.html:65
-msgid "Evolution and Configuration Management"
-msgstr "Evolución y Gestión de la Configuración"

@@ -8,6 +8,8 @@
     <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/contactUs.css' %}" >
 {% endblock %}
 
 {% block content %}
@@ -24,6 +26,71 @@
                 </div>
             </b-navbar-nav>
         </b-navbar>
+
+        <!-- Contact us -->
+        <section>
+            <div class="containerr">
+                <div class="contactInfo">
+                    <div>
+                        <h2>{% trans "Contact Info" %}</h2>
+                        <ul class="info">
+                            <li>
+                                <span><img src="{% static '/images/location.png' %}"></span>
+                                <span>{% trans "Higher Technical School of Computer Engineering," %}<br>
+                                    {% trans "Sevilla University, 41012" %}<br>
+                                    Sevilla
+                                </span>
+                            </li>
+                            <li>
+                                <span><img src="{% static '/images/mail.png' %}"></span>
+                                <span>decideVisualizacion@picaro.es</span>
+                            </li>
+                            <li>
+                                <span><img src="{% static '/images/phone.png' %}"></span>
+                                <span>+34 954 55 38 66</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="sci">
+                        <li><a href="https://m.facebook.com/garrybetijuelo/videos/583311158798950/?refsrc=http%3A%2F%2Fwww.google.com%2F&_rdr" target="_blank"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="https://twitter.com/search?q=%23r%C3%ADop%C3%ADcaro" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/explore/locations/1031691769/rio-picaro/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="https://www.pinterest.es/pin/259660734753203061/" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+                        <li><a href="https://www.youtube.com/watch?v=p3mPgfSSPw0" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
+                        <li><a href="https://github.com/pabfrasan/decide" target="_blank"><i class="fa fa-github-alt"></i></a></li>
+                        <li><a href="https://es.wikipedia.org/wiki/R%C3%ADo_P%C3%ADcaro" target="_blank"><i class="fa fa-wikipedia-w"></i></a></li>
+                    </ul>
+                </div>
+                <div class="contactForm">
+                    <h2>{% trans "Send a Message" %}</h2>
+                    <div class="formBox">
+                        <div class="inputBox w50">
+                            <input type="text" name="" required>
+                            <span>{% trans "First name" %}*</span>
+                        </div>
+                        <div class="inputBox w50">
+                            <input type="text" name="" required>
+                            <span>{% trans "Last name" %}*</span>
+                        </div>
+                        <div class="inputBox w50">
+                            <input type="text" name="" required>
+                            <span>{% trans "Email address" %}*</span>
+                        </div>
+                        <div class="inputBox w50">
+                            <input type="text" name="" required>
+                            <span>{% trans "Mobile number" %}*</span>
+                        </div>
+                        <div class="inputBox w100">
+                            <textarea name="" required></textarea>
+                            <span>{% trans "Write your message here" %}*</span>
+                        </div>
+                        <div class="inputBox w100">
+                            <input type="submit" value="{% trans 'Send' %}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Footer -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
@@ -81,12 +148,13 @@
                     labels: labels},
             options: {responsive: true}
             });
-    </script>  
+    </script>
+
     <script>
+        // Web site cookies
         function getCookie(cookieName) {
             var name = cookieName + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var cookies = decodedCookie.split(';');
+            var cookies = decodeURIComponent(document.cookie).split(';');
             for (var i = 0; i < cookies.length; i++) {
                 var c = cookies[i];
                 while (c.charAt(0) == ' ') {
@@ -98,13 +166,13 @@
             }
             return "";
         }
-        function checkCookie() {
-            var activatedTheme = getCookie("theme");
 
-            if (activatedTheme == "dark") {
+        function checkCookie() {
+            if (getCookie("theme") == "dark") {
                 activateDarkMode();
             }
         }
+
         function activateDarkMode() {
             document.body.className = "bg-dark"
             document.getElementById("lightButton").style.display = "inline"
