@@ -8,6 +8,7 @@
     <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="{% static 'css/aboutUs.css' %}" >
 {% endblock %}
 
 {% block content %}
@@ -24,7 +25,72 @@
                 </div>
             </b-navbar-nav>
         </b-navbar>
-
+        <div style="text-align: center; margin-top: 4px;">
+        
+            
+                <div  class="columna">
+                    <img src="{% static '/images/AbrahamG.jpg' %}" class="card-img-top"  alt="Abraham">
+                    <div class="cuadrado" >
+                    <h5 class="card-title" style="margin-top: 2px;">Abraham García</h5>
+                    <h5 class="card-title">Villalobos</h5>
+                    <p class="card-text">Estudiante de cuarto curso de la escula superior de ingeniería informática.</p>
+                    <a href="#" class="btn btn-outline-dark" style="margin-bottom: 2px;">Perfil Twitter</a>
+                    </div>
+                </div>
+            
+                <div  class="columna">
+                    <img src="{% static '/images/PabloF.jpeg' %}" class="card-img-top" alt="Pablo">
+                    <div class="cuadrado" >
+                    <h5 class="card-title" style="margin-top: 2px;">Pablo Franco </h5>
+                    <h5 class="card-title">Sánchez</h5>
+                    <p class="card-text">Estudiante de cuarto curso de la escula superior de ingeniería informática.</p>
+                    <a href="#" class="btn btn-outline-dark" style="margin-bottom: 2px;">Perfil Twitter</a>
+                    </div>
+                </div>
+                
+                <div  class="columna">
+                    <img src="{% static '/images/MartinA.jpeg' %}" class="card-img-top" alt="Martin">
+                    <div class="cuadrado" >
+                    <h5 class="card-title" style="margin-top: 2px;">Martín Arturo</h5>
+                    <h5 class="card-title">Guerrero Romero</h5>
+                    <p class="card-text">Estudiante de cuarto curso de la escula superior de ingeniería informática.</p>
+                    <a href="#" class="btn btn-outline-dark" style="margin-bottom: 2px;">Perfil Twitter</a>
+                    </div>
+                </div>
+        
+        </div>
+        <div style="text-align: center; margin-top: 8px;">
+        
+                <div  class="columna">
+                    <img src="{% static '/images/DavidS.jpeg' %}" class="card-img-top" alt="David">
+                    <div class="cuadrado" >
+                    <h5 class="card-title" style="margin-top: 2px;">David Soto</h5>
+                    <h5 class="card-title">Ponce</h5>
+                    <p class="card-text">Estudiante de cuarto curso de la escula superior de ingeniería informática.</p>
+                    <a href="#" class="btn btn-outline-dark" style="margin-bottom: 2px;">Perfil Twitter</a>
+                    </div>
+                </div>
+                <div  class="columna">
+                    <img src="{% static '/images/ThibautL.jpg' %}" class="card-img-top" alt="Thibaut">
+                    <div class="cuadrado" >
+                    <h5 class="card-title" style="margin-top: 2px;">Thibaut</h5>
+                    <h5 class="card-title">Lopez</h5>
+                    <p class="card-text">Estudiante de cuarto curso de la escula superior de ingeniería informática.</p>
+                    <a href="#" class="btn btn-outline-dark" style="margin-bottom: 2px;">Perfil Twitter</a>
+                    </div>
+                </div>
+                <div  class="columna">
+                    <img src="{% static '/images/GabrielG.jpeg' %}" class="card-img-top" alt="Gabriel">
+                    <div class="cuadrado" >
+                    <h5 class="card-title" style="margin-top: 2px;">Gabriel Gutiérrez</h5>
+                    <h5 class="card-title">Prieto</h5>
+                    <p class="card-text">Estudiante de cuarto curso de la escula superior de ingeniería informática.</p>
+                    <a href="#" class="btn btn-outline-dark" style="margin-bottom: 2px;">Perfil Twitter</a>
+                    </div>
+                </div>
+            </div>    
+        
+    
         <!-- Footer -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
             <div class="container">
@@ -33,6 +99,7 @@
             </div>
         </b-navbar> 
     </div>
+    
 {% endblock %}
 
 {% block extrabody %}
@@ -84,7 +151,14 @@
     </script>
     
     <script>
-        // Web site cookies
+
+       function setCookie(cookieName, cookieValue, expiresDays) {
+            var today = new Date();
+            today.setTime(today.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + today.toGMTString();
+            document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+        }
+
         function getCookie(cookieName) {
             var name = cookieName + "=";
             var cookies = decodeURIComponent(document.cookie).split(';');
@@ -105,6 +179,16 @@
                 activateDarkMode();
             }
         }
+
+        // Light mode and dark mode scripts
+        function activateLightMode() {
+            document.body.className = "bg-light"
+            document.getElementById("lightButton").style.display = "none"
+            document.getElementById("darkButton").style.display = "inline"
+            document.getElementById("text").style.color = "black"
+            setCookie("theme", "light", 365);
+        }
+
 
         function activateDarkMode() {
             document.body.className = "bg-dark"
