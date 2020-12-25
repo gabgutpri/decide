@@ -20,7 +20,7 @@
             <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
             
             <b-navbar-nav class="ml-auto">
-                <!-- Links to contactUs and aboutUs views -->
+                <!-- Return to principal display view -->
                 <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
                     <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
                 </div>
@@ -66,23 +66,19 @@
                     <div class="formBox">
                         <div class="inputBox w50">
                             <input type="text" name="" required>
-                            <span>{% trans "First name" %}*</span>
+                            <span>{% trans "Full name" %} *</span>
                         </div>
                         <div class="inputBox w50">
                             <input type="text" name="" required>
-                            <span>{% trans "Last name" %}*</span>
+                            <span>{% trans "Subject" %} *</span>
                         </div>
-                        <div class="inputBox w50">
+                        <div class="inputBox w100">
                             <input type="text" name="" required>
-                            <span>{% trans "Email address" %}*</span>
-                        </div>
-                        <div class="inputBox w50">
-                            <input type="text" name="" required>
-                            <span>{% trans "Mobile number" %}*</span>
+                            <span>{% trans "Email address" %} *</span>
                         </div>
                         <div class="inputBox w100">
                             <textarea name="" required></textarea>
-                            <span>{% trans "Write your message here" %}*</span>
+                            <span>{% trans "Write your message here" %} *</span>
                         </div>
                         <div class="inputBox w100">
                             <input type="submit" value="{% trans 'Send' %}">
@@ -123,34 +119,6 @@
     <script src="{% static 'js/mfb.js' %}"></script>
 
     <script>
-        var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
-        var postproc=voting.postproc;
-
-        function getColoresRandom(){
-            var colorRandom='#'+Math.random().toString(16).substr(-6);
-           return colorRandom;
-        }
-
-        for(var i=0;i<postproc.length;i++){
-            data.push(postproc[i].votes)
-            labels.push(postproc[i].option)
-            color= getColoresRandom()
-            colores.push(color)
-        }
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'doughnut',
-            data:{
-                datasets: [{
-                    data: data,
-                    backgroundColor: colores,
-                    label: 'Número de votos'}],
-                    labels: labels},
-            options: {responsive: true}
-            });
-    </script>
-
-    <script>
         // Web site cookies
         function getCookie(cookieName) {
             var name = cookieName + "=";
@@ -181,6 +149,6 @@
             setCookie("theme", "dark", 365);
         }
         window.onload = checkCookie();
-    </script>   
-
+    </script>
+    
 {% endblock %}

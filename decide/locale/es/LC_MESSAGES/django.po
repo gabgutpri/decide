@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-24 00:29+0000\n"
+"POT-Creation-Date: 2020-12-25 10:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,19 +57,37 @@ msgstr "Inglés"
 msgid "Spanish"
 msgstr "Español"
 
-#: visualizer/templates/visualizer/aboutUs.html:18
+#: visualizer/templates/visualizer/aboutUs.html:19
 #: visualizer/templates/visualizer/contactUs.html:20
 #: visualizer/templates/visualizer/visualizer.html:18
 msgid "Decide Visualization"
 msgstr "Decide Visualización"
 
-#: visualizer/templates/visualizer/aboutUs.html:23
+#: visualizer/templates/visualizer/aboutUs.html:24
 #: visualizer/templates/visualizer/contactUs.html:25
 msgid "Return"
 msgstr "Volver"
 
-#: visualizer/templates/visualizer/aboutUs.html:31
-#: visualizer/templates/visualizer/contactUs.html:98
+#: visualizer/templates/visualizer/aboutUs.html:35
+#: visualizer/templates/visualizer/aboutUs.html:43
+#: visualizer/templates/visualizer/aboutUs.html:51
+#: visualizer/templates/visualizer/aboutUs.html:61
+#: visualizer/templates/visualizer/aboutUs.html:69
+#: visualizer/templates/visualizer/aboutUs.html:77
+msgid "Computer Engineering student in Software Engineering"
+msgstr "Estudiante de Ingeniería Informática en Ingeniería del Software"
+
+#: visualizer/templates/visualizer/aboutUs.html:36
+#: visualizer/templates/visualizer/aboutUs.html:44
+#: visualizer/templates/visualizer/aboutUs.html:52
+#: visualizer/templates/visualizer/aboutUs.html:62
+#: visualizer/templates/visualizer/aboutUs.html:70
+#: visualizer/templates/visualizer/aboutUs.html:78
+msgid "GitHub Profile"
+msgstr "Perfil en GitHub"
+
+#: visualizer/templates/visualizer/aboutUs.html:86
+#: visualizer/templates/visualizer/contactUs.html:94
 #: visualizer/templates/visualizer/visualizer.html:65
 msgid "Evolution and Configuration Management"
 msgstr "Evolución y Gestión de la Configuración"
@@ -91,26 +109,22 @@ msgid "Send a Message"
 msgstr "Enviar un mensaje"
 
 #: visualizer/templates/visualizer/contactUs.html:69
-msgid "First name"
-msgstr "Nombre"
+msgid "Full name"
+msgstr "Nombre y apellidos"
 
 #: visualizer/templates/visualizer/contactUs.html:73
-msgid "Last name"
-msgstr "Apellidos"
+msgid "Subject"
+msgstr "Asunto"
 
 #: visualizer/templates/visualizer/contactUs.html:77
 msgid "Email address"
 msgstr "Dirección de correo"
 
 #: visualizer/templates/visualizer/contactUs.html:81
-msgid "Mobile number"
-msgstr "Número de teléfono"
-
-#: visualizer/templates/visualizer/contactUs.html:85
 msgid "Write your message here"
 msgstr "Escriba aquí su mensaje"
 
-#: visualizer/templates/visualizer/contactUs.html:88
+#: visualizer/templates/visualizer/contactUs.html:84
 msgid "Send"
 msgstr "Enviar"
 
@@ -155,3 +169,9 @@ msgstr "Puntuación"
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Voto"
+
+#~ msgid "Last name"
+#~ msgstr "Apellidos"
+
+#~ msgid "Mobile number"
+#~ msgstr "Número de teléfono"

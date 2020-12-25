@@ -38,17 +38,17 @@
             <div v-else>
                 <h2 id="text" class="heading">{% trans "Results" %}</h2>
                 <div>
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped" id="table">
                         <thead style="text-align:center;">
                             <tr>
-                                <th><u>{% trans "Option" %}</u></th>
-                                <th><u>{% trans "Punctuation" %}</u></th>
-                                <th><u>{% trans "Votes" %}</u></th>
+                                <th scope="col">{% trans "Option" %}</th>
+                                <th scope="col">{% trans "Punctuation" %}</th>
+                                <th scope="col">{% trans "Votes" %}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="opt in voting.postproc" :key="opt.number">
-                                <th>[[opt.option]]</th>
+                                <th scope="row">[[opt.option]]</th>
                                 <td style="text-align:center;">[[opt.postproc]]</td>
                                 <td class="text-muted" style="text-align:center;">[[opt.votes]]</td>
                             </tr>
