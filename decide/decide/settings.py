@@ -161,6 +161,7 @@ _ = lambda s: s
 LANGUAGES = [
     ('en', _('English')),
     ('es', _('Spanish')),
+    ('fr', _('French')),
 ]
 
 TIME_ZONE = 'UTC'
