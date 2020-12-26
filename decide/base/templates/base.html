@@ -30,16 +30,32 @@
                             {% if LANGUAGE_CODE == "es" %}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
                                 type="submit" value="{{lang.code}}" name="language"
-                                {% if lang.code == "es" %} data-mfb-label="Español" {% else %} data-mfb-label="Inglés" {% endif %}>
-                                <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" {% else %}
-                                    src="{% static '/images/england.jpg' %}" {% endif %}> 
+                                {% if lang.code == "es" %} data-mfb-label="Español" 
+                                    {% elif lang.code == "en"%} data-mfb-label="Inglés" 
+                                        {% else %} data-mfb-label="Francés" {% endif %}>
+                                <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
+                                    {% elif lang.code == "en" %} src="{% static '/images/england.jpg' %}" 
+                                        {% else %} src="{% static '/images/france.jpg' %}"{% endif %}> 
+                            </button>
+                            {% elif LANGUAGE_CODE == "en"%}
+                            <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
+                                type="submit" value="{{lang.code}}" name="language"
+                                {% if lang.code == "es" %} data-mfb-label="Snapish" 
+                                    {% elif lang.code == "en"%} data-mfb-label="English" 
+                                        {% else %} data-mfb-label="French" {% endif %}>
+                                    <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
+                                        {% elif lang.code == "en" %} src="{% static '/images/england.jpg' %}" 
+                                            {% else %} src="{% static '/images/france.jpg' %}"{% endif %}> 
                             </button>
                             {% else %}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
                                 type="submit" value="{{lang.code}}" name="language"
-                                {% if lang.code == "es" %} data-mfb-label="Spanish" {% else %} data-mfb-label="English" {% endif %}>
-                                <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" {% else %}
-                                    src="{% static '/images/england.jpg' %}" {% endif %}> 
+                                {% if lang.code == "es" %} data-mfb-label="Espagnol" 
+                                    {% elif lang.code == "en"%} data-mfb-label="Anglais" 
+                                        {% else %} data-mfb-label="Français" {% endif %}>
+                                    <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
+                                        {% elif lang.code == "en" %} src="{% static '/images/england.jpg' %}" 
+                                            {% else %} src="{% static '/images/france.jpg' %}"{% endif %}>
                             </button>
                             {% endif %}
                         </li>

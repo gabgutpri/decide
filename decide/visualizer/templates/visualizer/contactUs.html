@@ -61,27 +61,29 @@
                 </div>
                 <div class="contactForm">
                     <h2>{% trans "Send a Message" %}</h2>
-                    <div class="formBox">
-                        <div class="inputBox w50">
-                            <input type="text" name="" required>
-                            <span>{% trans "Full name" %} *</span>
+                    <form action="mailto:decideVisualizacion@picaro.es" method="post" enctype="text/plain">
+                        <div class="formBox">
+                            <div class="inputBox w50">
+                                <input type="text" name="name" required>
+                                <span>{% trans "Full name" %} *</span>
+                            </div>
+                            <div class="inputBox w50">
+                                <input type="text" name="subject" required>
+                                <span>{% trans "Subject" %} *</span>
+                            </div>
+                            <div class="inputBox w100">
+                                <input type="text" name="mail" required>
+                                <span>{% trans "Email address" %} *</span>
+                            </div>
+                            <div class="inputBox w100">
+                                <textarea name="Comment" required></textarea>
+                                <span>{% trans "Write your message here" %} *</span>
+                            </div>
+                            <div class="inputBox w100">
+                                <input type="submit" value="{% trans 'Send' %}">
+                            </div>
                         </div>
-                        <div class="inputBox w50">
-                            <input type="text" name="" required>
-                            <span>{% trans "Subject" %} *</span>
-                        </div>
-                        <div class="inputBox w100">
-                            <input type="text" name="" required>
-                            <span>{% trans "Email address" %} *</span>
-                        </div>
-                        <div class="inputBox w100">
-                            <textarea name="" required></textarea>
-                            <span>{% trans "Write your message here" %} *</span>
-                        </div>
-                        <div class="inputBox w100">
-                            <input type="submit" value="{% trans 'Send' %}">
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
