@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import requests
 
 from base import mods
 from base.models import Auth, Key
@@ -96,6 +97,7 @@ class Voting(models.Model):
         self.save()
 
         self.do_postproc()
+        self.enviarTelegram()
 
     def do_postproc(self):
         tally = self.tally
@@ -121,3 +123,15 @@ class Voting(models.Model):
 
     def __str__(self):
         return self.name
+    
+    #Método para enviar datos de los resultados por telegram (Pablo Franco Sánchez, visualización)
+    def enviarTelegram(self): 
+        id = "-406420323"
+        token = "1426657690:AAEmrAP5v4KFQvmzv5AyGdGvWwrbJbZup3M"
+        url = "https://api.telegram.org/bot" + token + "/sendMessage"
+        params = {
+        'chat_id': id,
+        'text' : str('Mensaje de prueba')
+        }
+        requests.post(url, params=params)
+
