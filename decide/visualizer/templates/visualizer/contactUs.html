@@ -18,12 +18,10 @@
         <!-- Header -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
             <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
-            
+
             <b-navbar-nav class="ml-auto">
                 <!-- Return to principal display view -->
-                <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
-                    <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
-                </div>
+                <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
             </b-navbar-nav>
         </b-navbar>
 
@@ -47,7 +45,7 @@
                             </li>
                             <li>
                                 <span><img src="{% static '/images/phone.png' %}"></span>
-                                <span>+34 954 55 38 66</span>
+                                <span>+34 954 55 38 66 (David)</span>
                             </li>
                         </ul>
                     </div>
@@ -143,8 +141,6 @@
 
         function activateDarkMode() {
             document.body.className = "bg-dark"
-            document.getElementById("lightButton").style.display = "inline"
-            document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
             setCookie("theme", "dark", 365);
         }

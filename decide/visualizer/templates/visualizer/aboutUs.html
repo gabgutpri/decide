@@ -5,89 +5,88 @@
 {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <link rel="stylesheet" href="{% static 'css/aboutUs.css' %}" >
 {% endblock %}
 
 {% block content %}
-    <div id="app-visualizer">
-
-        <!-- Header -->
-        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
-            <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
+    <!-- Header -->
+    <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
+        <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
             
-            <b-navbar-nav class="ml-auto">
-                <!-- Return to principal display view -->
-                <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
-                    <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
-                </div>
-            </b-navbar-nav>
-        </b-navbar>
+        <b-navbar-nav class="ml-auto">
+            <!-- Return to principal display view -->
+            <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
+        </b-navbar-nav>
+    </b-navbar>
 
-        <!-- Personal info cards -->
-        <div style="text-align: center; margin-top: 4px;">
-            <div  class="columna card border-secondary mb-3" style="max-width: 30rem;">
-                <img src="{% static '/images/PabloF.jpeg' %}" class="card-img-top img-thumbnail" alt="Pablo">
-                <div class="cuadrado">
-                    <h5 class="card-title">Pablo<br>Franco Sánchez</h5>
-                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
-                    <a href="https://github.com/pabfrasan" target="_blank" class="btn btn-outline-dark" style="margin-bottom: 2px;"><i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
-                </div>
-            </div>
-            <div  class="columna card border-secondary mb-3" style="max-width: 30rem;">
-                <img src="{% static '/images/AbrahamG.jpg' %}" class="card-img-top img-thumbnail"  alt="Abraham">
-                <div class="cuadrado">
-                    <h5 class="card-title">Abraham<br>García Villalobos</h5>
-                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
-                    <a href="https://github.com/AbrahamSFC" target="_blank" class="btn btn-outline-dark" style="margin-bottom: 2px;"><i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
-                </div>
-            </div>
-            <div  class="columna card border-secondary mb-3" style="max-width: 30rem;">
-                <img src="{% static '/images/MartinA.jpeg' %}" class="card-img-top img-thumbnail" alt="Martin">
-                <div class="cuadrado">
-                    <h5 class="card-title">Martín Arturo<br>Guerrero Romero</h5>
-                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
-                    <a href="https://github.com/Martinagr32" target="_blank" class="btn btn-outline-dark" style="margin-bottom: 2px;"><i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
-                </div>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 8px;">
-            <div  class="columna card border-secondary mb-3" style="max-width: 30rem;">
-                <img src="{% static '/images/GabrielG.jpeg' %}" class="card-img-top img-thumbnail" alt="Gabriel">
-                <div class="cuadrado">
-                    <h5 class="card-title">Gabriel<br>Gutiérrez Prieto</h5>
-                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
-                    <a href="https://github.com/gabgutpri" target="_blank" class="btn btn-outline-dark" style="margin-bottom: 2px;"><i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
-                </div>
-            </div> 
-            <div  class="columna card border-secondary mb-3" style="max-width: 18rem;">
-                <img src="{% static '/images/ThibautL.jpeg' %}" class="card-img-top img-thumbnail" alt="Thibaut">
-                <div class="cuadrado">
-                    <h5 class="card-title">Thibaut<br>Lopez</h5>
-                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
-                    <a href="https://github.com/Thiloparn" target="_blank" class="btn btn-outline-dark" style="margin-bottom: 2px;"><i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
-                </div>
-            </div>
-            <div  class="columna card border-secondary mb-3">
-                <img src="{% static '/images/DavidS.jpeg' %}" class="card-img-top img-thumbnail" alt="David">
-                <div class="cuadrado">
-                    <h5 class="card-title">David<br>Soto Ponce</h5>
-                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
-                    <a href="https://github.com/davsotpon" target="_blank" class="btn btn-outline-dark" style="margin-bottom: 2px; margin-left: 2px;"><i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
-                </div>
-            </div>   
-        </div>
-    
-        <!-- Footer -->
-        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
-            <div class="container">
-                <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
-                <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
-            </div>
-        </b-navbar> 
+    <!-- Personal info cards -->
+    <div class="au container">
+        <h2 id="text" class="heading"><i class="fa fa-eye"></i> {% trans "Visualization Team" %}</h2>
     </div>
+    <section>
+        <div class="containerr" style="text-align: center;">
+            <div class="personalInfo">
+                <div class="columna card">
+                    <img src="{% static '/images/PabloF.jpeg' %}" class="card-img-top" alt="Pablo">
+                    <h5 class="card-title">Pablo</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Franco Sánchez</h6>
+                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
+                    <a href="https://github.com/pabfrasan" target="_blank" class="btn btn-outline-dark">
+                        <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
+                </div>
+                <div class="columna card">
+                    <img src="{% static '/images/AbrahamG.jpg' %}" class="card-img-top"  alt="Abraham">
+                    <h5 class="card-title">Abraham</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">García Villalobos</h6>
+                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
+                    <a href="https://github.com/AbrahamSFC" target="_blank" class="btn btn-outline-dark">
+                        <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
+                </div>
+                <div class="columna card">
+                    <img src="{% static '/images/MartinA.jpeg' %}" class="card-img-top" alt="Martin">
+                    <h5 class="card-title">Martín Arturo</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Guerrero Romero</h6>
+                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
+                    <a href="https://github.com/Martinagr32" target="_blank" class="btn btn-outline-dark">
+                        <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
+                </div>
+                <div class="columna col card">
+                    <img src="{% static '/images/GabrielG.jpeg' %}" class="card-img-top" alt="Gabriel">
+                    <h5 class="card-title">Gabriel</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Gutiérrez Prieto</h6>
+                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
+                    <a href="https://github.com/gabgutpri" target="_blank" class="btn btn-outline-dark">
+                        <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
+                </div> 
+                <div class="columna col card">
+                    <img src="{% static '/images/ThibautL.jpeg' %}" class="card-img-top" alt="Thibaut">
+                    <h5 class="card-title">Thibaut</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Lopez</h6>
+                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
+                    <a href="https://github.com/Thiloparn" target="_blank" class="btn btn-outline-dark">
+                        <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
+                </div>
+                <div class="columna col card">
+                    <img src="{% static '/images/DavidS.jpeg' %}" class="card-img-top" alt="David">
+                    <h5 class="card-title">David</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Soto Ponce</h6>
+                    <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
+                    <a href="https://github.com/davsotpon" target="_blank" class="btn btn-outline-dark">
+                        <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
+        <div class="container">
+            <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
+            <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
+        </div>
+    </b-navbar>
     
 {% endblock %}
 
@@ -112,8 +111,8 @@
     <script src="{% static 'js/mfb.js' %}"></script>
     
     <script>
-
-       function setCookie(cookieName, cookieValue, expiresDays) {
+        // Cookies to change dark mode
+        function setCookie(cookieName, cookieValue, expiresDays) {
             var today = new Date();
             today.setTime(today.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
             var expires = "expires=" + today.toGMTString();
@@ -141,20 +140,8 @@
             }
         }
 
-        // Light mode and dark mode scripts
-        function activateLightMode() {
-            document.body.className = "bg-light"
-            document.getElementById("lightButton").style.display = "none"
-            document.getElementById("darkButton").style.display = "inline"
-            document.getElementById("text").style.color = "black"
-            setCookie("theme", "light", 365);
-        }
-
-
         function activateDarkMode() {
             document.body.className = "bg-dark"
-            document.getElementById("lightButton").style.display = "inline"
-            document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
             setCookie("theme", "dark", 365);
         }

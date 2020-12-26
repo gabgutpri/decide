@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-25 10:39+0000\n"
+"POT-Creation-Date: 2020-12-26 02:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,118 +57,126 @@ msgstr "Inglés"
 msgid "Spanish"
 msgstr "Español"
 
-#: visualizer/templates/visualizer/aboutUs.html:19
+#: visualizer/templates/visualizer/aboutUs.html:16
 #: visualizer/templates/visualizer/contactUs.html:20
-#: visualizer/templates/visualizer/visualizer.html:18
+#: visualizer/templates/visualizer/visualizer.html:20
 msgid "Decide Visualization"
 msgstr "Decide Visualización"
 
-#: visualizer/templates/visualizer/aboutUs.html:24
-#: visualizer/templates/visualizer/contactUs.html:25
+#: visualizer/templates/visualizer/aboutUs.html:20
+#: visualizer/templates/visualizer/contactUs.html:24
 msgid "Return"
 msgstr "Volver"
+
+#: visualizer/templates/visualizer/aboutUs.html:26
+msgid "Visualization Team"
+msgstr "Equipo de Visualización"
 
 #: visualizer/templates/visualizer/aboutUs.html:35
 #: visualizer/templates/visualizer/aboutUs.html:43
 #: visualizer/templates/visualizer/aboutUs.html:51
-#: visualizer/templates/visualizer/aboutUs.html:61
-#: visualizer/templates/visualizer/aboutUs.html:69
-#: visualizer/templates/visualizer/aboutUs.html:77
+#: visualizer/templates/visualizer/aboutUs.html:59
+#: visualizer/templates/visualizer/aboutUs.html:67
+#: visualizer/templates/visualizer/aboutUs.html:75
 msgid "Computer Engineering student in Software Engineering"
 msgstr "Estudiante de Ingeniería Informática en Ingeniería del Software"
 
-#: visualizer/templates/visualizer/aboutUs.html:36
-#: visualizer/templates/visualizer/aboutUs.html:44
-#: visualizer/templates/visualizer/aboutUs.html:52
-#: visualizer/templates/visualizer/aboutUs.html:62
-#: visualizer/templates/visualizer/aboutUs.html:70
-#: visualizer/templates/visualizer/aboutUs.html:78
+#: visualizer/templates/visualizer/aboutUs.html:37
+#: visualizer/templates/visualizer/aboutUs.html:45
+#: visualizer/templates/visualizer/aboutUs.html:53
+#: visualizer/templates/visualizer/aboutUs.html:61
+#: visualizer/templates/visualizer/aboutUs.html:69
+#: visualizer/templates/visualizer/aboutUs.html:77
 msgid "GitHub Profile"
 msgstr "Perfil en GitHub"
 
 #: visualizer/templates/visualizer/aboutUs.html:86
-#: visualizer/templates/visualizer/contactUs.html:94
-#: visualizer/templates/visualizer/visualizer.html:65
+#: visualizer/templates/visualizer/contactUs.html:92
+#: visualizer/templates/visualizer/visualizer.html:80
 msgid "Evolution and Configuration Management"
 msgstr "Evolución y Gestión de la Configuración"
 
-#: visualizer/templates/visualizer/contactUs.html:35
+#: visualizer/templates/visualizer/contactUs.html:33
 msgid "Contact Info"
 msgstr "Contáctanos"
 
-#: visualizer/templates/visualizer/contactUs.html:39
+#: visualizer/templates/visualizer/contactUs.html:37
 msgid "Higher Technical School of Computer Engineering,"
 msgstr "Escuela Técnica Superior de Ingeniería Informática,"
 
-#: visualizer/templates/visualizer/contactUs.html:40
+#: visualizer/templates/visualizer/contactUs.html:38
 msgid "Sevilla University, 41012"
 msgstr "Universidad de Sevilla, 41012"
 
-#: visualizer/templates/visualizer/contactUs.html:65
+#: visualizer/templates/visualizer/contactUs.html:63
 msgid "Send a Message"
 msgstr "Enviar un mensaje"
 
-#: visualizer/templates/visualizer/contactUs.html:69
+#: visualizer/templates/visualizer/contactUs.html:67
 msgid "Full name"
 msgstr "Nombre y apellidos"
 
-#: visualizer/templates/visualizer/contactUs.html:73
+#: visualizer/templates/visualizer/contactUs.html:71
 msgid "Subject"
 msgstr "Asunto"
 
-#: visualizer/templates/visualizer/contactUs.html:77
+#: visualizer/templates/visualizer/contactUs.html:75
 msgid "Email address"
 msgstr "Dirección de correo"
 
-#: visualizer/templates/visualizer/contactUs.html:81
+#: visualizer/templates/visualizer/contactUs.html:79
 msgid "Write your message here"
 msgstr "Escriba aquí su mensaje"
 
-#: visualizer/templates/visualizer/contactUs.html:84
+#: visualizer/templates/visualizer/contactUs.html:82
 msgid "Send"
 msgstr "Enviar"
 
-#: visualizer/templates/visualizer/visualizer.html:23
+#: visualizer/templates/visualizer/visualizer.html:25
 msgid "Contact us"
 msgstr "Contáctanos"
 
-#: visualizer/templates/visualizer/visualizer.html:24
+#: visualizer/templates/visualizer/visualizer.html:26
 msgid "About us"
 msgstr "Sobre nosotros"
 
-#: visualizer/templates/visualizer/visualizer.html:29
+#: visualizer/templates/visualizer/visualizer.html:31
 msgid "Light mode"
 msgstr "Modo claro"
 
-#: visualizer/templates/visualizer/visualizer.html:31
+#: visualizer/templates/visualizer/visualizer.html:33
 msgid "Dark mode"
 msgstr "Modo oscuro"
 
-#: visualizer/templates/visualizer/visualizer.html:36
+#: visualizer/templates/visualizer/visualizer.html:38
 msgid "Voting not started"
 msgstr "Votación no comenzada"
 
-#: visualizer/templates/visualizer/visualizer.html:37
+#: visualizer/templates/visualizer/visualizer.html:39
 msgid "Voting in progress"
 msgstr "Votación en curso"
 
-#: visualizer/templates/visualizer/visualizer.html:39
+#: visualizer/templates/visualizer/visualizer.html:41
 msgid "Results"
 msgstr "Resultados"
 
-#: visualizer/templates/visualizer/visualizer.html:44
+#: visualizer/templates/visualizer/visualizer.html:46
 msgid "Option"
 msgstr "Opción"
 
-#: visualizer/templates/visualizer/visualizer.html:45
+#: visualizer/templates/visualizer/visualizer.html:47
 msgid "Punctuation"
 msgstr "Puntuación"
 
-#: visualizer/templates/visualizer/visualizer.html:46
+#: visualizer/templates/visualizer/visualizer.html:48
 #, fuzzy
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Voto"
+
+#: visualizer/templates/visualizer/visualizer.html:65
+msgid "Donut Chart"
+msgstr "Gráfico Circular"
 
 #~ msgid "Last name"
 #~ msgstr "Apellidos"
