@@ -5,9 +5,12 @@
 {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/visualizer.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/mfb.css' %}" >
 
@@ -24,90 +27,92 @@
     <script src="http://java.sun.com/jsp/jstl/core"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <script src="{% static 'js/mfb.js' %}"></script>
-
-     
 {% endblock %}
 
 {% block content %}
     <div id="app-visualizer">
 
         <!-- Header -->
-        <b-navbar type="dark" variant="secondary">
-            <b-navbar-brand tag="h1">Decide Visualización</b-navbar-brand>
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
+            <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
             
             <b-navbar-nav class="ml-auto">
+                <!-- Links to contactUs and aboutUs views -->
+                <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
+                    <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLContactUs();">{% trans "Contact us" %}</button>
+                    <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLAboutUs();">{% trans "About us" %}</button>
+                </div>
+
                 <!-- Dark mode and light mode buttons -->
                 <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
-                    onclick="activateLightMode()">Modo claro</button>
+                    onclick="activateLightMode()">{% trans "Light mode" %}</button>
                 <button id="darkButton" type="button" class="btn btn-dark btn-sm pull-xs-right" style="display: inline"
-                    onclick="activateDarkMode()">Modo oscuro</button>
+                    onclick="activateDarkMode()">{% trans "Dark mode" %}</button>
             </b-navbar-nav>
         </b-navbar>
 
-                <h2 class="heading">Resultados:</h2>
-                <div id="exportarTab">
-                <table id="tabla" class="table table-bordered table-striped" width="480" height="320">
+        <div class="voting container">
+            <h2 id="text" v-if="!voting.start_date">{% trans "Voting not started" %}</h2>
+            <h2 id="text" v-else-if="!voting.end_date">{% trans "Voting in progress" %}</h2>
+            <div v-else>
+                <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
+                <div class="theTable" id="exportarTab">
+                    <table class="tb table" id="table">
+                        <thead>
+                            <tr>
+                                <th><h5 class="heading" style="font-style: italic;"><i class="fa fa-question-circle-o"></i> [[voting.question.desc]]</h5></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td><table class="tb table table-striped" id="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;"><i class="fa fa-comment-o"></i>  {% trans "Option" %}</th>
+                                        <th style="text-align: center;"><i class="fa fa-balance-scale"></i>  {% trans "Punctuation" %}</th>
+                                        <th style="text-align: center;"><i class="fa fa-envelope-o"></i>  {% trans "Votes" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="opt in voting.postproc" :key="opt.number">
+                                        <th>[[opt.option]]</th>
+                                        <td style="text-align: center;">[[opt.postproc]]</td>
+                                        <td style="text-align: center;">[[opt.votes]]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                        </tbody>
+                    </table>
+            </div>
+            <section>
+                <table class="tb table" id="table">
                     <thead>
                         <tr>
-                            <th>Opción</th>
-                            <th>Puntuación</th>
-                            <th>Votos</th>
+                            <th><h5 class="heading"><i class="fa fa-pie-chart"></i> {% trans "Donut Chart" %}</h5></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="opt in voting.postproc" :key="opt.number">
-                            <th>[[opt.option]]</th>
-                            <td>[[opt.postproc]]</td>
-                            <td class="text-muted">[[opt.votes]]</td>
+                        <tr>
+                            <td><canvas id="myChart" width="500" height="500"></canvas></td>
+                            <td><button onclick="saveAsPNG();">Save as PNG</button></td>
                         </tr>
+                        <tr>
+                            <td><canvas id="myChart2" width="500" height="500"></canvas></td>
+                            <td><button onclick="saveAsPNG2();">Save as PNG</button></td>
+                        </tr> 
                     </tbody>
                 </table>
-                </div>
-                <div>
-                   <canvas id="myChart" width="500" height="500"></canvas> 
-                   <button onclick="saveAsPNG();">Save as PNG</button>
-                </div>
-                <div>  
-                   <canvas id="myChart2" width="500" height="500"></canvas>
-                   <button onclick="saveAsPNG2();">Save as PNG</button>
-                   
-                </div> 
-            </div>
-        
+            </section>
+        </div>        
         <button onclick="saveAsPDF();">Save as PDF</button>
 
-
         <!-- Footer -->
-        <b-navbar type="dark" variant="secondary" style="margin-top: 20px;">
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
             <div class="container">
-                <span class="navbar-text" style="color: white;">Evolución y Gestión de la Configuración · <em>Decide</em></span>
-                <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro - Visualización &copy; 2021</span>
+                <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
+                <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
             </div>
-        </b-navbar>
-
-        <!-- Floating action button to select language -->
-        <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
-            <li class="mfb-component__wrap">
-                <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary">
-                    <i class="fa fa-globe"></i>
-                </a>
-                <ul class="mfb-component__list">
-                    <li>
-                        <a class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
-                            data-title="English" data-mfb-label="Inglés"> 
-                            <img width="30" src="{% static '/images/england.jpg' %}"> 
-                        </a> 
-                    </li>
-                    <li>
-                        <a class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light" 
-                            data-title="Spanish" data-mfb-label="Español"> 
-                            <img width="30" src="{% static '/images/spain.jpg' %}"> 
-                        </a> 
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
+        </b-navbar> 
     </div>
 {% endblock %}
 
@@ -217,8 +222,7 @@
                 'width': 170,
                 'elementHandlers': specialElementHandlers
             });
-            
-            var canvas = document.getElementById('myChart');
+          var canvas = document.getElementById('myChart');
             var dataURL2 = canvas.toDataURL();
             var canvas = document.getElementById('myChart2');
             var dataURL3 = canvas.toDataURL();
@@ -231,6 +235,25 @@
             doc.save('Datos-Votacion.pdf');
             }
     </script>
+
+    <script>
+        // URLs to ContactUs and AboutUs views
+        function getURLContactUs() {
+            var url = document.location.href; 
+            partes = url.split('/');
+            var page = partes[partes.length-2];
+            var newURL = url.replace(page,"contactUs")
+            return newURL
+        }
+        function getURLAboutUs() {
+            var url = document.location.href; 
+            partes = url.split('/');
+            var page = partes[partes.length-2];
+            var newURL = url.replace(page,"aboutUs")
+            return newURL
+        }
+    </script>
+            
     <script>  
         function saveAsPNG() {
             var canvas = document.getElementById('myChart');
@@ -243,17 +266,44 @@
             Canvas2Image.saveAsPNG(canvas);
         }
     </script>
-    
 
-   
-
-    
     <script>
+       function setCookie(cookieName, cookieValue, expiresDays) {
+            var today = new Date();
+            today.setTime(today.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + today.toGMTString();
+            document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var cookies = decodeURIComponent(document.cookie).split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var c = cookies[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            if (getCookie("theme") == "dark") {
+                activateDarkMode();
+            }
+        }
+        window.onload = checkCookie();
+        
+        // Light mode and dark mode scripts
         function activateLightMode() {
             document.body.className = "bg-light"
             document.getElementById("lightButton").style.display = "none"
             document.getElementById("darkButton").style.display = "inline"
             document.getElementById("text").style.color = "black"
+            setCookie("theme", "light", 365);
         }
 
         function activateDarkMode() {
@@ -261,9 +311,19 @@
             document.getElementById("lightButton").style.display = "inline"
             document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
+            setCookie("theme", "dark", 365);
         }
-
-        //window.onload = activateDarkMode();
+    </script>
+    
+    <script>
+        // Pop up message when window load
+        function popUp() {
+            if (confirm("La página de visualización es demasiado chula. ¿Quiere continuar?")) {   
+            } else {
+                window.onload = popUp();
+            }
+        }
+        window.onload = popUp();
     </script>
     
 

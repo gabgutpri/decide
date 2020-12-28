@@ -20,3 +20,15 @@ class VisualizerView(TemplateView):
             raise Http404
 
         return context
+
+class ContactUs(TemplateView):
+    try:
+        template_name = 'visualizer/contactUs.html'
+    except:
+        raise Http404
+
+class AboutUs(TemplateView):
+    try:
+        template_name = 'visualizer/aboutUs.html'
+    except:
+        raise Http404
