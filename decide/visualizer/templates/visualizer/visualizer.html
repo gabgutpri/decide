@@ -38,23 +38,32 @@
             <h2 id="text" v-if="!voting.start_date">{% trans "Voting not started" %}</h2>
             <h2 id="text" v-else-if="!voting.end_date">{% trans "Voting in progress" %}</h2>
             <div v-else>
-                <h2 id="text" class="heading" style="color: rgb(182, 11, 11); font-style: italic;"> [[voting.question.desc]]</h2>
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
                 <div class="theTable">
-                    <table class="tb table table-striped" id="table">
+                    <table class="tb table" id="table">
                         <thead>
                             <tr>
-                                <th style="text-align: center;"><i class="fa fa-comment-o"></i>  {% trans "Option" %}</th>
-                                <th style="text-align: center;"><i class="fa fa-balance-scale"></i>  {% trans "Punctuation" %}</th>
-                                <th style="text-align: center;"><i class="fa fa-envelope-o"></i>  {% trans "Votes" %}</th>
+                                <th><h5 class="heading" style="font-style: italic;"><i class="fa fa-question-circle-o"></i> [[voting.question.desc]]</h5></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="opt in voting.postproc" :key="opt.number">
-                                <th>[[opt.option]]</th>
-                                <td style="text-align: center;">[[opt.postproc]]</td>
-                                <td style="text-align: center;">[[opt.votes]]</td>
-                            </tr>
+                            <td><table class="tb table table-striped" id="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;"><i class="fa fa-comment-o"></i>  {% trans "Option" %}</th>
+                                        <th style="text-align: center;"><i class="fa fa-balance-scale"></i>  {% trans "Punctuation" %}</th>
+                                        <th style="text-align: center;"><i class="fa fa-envelope-o"></i>  {% trans "Votes" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="opt in voting.postproc" :key="opt.number">
+                                        <th>[[opt.option]]</th>
+                                        <td style="text-align: center;">[[opt.postproc]]</td>
+                                        <td style="text-align: center;">[[opt.votes]]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </td>
                         </tbody>
                     </table>
                 </div>
