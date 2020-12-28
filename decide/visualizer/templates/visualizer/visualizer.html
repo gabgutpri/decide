@@ -38,6 +38,7 @@
             <h2 id="text" v-if="!voting.start_date">{% trans "Voting not started" %}</h2>
             <h2 id="text" v-else-if="!voting.end_date">{% trans "Voting in progress" %}</h2>
             <div v-else>
+                <h2 id="text" class="heading" style="color: rgb(182, 11, 11); font-style: italic;"> [[voting.question.desc]]</h2>
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
                 <div class="theTable">
                     <table class="tb table table-striped" id="table">
