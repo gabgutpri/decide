@@ -3,6 +3,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
+import discord
+from discord.ext import commands
 
 from base import mods
 from base.models import Auth, Key
@@ -114,29 +116,41 @@ class Voting(models.Model):
                 'number': opt.number,
                 'votes': votes
             })
-
+        msn ="Votación: "+self.name+"\n\n"
+        for opt in opts:
+            msn = str(msn)+str(opt.get('option'))+": "+(str(opt.get('votes')))+" votos.\n"
         data = { 'type': 'IDENTITY', 'options': opts }
         postp = mods.post('postproc', json=data)
+        
 
         self.postproc = postp
         self.save()
-        self.enviarTelegram(opts)
+        self.enviarTelegram(msn)
+        self.enviarDiscord(msn)
 
     def __str__(self):
         return self.name
     
     #Método para enviar datos de los resultados por telegram (Pablo Franco Sánchez, visualización)
-    def enviarTelegram(self,opts): 
+    def enviarTelegram(self,msn): 
         id = "-406420323"
         token = "1426657690:AAEmrAP5v4KFQvmzv5AyGdGvWwrbJbZup3M"
         url = "https://api.telegram.org/bot" + token + "/sendMessage"
 
-        data = "Votación: "+self.name+"\n\n"
-        for opt in opts:
-            data = data+str(opt.get('option'))+": "+(str(opt.get('votes')))+" votos.\n"
         params = {
         'chat_id': id,
-        'text' : str(data)
+        'text' : str(msn)
         }
         requests.post(url, params=params)
+
+    def enviarDiscord(self,msn):
+        client = discord.Client()
+        custom_guild = discord.utils.get(client.guilds, id='793169633623539753')
+        custom_channel = discord.utils.get(custom.guild.channels, id="793169634195013684")
+        @client.envent
+        def result():
+            custom_channel.send(str(msn))
+
+        token = "NzkzMTY5MDI0NTM1NjI1NzQ5.X-oWNw.HV6OG0QKkvCUUlj3O-hNe0I64ig"
+        client.run(token)
 
