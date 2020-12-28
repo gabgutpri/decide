@@ -60,7 +60,7 @@
                     <table class="tb table" id="table">
                         <thead>
                             <tr>
-                                <th><h5 class="heading" style="font-style: italic;"><i class="fa fa-question-circle-o"></i> [[voting.question.desc]]</h5></th>
+                                <th><h5 class="heading" style="font-style: italic;" id="question"><i class="fa fa-question-circle-o"></i> [[voting.question.desc]]</h5></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -197,7 +197,7 @@
            
         function saveAsPDF() {
             //Creo el documento PDF (jsPDF)
-            var doc = new jsPDF('p', 'mm');
+            var doc = new jsPDF('p', 'pt');
             //Paso la tabla a tipo html
             var elementHTML = $('#exportarTab').html();
             var specialElementHandlers = {
@@ -214,7 +214,7 @@
             });
 
             margins = {
-                    top: 15,
+                    top: 30,
                     bottom: 60,
                     left: 15,
                     width: 522
@@ -222,6 +222,9 @@
             //Modifico algunas características sobre como se verá la tabla en el documento
             doc.setFont("times");
             doc.setTextColor(0,0,0);
+            doc.setFontSize(25);
+            doc.setFontStyle("italic");
+            doc.text(15, 25, $('#question').text())
 
             doc.fromHTML(elementHTML, margins.left, margins.top, {
                 'width': 170,
