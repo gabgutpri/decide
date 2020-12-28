@@ -56,7 +56,7 @@
             <h2 id="text" v-else-if="!voting.end_date">{% trans "Voting in progress" %}</h2>
             <div v-else>
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
-                <div class="theTable" id="exportarTab">
+                <div class="theTable">
                     <table class="tb table" id="table">
                         <thead>
                             <tr>
@@ -64,7 +64,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <td><table class="tb table table-striped" id="table">
+                            <td>
+                                <div id="exportarTab">
+                                <table class="tb table table-striped" id="table">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center;"><i class="fa fa-comment-o"></i>  {% trans "Option" %}</th>
@@ -79,10 +81,12 @@
                                         <td style="text-align: center;">[[opt.votes]]</td>
                                     </tr>
                                 </tbody>
-                            </table>
+                                </table>
+                                </div>
                             </td>
                         </tbody>
                     </table>
+                </div>
             </div>
             <section>
                 <table class="tb table" id="table">
@@ -94,17 +98,20 @@
                     <tbody>
                         <tr>
                             <td><canvas id="myChart" width="500" height="500"></canvas></td>
-                            <td><button onclick="saveAsPNG();">Save as PNG</button></td>
                         </tr>
+                        <tr>
+                            <td><button onclick="saveAsPNG();">{% trans "Save as PNG" %}</button></td>
+                            <td><button onclick="saveAsPDF();">{% trans "Save as PDF" %}</button></td>
+                        </tr>
+                        <!-- NO BORRAR, ABRAHAM DIJO ANOCHE BORRACHO: )"(·6g9128sm=!E"
                         <tr>
                             <td><canvas id="myChart2" width="500" height="500"></canvas></td>
                             <td><button onclick="saveAsPNG2();">Save as PNG</button></td>
-                        </tr> 
+                        </tr>-->
                     </tbody>
                 </table>
             </section>
         </div>        
-        <button onclick="saveAsPDF();">Save as PDF</button>
 
         <!-- Footer -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
@@ -116,9 +123,7 @@
     </div>
 {% endblock %}
 
-{% block extrabody %}
-    <!-- Vuejs -->
-    
+{% block extrabody %}    
     <script>
         var voting = {{voting|safe}};
         var app = new Vue({
@@ -196,9 +201,9 @@
             //Paso la tabla a tipo html
             var elementHTML = $('#exportarTab').html();
             var specialElementHandlers = {
-            '#elementH': function (element, renderer) {
+                '#elementH': function (element, renderer) {
                     return true;
-            }
+                }
             };
 
             //Añade las propiedades basicas del pdf
@@ -222,18 +227,22 @@
                 'width': 170,
                 'elementHandlers': specialElementHandlers
             });
-          var canvas = document.getElementById('myChart');
+            var canvas = document.getElementById('myChart');
             var dataURL2 = canvas.toDataURL();
+            /* NO BORRAR ABRAHAM
             var canvas = document.getElementById('myChart2');
             var dataURL3 = canvas.toDataURL();
+            */
             //Añado las gráficas al documento, insertando antes de cada gráfica una nueva página             
             doc.addPage();
             doc.addImage(dataURL2,'PNG', 8, 8);
+            /* NO BORRAR ABRAHAM
             doc.addPage();
             doc.addImage( dataURL3, 'PNG', 10, 10);
+            */
             //Guardo el documento
             doc.save('Datos-Votacion.pdf');
-            }
+        }
     </script>
 
     <script>
@@ -260,12 +269,12 @@
             Canvas2Image.saveAsPNG(canvas);
         }
     </script>
-    <script>  
+    <!--<script>  
         function saveAsPNG2() {
             var canvas = document.getElementById('myChart2');
             Canvas2Image.saveAsPNG(canvas);
         }
-    </script>
+    </script>-->
 
     <script>
        function setCookie(cookieName, cookieValue, expiresDays) {
@@ -325,6 +334,4 @@
         }
         window.onload = popUp();
     </script>
-    
-
 {% endblock %}

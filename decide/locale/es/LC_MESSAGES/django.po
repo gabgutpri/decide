@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 02:17+0000\n"
+"POT-Creation-Date: 2020-12-28 12:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: booth/templates/booth/booth.html:19
-#, fuzzy 
+#, fuzzy
 #| msgid "logout"
 msgid "Logout"
 msgstr "Cerrar sesión"
@@ -40,8 +40,7 @@ msgstr "Iniciar sesión"
 msgid "Vote"
 msgstr "Voto"
 
-#: booth/templates/booth/booth.html:160 
-#: booth/templates/booth/booth.html:170
+#: booth/templates/booth/booth.html:160 booth/templates/booth/booth.html:170
 #: booth/templates/booth/booth.html:201
 msgid "Error: "
 msgstr "Error: "
@@ -64,7 +63,7 @@ msgstr "Français"
 
 #: visualizer/templates/visualizer/aboutUs.html:16
 #: visualizer/templates/visualizer/contactUs.html:20
-#: visualizer/templates/visualizer/visualizer.html:20
+#: visualizer/templates/visualizer/visualizer.html:37
 msgid "Decide Visualization"
 msgstr "Decide Visualización"
 
@@ -96,8 +95,8 @@ msgid "GitHub Profile"
 msgstr "Perfil en GitHub"
 
 #: visualizer/templates/visualizer/aboutUs.html:86
-#: visualizer/templates/visualizer/contactUs.html:92
-#: visualizer/templates/visualizer/visualizer.html:80
+#: visualizer/templates/visualizer/contactUs.html:94
+#: visualizer/templates/visualizer/visualizer.html:119
 msgid "Evolution and Configuration Management"
 msgstr "Evolución y Gestión de la Configuración"
 
@@ -117,71 +116,79 @@ msgstr "Universidad de Sevilla, 41012"
 msgid "Send a Message"
 msgstr "Enviar un mensaje"
 
-#: visualizer/templates/visualizer/contactUs.html:67
+#: visualizer/templates/visualizer/contactUs.html:68
 msgid "Full name"
 msgstr "Nombre y apellidos"
 
-#: visualizer/templates/visualizer/contactUs.html:71
+#: visualizer/templates/visualizer/contactUs.html:72
 msgid "Subject"
 msgstr "Asunto"
 
-#: visualizer/templates/visualizer/contactUs.html:75
+#: visualizer/templates/visualizer/contactUs.html:76
 msgid "Email address"
 msgstr "Dirección de correo"
 
-#: visualizer/templates/visualizer/contactUs.html:79
+#: visualizer/templates/visualizer/contactUs.html:80
 msgid "Write your message here"
 msgstr "Escriba aquí su mensaje"
 
-#: visualizer/templates/visualizer/contactUs.html:82
+#: visualizer/templates/visualizer/contactUs.html:83
 msgid "Send"
 msgstr "Enviar"
 
-#: visualizer/templates/visualizer/visualizer.html:25
+#: visualizer/templates/visualizer/visualizer.html:42
 msgid "Contact us"
 msgstr "Contáctanos"
 
-#: visualizer/templates/visualizer/visualizer.html:26
+#: visualizer/templates/visualizer/visualizer.html:43
 msgid "About us"
 msgstr "Sobre nosotros"
 
-#: visualizer/templates/visualizer/visualizer.html:31
+#: visualizer/templates/visualizer/visualizer.html:48
 msgid "Light mode"
 msgstr "Modo claro"
 
-#: visualizer/templates/visualizer/visualizer.html:33
+#: visualizer/templates/visualizer/visualizer.html:50
 msgid "Dark mode"
 msgstr "Modo oscuro"
 
-#: visualizer/templates/visualizer/visualizer.html:38
+#: visualizer/templates/visualizer/visualizer.html:55
 msgid "Voting not started"
 msgstr "Votación no comenzada"
 
-#: visualizer/templates/visualizer/visualizer.html:39
+#: visualizer/templates/visualizer/visualizer.html:56
 msgid "Voting in progress"
 msgstr "Votación en curso"
 
-#: visualizer/templates/visualizer/visualizer.html:41
+#: visualizer/templates/visualizer/visualizer.html:58
 msgid "Results"
 msgstr "Resultados"
 
-#: visualizer/templates/visualizer/visualizer.html:46
+#: visualizer/templates/visualizer/visualizer.html:72
 msgid "Option"
 msgstr "Opción"
 
-#: visualizer/templates/visualizer/visualizer.html:47
+#: visualizer/templates/visualizer/visualizer.html:73
 msgid "Punctuation"
 msgstr "Puntuación"
 
-#: visualizer/templates/visualizer/visualizer.html:48
-#, fuzzy 
+#: visualizer/templates/visualizer/visualizer.html:74
+#, fuzzy
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Voto"
 
-#: visualizer/templates/visualizer/visualizer.html:65
+#: visualizer/templates/visualizer/visualizer.html:95
 msgid "Donut Chart"
 msgstr "Gráfico Circular"
+
+#: visualizer/templates/visualizer/visualizer.html:103
+msgid "Save as PNG"
+msgstr "Guardar como PNG"
+
+#: visualizer/templates/visualizer/visualizer.html:104
+msgid "Save as PDF"
+msgstr "Guardar como PDF"
 
 #~ msgid "Last name"
 #~ msgstr "Apellidos"
