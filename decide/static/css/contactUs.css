@@ -73,10 +73,12 @@ section .containerr .contactInfo .info li span:nth-child(2) {
     font-weight: 300;
     opacity: 0.5;
 }
-section .containerr .contactInfo .info li:hover span:nth-child(1) img ,
+
+section .containerr .contactInfo .info li:hover span:nth-child(1) img,
 section .containerr .contactInfo .info li:hover span:nth-child(2) {
     opacity: 1;
 }
+
 section .containerr .contactInfo .sci {
     position: relative;
     display: flex;
