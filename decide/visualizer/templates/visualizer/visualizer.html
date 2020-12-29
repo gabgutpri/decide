@@ -58,21 +58,21 @@
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
                 </head>
                 <!-- Podio -->
-                <body onload="start()">
                 <div class="result">
                     <pre id="response"></pre>
                 </div>
-                <center>
-                <div class="podium">
+                
+                <div class="theTable">
+                    
                     <table id="ladder">
-                    <tr>
-                        <td class="podio"><div id="podium1"></div></td>
-                        <td class="podio"><div id="podium0"></div></td>
-                        <td class="podio"><div id="podium2"></div></td>
+                        
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "2nd place"%}</div><div id="podium1"></div></td>
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "WINNER" %}</div><div id="podium0"></div></td>
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "3rd place" %}</div><div id="podium2"></div></td>
                     </tr>
                 </table>
                 </div>
-                </center>
+               
             </body>
                 <div class="theTable">
                     <table class="tb table" id="table">
@@ -388,19 +388,25 @@
         #response {
         font-family: courier-new, courier;
         }
-        #podium0, #podium1, #podium2 {
+        #podium0, #podium1, #podium2, #winner {
         width: 150px;
-        background: rgb(148, 101, 101);
+        font-size: 5mm;
         text-align: center;
+        font-weight: 700;
+        
         }
+    
         #podium0 { /* gold */
             height: 250px;
+            background: rgb(255, 215, 0);
         }
         #podium1 { /* silver */
             height: 200px;
+            background: rgb(192, 192, 192);
         }
         #podium2 { /* bronze */
             height: 150px;
+            background: rgb(205,127,50);
         }
     </style>
 {% endblock %}
