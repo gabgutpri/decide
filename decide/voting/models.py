@@ -126,7 +126,6 @@ class Voting(models.Model):
         self.postproc = postp
         self.save()
         self.enviarTelegram(msn)
-        self.enviarDiscord(msn)
 
     def __str__(self):
         return self.name
@@ -142,15 +141,3 @@ class Voting(models.Model):
         'text' : str(msn)
         }
         requests.post(url, params=params)
-
-    def enviarDiscord(self,msn):
-        client = discord.Client()
-        custom_guild = discord.utils.get(client.guilds, id='793169633623539753')
-        custom_channel = discord.utils.get(custom.guild.channels, id="793169634195013684")
-        @client.envent
-        def result():
-            custom_channel.send(str(msn))
-
-        token = "NzkzMTY5MDI0NTM1NjI1NzQ5.X-oWNw.HV6OG0QKkvCUUlj3O-hNe0I64ig"
-        client.run(token)
-
