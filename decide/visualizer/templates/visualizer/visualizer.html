@@ -98,16 +98,20 @@
                     <tbody>
                         <tr>
                             <td><canvas id="myChart" width="500" height="500"></canvas></td>
+                            <td><button class="btn btn-outline-dark" onclick="saveAsPNG();">
+                                <i class="fa fa-file-photo-o"></i> {% trans "Save as PNG" %}</button></td>
                         </tr>
                         <tr>
-                            <td><button onclick="saveAsPNG();">{% trans "Save as PNG" %}</button></td>
-                            <td><button onclick="saveAsPDF();">{% trans "Save as PDF" %}</button></td>
+                            <td><canvas  id="myChart2" width="500" height="500"></canvas></td>
+                            <td><button class="btn btn-outline-dark" onclick="saveAsPNG2();">
+                                <i class="fa fa-file-photo-o"></i> {% trans "Save as PNG" %}</button></td>
                         </tr>
-                        <!-- NO BORRAR, ABRAHAM DIJO ANOCHE BORRACHO: )"(·6g9128sm=!E"
                         <tr>
-                            <td><canvas id="myChart2" width="500" height="500"></canvas></td>
-                            <td><button onclick="saveAsPNG2();">Save as PNG</button></td>
-                        </tr>-->
+                            
+                            <td><button class="btn btn-outline-dark" onclick="saveAsPDF();">
+                                <i class="fa fa-file-pdf-o"></i> {% trans "Save as PDF" %}</button></td>
+                        </tr>
+                       
                     </tbody>
                 </table>
             </section>
@@ -180,14 +184,13 @@
             colores.push(color)
         }
         var ctx = document.getElementById('myChart2').getContext('2d');
-        
-        var chart = new Chart(ctx, {
-            type: 'doughnut',
+        var chart2 = new Chart(ctx, {
+            type: 'bar',
             //element:'graficaDonut',
             data:{
                 datasets: [{
                     data: data,
-                    backgroundColor: colores,
+                    backgroundColor: 'blue',
                     label: 'Número de votos'}],
                     labels: labels},
             options: {responsive: false}
@@ -232,17 +235,15 @@
             });
             var canvas = document.getElementById('myChart');
             var dataURL2 = canvas.toDataURL();
-            /* NO BORRAR ABRAHAM
             var canvas = document.getElementById('myChart2');
             var dataURL3 = canvas.toDataURL();
-            */
+            
             //Añado las gráficas al documento, insertando antes de cada gráfica una nueva página             
             doc.addPage();
             doc.addImage(dataURL2,'PNG', 8, 8);
-            /* NO BORRAR ABRAHAM
             doc.addPage();
             doc.addImage( dataURL3, 'PNG', 10, 10);
-            */
+            
             //Guardo el documento
             doc.save('Datos-Votacion.pdf');
         }
@@ -272,12 +273,12 @@
             Canvas2Image.saveAsPNG(canvas);
         }
     </script>
-    <!--<script>  
+    <script>  
         function saveAsPNG2() {
             var canvas = document.getElementById('myChart2');
             Canvas2Image.saveAsPNG(canvas);
         }
-    </script>-->
+    </script>
 
     <script>
        function setCookie(cookieName, cookieValue, expiresDays) {
