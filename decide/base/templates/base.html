@@ -40,7 +40,7 @@
                             {% elif LANGUAGE_CODE == "en"%}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
                                 type="submit" value="{{lang.code}}" name="language"
-                                {% if lang.code == "es" %} data-mfb-label="Snapish" 
+                                {% if lang.code == "es" %} data-mfb-label="Spanish" 
                                     {% elif lang.code == "en"%} data-mfb-label="English" 
                                         {% else %} data-mfb-label="French" {% endif %}>
                                     <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
