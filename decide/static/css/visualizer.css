@@ -13,7 +13,21 @@
 .voting h2 {
     margin-bottom: 25px;
 }
-.voting .theTable {
+.voting .podium {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 30%;
+    margin-right: 30%;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 50px 50px rgba(0, 0, 0, 0.5);
+}
+.voting .theTable, .voting section {
     position: relative;
     display: flex;
     justify-content: center;
@@ -25,7 +39,7 @@
     border-radius: 20px;
     box-shadow: 0 50px 50px rgba(0, 0, 0, 0.5);
 }
-.voting .theTable .tb {
+.voting .theTable .tb, .voting section .tb {
     margin: 20px;
 }
 .voting .theTable .tb th, td {
@@ -34,13 +48,15 @@
 .voting section {
     position: relative;
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 100%;
     margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 30%;
-    margin-right: 23%;
+    margin-bottom: 30px;
+    margin-left: 11%;
+    margin-right: 7%;
     background: white;
+    border-radius: 20px;
     box-shadow: 0 50px 50px rgba(0, 0, 0, 0.5);
 }

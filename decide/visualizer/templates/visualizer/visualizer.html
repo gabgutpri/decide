@@ -11,10 +11,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Required imports to use icons and float button -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/mfb.css' %}" >
 
-    <!--Librerias necesarias para exportar a PDF y PNG-->
+    <!-- Required scripts to export to PDF and PNG-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -52,10 +54,25 @@
         </b-navbar>
 
         <div class="voting container">
-            <h2 id="text" v-if="!voting.start_date">{% trans "Voting not started" %}</h2>
-            <h2 id="text" v-else-if="!voting.end_date">{% trans "Voting in progress" %}</h2>
+            <h2 id="text" v-if="!voting.start_date"><i class="fa fa-ban"></i> {% trans "Voting not started" %}</h2>
+            <h2 id="text" v-else-if="!voting.end_date"><i class="fa fa-cog fa-spin"></i> {% trans "Voting in progress" %}</h2>
             <div v-else>
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
+                <!-- Podium -->
+                <div class="result">
+                    <pre id="response"></pre>
+                </div>
+                <div class="podium">
+                    <table id="ladder">
+                    <tr>
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "2nd place"%}</div><div id="podium1"></div></td>
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "WINNER" %}</div><div id="podium0"></div></td>
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "3rd place" %}</div><div id="podium2"></div></td>
+                    </tr>
+                    </table>
+                </div>
+                
+                <!-- Table -->
                 <div class="theTable">
                     <table class="tb table" id="table">
                         <thead>
@@ -88,27 +105,29 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Charts -->
             <section>
                 <table class="tb table" id="table">
                     <thead>
                         <tr>
                             <th><h5 class="heading"><i class="fa fa-pie-chart"></i> {% trans "Donut Chart" %}</h5></th>
+                            <th><h5 class="heading"><i class="fa fa-bar-chart"></i> {% trans "Bar Chart" %}</h5></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><canvas id="myChart" width="500" height="500"></canvas></td>
-                            <td><button class="btn btn-outline-dark" onclick="saveAsPNG();">
-                                <i class="fa fa-file-photo-o"></i> {% trans "Save as PNG" %}</button></td>
-                        </tr>
-                        <tr>
                             <td><canvas  id="myChart2" width="500" height="500"></canvas></td>
-                            <td><button class="btn btn-outline-dark" onclick="saveAsPNG2();">
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><button class="btn btn-outline-dark" onclick="saveAsPNG();">
+                                <i class="fa fa-file-photo-o"></i> {% trans "Save as PNG" %}</button></td>
+                            <td style="text-align: center;"><button class="btn btn-outline-dark" onclick="saveAsPNG2();">
                                 <i class="fa fa-file-photo-o"></i> {% trans "Save as PNG" %}</button></td>
                         </tr>
                         <tr>
-                            
-                            <td><button class="btn btn-outline-dark" onclick="saveAsPDF();">
+                            <td colspan="2" style="text-align: center;"><button class="btn btn-outline-dark" onclick="saveAsPDF();">
                                 <i class="fa fa-file-pdf-o"></i> {% trans "Save as PDF" %}</button></td>
                         </tr>
                        
@@ -338,4 +357,63 @@
         }
         window.onload = popUp();
     </script>
+    <script>
+
+        
+        window.onload = function podium() {
+            var lista = voting.postproc;
+            var n, i, k, aux;
+            n = lista.length;
+            for (k = 1; k < n; k++) {
+                for (i = 0; i < (n - k); i++) {
+                    if (lista[i].postproc > lista[i + 1].postproc) {
+                        aux = lista[i];
+                        lista[i] = lista[i + 1];
+                        lista[i + 1] = aux;
+                    }
+                }
+            }
+
+            for (var i = 0; i < 3; i++) {
+                var p = document.getElementById('podium'+i.toString());
+                p.innerHTML  = lista[n-i-1].option.toString()+"<br>"+lista[n-i-1].postproc.toString() 
+            }
+        }
+
+    </script>
+    <style>
+        .podio {
+        height: 300px;
+        vertical-align: bottom;
+        padding: 5px;
+         }
+        #response {
+        font-family: courier-new, courier;
+        }
+        #podium0, #podium1, #podium2{
+        width: 150px;
+        font-size: 5mm;
+        text-align: center;
+        font-weight: 700;
+        }
+        #winner{
+        width: 150px;
+        font-size: 7mm;
+        text-align: center;
+        font-weight: 700;   
+        }
+    
+        #podium0 { /* gold */
+            height: 250px;
+            background: rgb(255, 215, 0);
+        }
+        #podium1 { /* silver */
+            height: 200px;
+            background: rgb(192, 192, 192);
+        }
+        #podium2 { /* bronze */
+            height: 150px;
+            background: rgb(205,127,50);
+        }
+    </style>
 {% endblock %}
