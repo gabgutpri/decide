@@ -56,6 +56,24 @@
             <h2 id="text" v-else-if="!voting.end_date">{% trans "Voting in progress" %}</h2>
             <div v-else>
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
+                </head>
+                <!-- Podio -->
+                <div class="result">
+                    <pre id="response"></pre>
+                </div>
+                
+                <div class="theTable">
+                    
+                    <table id="ladder">
+                        
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "2nd place"%}</div><div id="podium1"></div></td>
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "WINNER" %}</div><div id="podium0"></div></td>
+                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "3rd place" %}</div><div id="podium2"></div></td>
+                    </tr>
+                </table>
+                </div>
+               
+            </body>
                 <div class="theTable">
                     <table class="tb table" id="table">
                         <thead>
@@ -338,4 +356,63 @@
         }
         window.onload = popUp();
     </script>
+    <script>
+
+        
+        window.onload = function podium() {
+            var lista = voting.postproc;
+            var n, i, k, aux;
+            n = lista.length;
+            for (k = 1; k < n; k++) {
+                for (i = 0; i < (n - k); i++) {
+                    if (lista[i].postproc > lista[i + 1].postproc) {
+                        aux = lista[i];
+                        lista[i] = lista[i + 1];
+                        lista[i + 1] = aux;
+                    }
+                }
+            }
+
+            for (var i = 0; i < 3; i++) {
+                var p = document.getElementById('podium'+i.toString());
+                p.innerHTML  = lista[n-i-1].option.toString()+"<br>"+lista[n-i-1].postproc.toString() 
+            }
+        }
+
+    </script>
+    <style>
+        .podio {
+        height: 300px;
+        vertical-align: bottom;
+        padding: 5px;
+         }
+        #response {
+        font-family: courier-new, courier;
+        }
+        #podium0, #podium1, #podium2{
+        width: 150px;
+        font-size: 5mm;
+        text-align: center;
+        font-weight: 700;
+        }
+        #winner{
+        width: 150px;
+        font-size: 7mm;
+        text-align: center;
+        font-weight: 700;   
+        }
+    
+        #podium0 { /* gold */
+            height: 250px;
+            background: rgb(255, 215, 0);
+        }
+        #podium1 { /* silver */
+            height: 200px;
+            background: rgb(192, 192, 192);
+        }
+        #podium2 { /* bronze */
+            height: 150px;
+            background: rgb(205,127,50);
+        }
+    </style>
 {% endblock %}

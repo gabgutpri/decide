@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 12:57+0000\n"
+"POT-Creation-Date: 2020-12-29 17:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,7 +96,7 @@ msgstr "Perfil en GitHub"
 
 #: visualizer/templates/visualizer/aboutUs.html:86
 #: visualizer/templates/visualizer/contactUs.html:94
-#: visualizer/templates/visualizer/visualizer.html:119
+#: visualizer/templates/visualizer/visualizer.html:137
 msgid "Evolution and Configuration Management"
 msgstr "Evolución y Gestión de la Configuración"
 
@@ -164,29 +164,41 @@ msgstr "Votación en curso"
 msgid "Results"
 msgstr "Resultados"
 
-#: visualizer/templates/visualizer/visualizer.html:72
+#: visualizer/templates/visualizer/visualizer.html:69
+msgid "2nd place"
+msgstr "2º puesto"
+
+#: visualizer/templates/visualizer/visualizer.html:70
+msgid "WINNER"
+msgstr "GANADOR"
+
+#: visualizer/templates/visualizer/visualizer.html:71
+msgid "3rd place"
+msgstr "3º puesto"
+
+#: visualizer/templates/visualizer/visualizer.html:90
 msgid "Option"
 msgstr "Opción"
 
-#: visualizer/templates/visualizer/visualizer.html:73
+#: visualizer/templates/visualizer/visualizer.html:91
 msgid "Punctuation"
 msgstr "Puntuación"
 
-#: visualizer/templates/visualizer/visualizer.html:74
+#: visualizer/templates/visualizer/visualizer.html:92
 #, fuzzy
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Voto"
 
-#: visualizer/templates/visualizer/visualizer.html:95
+#: visualizer/templates/visualizer/visualizer.html:113
 msgid "Donut Chart"
 msgstr "Gráfico Circular"
 
-#: visualizer/templates/visualizer/visualizer.html:103
+#: visualizer/templates/visualizer/visualizer.html:121
 msgid "Save as PNG"
 msgstr "Guardar como PNG"
 
-#: visualizer/templates/visualizer/visualizer.html:104
+#: visualizer/templates/visualizer/visualizer.html:122
 msgid "Save as PDF"
 msgstr "Guardar como PDF"
 
