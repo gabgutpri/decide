@@ -187,7 +187,31 @@
             options: {responsive: false}
             });
 
-        
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
+        var chart2 = new Chart(ctx2, {
+            type: 'bar',
+            //element:'graficaDonut',
+            data:{
+                datasets: [{
+                    data: data,
+                    borderWidth: '2',
+                    borderColor: '#6c757d',
+                    backgroundColor: '#9d9c9f',
+                    hoverBackgroundColor: '#242330',
+                    label: 'Número de votos'}],
+                    labels: labels},
+            options: {
+                responsive: false,
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+        }
+            }
+            });
         var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
         var postproc=voting.postproc;
 
@@ -202,18 +226,7 @@
             color= getColoresRandom()
             colores.push(color)
         }
-        var ctx = document.getElementById('myChart2').getContext('2d');
-        var chart2 = new Chart(ctx, {
-            type: 'bar',
-            //element:'graficaDonut',
-            data:{
-                datasets: [{
-                    data: data,
-                    backgroundColor: '#6c757d',
-                    label: 'Número de votos'}],
-                    labels: labels},
-            options: {responsive: false}
-            });
+        
     </script>       
     <script> 
            
