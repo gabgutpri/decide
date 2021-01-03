@@ -61,14 +61,27 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning'
 }
 
+#Authentication Backends
+
 AUTHENTICATION_BACKENDS = [
     'base.backends.AuthBackend',
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
 ]
 
-#Facebook Keys
+#Social Login Keys
+
+#Facebook App Keys
 SOCIAL_AUTH_FACEBOOK_KEY = '1611054769087460'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'e5a981424b175589a87110c712dc3584'
+
+#Twitter App keys
+SOCIAL_AUTH_TWITTER_KEY = 'YeLc8PNE10orRRnAMINCwyPWG'
+SOCIAL_AUTH_TWITTER_SECRET = 'K0I5W9xa2Btcv2xxO1IpacNXlTioplgeXVUlBG3XMbHwpei76B'
+
+#Email Auth Backend (For testing and debugging purposes, not yet ready for production)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 MODULES = [
     'authentication',
