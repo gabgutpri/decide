@@ -13,6 +13,18 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .serializers import UserSerializer
 
+from django.shortcuts import render, redirect
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+
+from .forms import RegisterForm
+from django.contrib.auth import logout, login, authenticate
+
 
 class GetUserView(APIView):
     def post(self, request):
@@ -53,3 +65,34 @@ class RegisterView(APIView):
         except IntegrityError:
             return Response({}, status=HTTP_400_BAD_REQUEST)
         return Response({'user_pk': user.pk, 'token': token.key}, HTTP_201_CREATED)
+
+
+#Sign Up View
+class RegisterGUI:
+    def register(request):
+        if request.user.is_authenticated:
+            return redirect('/')
+        if request.method == 'POST':
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                #Setting the additional fields on the BBDD
+                user = form.save()
+                user.refresh_from_db()
+                user.profile.email = form.cleaned_data.get('email')
+                user.profile.first_name = form.cleaned_data.get('first_name')
+                user.profile.last_name = form.cleaned_data.get('last_name')
+                user.is_active = False
+                user.save()
+                return redirect('/')
+            else:
+                return render(request, 'register.html', {'form': form})
+        else:
+            form = RegisterForm()
+            return render(request, 'register.html', {'form': form})
+
+#Simple logout, could be improved
+
+class LogOutTestView:
+    def logout(request):
+        logout(request)
+        return redirect('/')
