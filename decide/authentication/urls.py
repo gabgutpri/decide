@@ -16,7 +16,7 @@ urlpatterns = [
     #Register URL
     path('registergui/', RegisterGUI.register, name='account_activation_sent'),
     #Login URL Built In
-    path('logingui/', auth_views.login,{'template_name': 'login.html'}, name='login2'),<a href="{% url 'social:begin' 'twitter' %}">Acceder con Twitter</a>
+    path('logingui/', auth_views.login,{'template_name': 'login.html'}, name='login2'),
     #Logout URL
     path('logoutgui/', LogOutTestView.logout, name='logout'),
     #Registration Form
