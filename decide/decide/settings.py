@@ -47,6 +47,12 @@ INSTALLED_APPS = [
     'gateway',
 ]
 
+#Authentication Apps
+
+AUTH_APPS = [
+    'social_django',
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
@@ -57,7 +63,12 @@ REST_FRAMEWORK = {
 
 AUTHENTICATION_BACKENDS = [
     'base.backends.AuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
 ]
+
+#Facebook Keys
+SOCIAL_AUTH_FACEBOOK_KEY = '1611054769087460'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'e5a981424b175589a87110c712dc3584'
 
 MODULES = [
     'authentication',
@@ -94,6 +105,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware', #Authentication Social Middleware
 ]
 
 ROOT_URLCONF = 'decide.urls'
@@ -218,8 +231,9 @@ if os.path.exists("config.jsonnet"):
     for k, v in config.items():
         vars()[k] = v
 
-
-INSTALLED_APPS = INSTALLED_APPS + MODULES
+#All the apps are loaded from here, it's better to divide the apps of each team in different arrays so we can identify
+#which are the newly added ones, for example: All the needed Apps for Authentication are under the array: AUTH_APPS
+INSTALLED_APPS = INSTALLED_APPS + MODULES + AUTH_APPS
 
 import django_heroku
 django_heroku.settings(locals())
