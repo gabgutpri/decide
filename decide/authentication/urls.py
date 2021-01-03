@@ -4,7 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import include, path, re_path
 from django.contrib.auth import views as auth_views
 
-from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView
+from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation
 
 
 
@@ -16,7 +16,7 @@ urlpatterns = [
     #Register URL
     path('registergui/', RegisterGUI.register, name='account_activation_sent'),
     #Login URL Built In
-    path('logingui/', auth_views.login,{'template_name': 'login.html'}, name='login2'),
+    path('logingui/', auth_views.login,{'template_name': 'login.html'}, name='login2'),<a href="{% url 'social:begin' 'twitter' %}">Acceder con Twitter</a>
     #Logout URL
     path('logoutgui/', LogOutTestView.logout, name='logout'),
     #Registration Form
