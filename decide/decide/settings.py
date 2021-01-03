@@ -57,10 +57,15 @@ REST_FRAMEWORK = {
 
 AUTHENTICATION_BACKENDS = [
     'base.backends.AuthBackend',
+    'social_core.backends.twitter.TwitterOAuth',
 ]
 
 #Email Auth Backend (For testing and debugging purposes)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Twitter OAuth keys
+SOCIAL_AUTH_TWITTER_KEY = 'YeLc8PNE10orRRnAMINCwyPWG'
+SOCIAL_AUTH_TWITTER_SECRET = 'K0I5W9xa2Btcv2xxO1IpacNXlTioplgeXVUlBG3XMbHwpei76B'
 
 MODULES = [
     'authentication',
