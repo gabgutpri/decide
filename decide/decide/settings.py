@@ -59,6 +59,9 @@ AUTHENTICATION_BACKENDS = [
     'base.backends.AuthBackend',
 ]
 
+#Email Auth Backend (For testing and debugging purposes)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 MODULES = [
     'authentication',
     'base',
