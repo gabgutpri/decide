@@ -20,7 +20,7 @@ urlpatterns = [
     #Logout URL
     path('logoutgui/', LogOutTestView.logout, name='logout'),
     #Registration Form
-    path('registertest/', RegisterTest.register, name='account_activation_sent'),
+    path('registergui/', RegisterGUI.register, name='account_activation_sent'),
     #Account activation sent view
     path(r'^account_activation_sent/$', AccountActivation.account_activation_sent, name='account_activation_sent'),
     #Activation URL
