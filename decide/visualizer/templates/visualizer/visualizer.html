@@ -33,7 +33,6 @@
 
 {% block content %}
     <div id="app-visualizer">
-
         <!-- Header -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
             <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
@@ -41,7 +40,6 @@
             <b-navbar-nav class="ml-auto">
                 <!-- Links to contactUs and aboutUs views -->
                 <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
-
                     <a class="btn btn-secondary" href="https://t.me/decidePicaro">Telegram</a>
                     <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLContactUs();">{% trans "Contact us" %}</button>
                     <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLAboutUs();">{% trans "About us" %}</button>
@@ -90,9 +88,7 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
-
 
             <div v-else>
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
@@ -143,10 +139,8 @@
                     </table>
                 </div>
 
-
-
-            <!-- Charts -->
-            <section>
+                <!-- Charts -->
+                <section>
                 <table class="tb table" id="table">
                     <thead>
                         <tr>
@@ -172,10 +166,8 @@
 
                     </tbody>
                 </table>
-            </section>
-
-
-
+                </section>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -414,8 +406,6 @@
     </script>
 
     <script>
-
-
         window.onload = function podium() {
             var lista = voting.postproc;
             var n, i, k, aux;
@@ -432,17 +422,18 @@
 
             for (var i = 0; i < 3; i++) {
                 var p = document.getElementById('podium'+i.toString());
-                p.innerHTML  = lista[n-i-1].option.toString()+"<br>"+lista[n-i-1].postproc.toString()
+                p.innerHTML  = lista[n-i-1].option.toString()+"<br>"+lista[n-i-1].postproc.toString();
+            }
+        }
     </script>
 
     <script>
-
         function getNumeroVotos(){
             for(var i=0; i< voting.postproc.length; i++){
                 voting.postproc[i]["votes"]
 
             }
         }
-
     </script>
+
 {% endblock %}
