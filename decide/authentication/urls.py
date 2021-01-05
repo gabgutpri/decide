@@ -4,7 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView
+from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation
 
 
 
@@ -19,6 +19,11 @@ urlpatterns = [
     path('logingui/', auth_views.login,{'template_name': 'login.html'}, name='login2'),
     #Logout URL
     path('logoutgui/', LogOutTestView.logout, name='logout'),
+    #Account activation sent view
+    path(r'^account_activation_sent/$', AccountActivation.account_activation_sent, name='account_activation_sent'),
+    #Activation URL
+    path('activate/<slug:uidb64>/<slug:token>/', AccountActivation.activate, name='activate'),
     #OAuth Social Login URL
     path('oauth/', include('social_django.urls', namespace='social')),
+
 ]
