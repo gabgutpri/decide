@@ -33,7 +33,6 @@
 
 {% block content %}
     <div id="app-visualizer">
-
         <!-- Header -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
             <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
@@ -65,9 +64,9 @@
                 <div class="podium">
                     <table id="ladder">
                     <tr>
-                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "2nd place"%}</div><div id="podium1"></div></td>
-                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "WINNER" %}</div><div id="podium0"></div></td>
-                        <td class="podio"><div id="winner" style="text-align: center;"> {% trans "3rd place" %}</div><div id="podium2"></div></td>
+                        <td class="podio"><div id="winner"> {% trans "2nd place"%}</div><div id="podium1"></div></td>
+                        <td class="podio"><div id="winner"> {% trans "WINNER" %}</div><div id="podium0"></div></td>
+                        <td class="podio"><div id="winner"> {% trans "3rd place" %}</div><div id="podium2"></div></td>
                     </tr>
                     </table>
                 </div>
@@ -158,6 +157,7 @@
         })
     </script>
 
+    <!-- CHARTS -->
     <script>
         var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
         var postproc=voting.postproc;
@@ -173,11 +173,10 @@
             color= getColoresRandom()
             colores.push(color)
         }
+
         var ctx = document.getElementById('myChart').getContext('2d');
-        
         var chart = new Chart(ctx, {
             type: 'doughnut',
-            //element:'graficaDonut',
             data:{
                 datasets: [{
                     data: data,
@@ -187,49 +186,21 @@
             options: {responsive: false}
             });
 
-        var ctx2 = document.getElementById('myChart2').getContext('2d');
-        var chart2 = new Chart(ctx2, {
+        var ctx = document.getElementById('myChart2').getContext('2d');
+        var chart2 = new Chart(ctx, {
             type: 'bar',
-            //element:'graficaDonut',
             data:{
                 datasets: [{
                     data: data,
-                    borderWidth: '2',
-                    borderColor: '#6c757d',
-                    backgroundColor: '#9d9c9f',
-                    hoverBackgroundColor: '#242330',
+                    backgroundColor: '#6c757d',
                     label: 'Número de votos'}],
                     labels: labels},
-            options: {
-                responsive: false,
-                scales: {
-                    xAxes: [{
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        stacked: true
-                    }]
-        }
-            }
+            options: {responsive: false}
             });
-        var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
-        var postproc=voting.postproc;
+    </script>
 
-        function getColoresRandom(){
-            var colorRandom='#'+Math.random().toString(16).substr(-6);
-           return colorRandom;
-        }
-
-        for(var i=0;i<postproc.length;i++){
-            data.push(postproc[i].votes)
-            labels.push(postproc[i].option)
-            color= getColoresRandom()
-            colores.push(color)
-        }
-        
-    </script>       
-    <script> 
-           
+    <!-- EXPORTS -->
+    <script>    
         function saveAsPDF() {
             //Creo el documento PDF (jsPDF)
             var doc = new jsPDF('p', 'pt');
@@ -279,8 +250,19 @@
             //Guardo el documento
             doc.save('Datos-Votacion.pdf');
         }
+
+        function saveAsPNG() {
+            var canvas = document.getElementById('myChart');
+            Canvas2Image.saveAsPNG(canvas);
+        }
+
+        function saveAsPNG2() {
+            var canvas = document.getElementById('myChart2');
+            Canvas2Image.saveAsPNG(canvas);
+        }
     </script>
 
+    <!-- OTHER VIEWS -->
     <script>
         // URLs to ContactUs and AboutUs views
         function getURLContactUs() {
@@ -298,20 +280,8 @@
             return newURL
         }
     </script>
-            
-    <script>  
-        function saveAsPNG() {
-            var canvas = document.getElementById('myChart');
-            Canvas2Image.saveAsPNG(canvas);
-        }
-    </script>
-    <script>  
-        function saveAsPNG2() {
-            var canvas = document.getElementById('myChart2');
-            Canvas2Image.saveAsPNG(canvas);
-        }
-    </script>
 
+    <!-- VIEW MODES WITH COOKIES -->
     <script>
        function setCookie(cookieName, cookieValue, expiresDays) {
             var today = new Date();
@@ -370,10 +340,10 @@
         }
         window.onload = popUp();
     </script>
-    <script>
 
-        
-        window.onload = function podium() {
+    <!-- PODIUM -->
+    <script>
+        function podium() {
             var lista = voting.postproc;
             var n, i, k, aux;
             n = lista.length;
@@ -392,41 +362,6 @@
                 p.innerHTML  = lista[n-i-1].option.toString()+"<br>"+lista[n-i-1].postproc.toString() 
             }
         }
-
+        window.onload = podium();
     </script>
-    <style>
-        .podio {
-        height: 300px;
-        vertical-align: bottom;
-        padding: 5px;
-         }
-        #response {
-        font-family: courier-new, courier;
-        }
-        #podium0, #podium1, #podium2{
-        width: 150px;
-        font-size: 5mm;
-        text-align: center;
-        font-weight: 700;
-        }
-        #winner{
-        width: 150px;
-        font-size: 7mm;
-        text-align: center;
-        font-weight: 700;   
-        }
-    
-        #podium0 { /* gold */
-            height: 250px;
-            background: rgb(255, 215, 0);
-        }
-        #podium1 { /* silver */
-            height: 200px;
-            background: rgb(192, 192, 192);
-        }
-        #podium2 { /* bronze */
-            height: 150px;
-            background: rgb(205,127,50);
-        }
-    </style>
 {% endblock %}
