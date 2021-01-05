@@ -36,10 +36,11 @@
         <!-- Header -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
             <a class="navbar-brand navbar-dark">{% trans "Decide Visualization" %}</a>
-            
+
             <b-navbar-nav class="ml-auto">
                 <!-- Links to contactUs and aboutUs views -->
                 <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
+                    <a class="btn btn-secondary" href="https://t.me/decidePicaro">Telegram</a>
                     <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLContactUs();">{% trans "Contact us" %}</button>
                     <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLAboutUs();">{% trans "About us" %}</button>
                 </div>
@@ -53,8 +54,42 @@
         </b-navbar>
 
         <div class="voting container">
-            <h2 id="text" v-if="!voting.start_date"><i class="fa fa-ban"></i> {% trans "Voting not started" %}</h2>
-            <h2 id="text" v-else-if="!voting.end_date"><i class="fa fa-cog fa-spin"></i> {% trans "Voting in progress" %}</h2>
+            <div v-if="!voting.start_date">
+                <h2 id="text" ><i class="fa fa-ban"></i> {% trans "Voting not started" %}</h2>
+            </div>
+
+            <div v-else-if="!voting.end_date">
+                <h2 id="text" ><i class="fa fa-cog fa-spin"></i> {% trans "Voting in progress" %}</h2>
+                <div class="theTable">
+                    <table class="tb table" id="table">
+                        <thead>
+                            <tr>
+                                <th><h5 class="heading" style="font-style: italic;"><i class="fa fa-question-circle-o"></i> [[voting.question.desc]]</h5></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td>
+                                <div id="exportarTab">
+                                <table class="tb table table-striped" id="table">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;"><i class="fa fa-comment-o"></i>  {% trans "Number of votes" %}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th style="text-align: center;">{{numero_votos}}</th>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </div>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div v-else>
                 <h2 id="text" class="heading"><i class="fa fa-pencil-square-o"></i> {% trans "Results" %}</h2>
                 <!-- Podium -->
@@ -70,7 +105,7 @@
                     </tr>
                     </table>
                 </div>
-                
+
                 <!-- Table -->
                 <div class="theTable">
                     <table class="tb table" id="table">
@@ -103,10 +138,9 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
 
-            <!-- Charts -->
-            <section>
+                <!-- Charts -->
+                <section>
                 <table class="tb table" id="table">
                     <thead>
                         <tr>
@@ -129,11 +163,12 @@
                             <td colspan="2" style="text-align: center;"><button class="btn btn-outline-dark" onclick="saveAsPDF();">
                                 <i class="fa fa-file-pdf-o"></i> {% trans "Save as PDF" %}</button></td>
                         </tr>
-                       
+
                     </tbody>
                 </table>
-            </section>
-        </div>        
+                </section>
+            </div>
+        </div>
 
         <!-- Footer -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
@@ -141,11 +176,11 @@
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
             </div>
-        </b-navbar> 
+        </b-navbar>
     </div>
 {% endblock %}
 
-{% block extrabody %}    
+{% block extrabody %}
     <script>
         var voting = {{voting|safe}};
         var app = new Vue({
@@ -175,6 +210,7 @@
         }
 
         var ctx = document.getElementById('myChart').getContext('2d');
+
         var chart = new Chart(ctx, {
             type: 'doughnut',
             data:{
@@ -199,8 +235,10 @@
             });
     </script>
 
+
     <!-- EXPORTS -->
     <script>    
+
         function saveAsPDF() {
             //Creo el documento PDF (jsPDF)
             var doc = new jsPDF('p', 'pt');
@@ -215,7 +253,7 @@
             //Añade las propiedades basicas del pdf
             doc.setProperties({
             title: 'Datos votaciones',
-            subject: 'Votaciones',		
+            subject: 'Votaciones',
             author: 'Decide-Picaro-Visualizacion',
             });
 
@@ -240,13 +278,13 @@
             var dataURL2 = canvas.toDataURL();
             var canvas = document.getElementById('myChart2');
             var dataURL3 = canvas.toDataURL();
-            
-            //Añado las gráficas al documento, insertando antes de cada gráfica una nueva página             
+
+            //Añado las gráficas al documento, insertando antes de cada gráfica una nueva página
             doc.addPage();
             doc.addImage(dataURL2,'PNG', 8, 8);
             doc.addPage();
             doc.addImage( dataURL3, 'PNG', 10, 10);
-            
+
             //Guardo el documento
             doc.save('Datos-Votacion.pdf');
         }
@@ -266,14 +304,14 @@
     <script>
         // URLs to ContactUs and AboutUs views
         function getURLContactUs() {
-            var url = document.location.href; 
+            var url = document.location.href;
             partes = url.split('/');
             var page = partes[partes.length-2];
             var newURL = url.replace(page,"contactUs")
             return newURL
         }
         function getURLAboutUs() {
-            var url = document.location.href; 
+            var url = document.location.href;
             partes = url.split('/');
             var page = partes[partes.length-2];
             var newURL = url.replace(page,"aboutUs")
@@ -311,7 +349,7 @@
             }
         }
         window.onload = checkCookie();
-        
+
         // Light mode and dark mode scripts
         function activateLightMode() {
             document.body.className = "bg-light"
@@ -329,11 +367,11 @@
             setCookie("theme", "dark", 365);
         }
     </script>
-    
+
     <script>
         // Pop up message when window load
         function popUp() {
-            if (confirm("La página de visualización es demasiado chula. ¿Quiere continuar?")) {   
+            if (confirm("La página de visualización es demasiado chula. ¿Quiere continuar?")) {
             } else {
                 window.onload = popUp();
             }
@@ -341,9 +379,11 @@
         window.onload = popUp();
     </script>
 
+
     <!-- PODIUM -->
     <script>
         function podium() {
+
             var lista = voting.postproc;
             var n, i, k, aux;
             n = lista.length;
@@ -359,9 +399,21 @@
 
             for (var i = 0; i < 3; i++) {
                 var p = document.getElementById('podium'+i.toString());
-                p.innerHTML  = lista[n-i-1].option.toString()+"<br>"+lista[n-i-1].postproc.toString() 
+                p.innerHTML  = lista[n-i-1].option.toString()+"<br>"+lista[n-i-1].postproc.toString();
             }
         }
+
         window.onload = podium();
     </script>
+
+    <script>
+        function getNumeroVotos(){
+            for(var i=0; i< voting.postproc.length; i++){
+                voting.postproc[i]["votes"]
+
+            }
+        }
+    </script>
+
+
 {% endblock %}
