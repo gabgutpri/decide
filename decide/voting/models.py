@@ -15,17 +15,36 @@ class Question(models.Model):
 
         super().save()
         if self.is_yes_no_question:
-
-            question_yes = QuestionOption(option = 'YES', number = 1, question = self)
-            question_yes.save()
-
-            question_no = QuestionOption(option = 'NO', number = 2, question = self)
-            question_no.save()
+            yesNoQuestionCreation(self)
 
 
     def __str__(self):
         return self.desc
 
+def yesNoQuestionCreation(self):
+    exists_yes = False
+    exists_no = False
+    try:
+        options = QuestionOption.objects.all().filter(question = self)
+        for element in options:
+            if element.option == 'YES':
+                exists_yes = True
+            elif element.option == 'NO':    
+                exists_no = True
+            
+            if exists_yes and exists_no:
+                break
+    except:
+        pass
+
+    if not exists_yes:
+        question_yes = QuestionOption(option = 'YES', number = 1, question = self)
+        question_yes.save()
+
+    if not exists_no:
+        question_no = QuestionOption(option = 'NO', number = 2, question = self)
+        question_no.save()
+    
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
@@ -33,7 +52,10 @@ class QuestionOption(models.Model):
     option = models.TextField()
 
     def save(self):
-        if not self.question.is_yes_no_question:
+        if self.question.is_yes_no_question:
+            if not self.option == 'YES' and not self.option == 'NO':
+                return ""
+        else:
             if not self.number:
                 self.number = self.question.options.count() + 2
         return super().save()
