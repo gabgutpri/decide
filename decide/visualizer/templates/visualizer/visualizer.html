@@ -222,10 +222,9 @@
             options: {responsive: false}
             });
 
-        var ctx = document.getElementById('myChart2').getContext('2d');
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
         var chart2 = new Chart(ctx2, {
             type: 'bar',
-            //element:'graficaDonut',
             data:{
                 datasets: [{
                     data: data,
@@ -244,8 +243,8 @@
                     yAxes: [{
                         stacked: true
                     }]
-        }
-            }
+                }
+               }
             });
     </script>
 
