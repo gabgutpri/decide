@@ -1,10 +1,17 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from base import mods
 from base.models import Auth, Key
+
+def no_past(value):
+    today = timezone.now()
+    if value < today:
+        raise ValidationError('End date past')
 
 
 class Question(models.Model):
@@ -34,7 +41,7 @@ class Voting(models.Model):
     question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
 
     start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True, validators=[no_past])
 
     pub_key = models.OneToOneField(Key, related_name='voting', blank=True, null=True, on_delete=models.SET_NULL)
     auths = models.ManyToManyField(Auth, related_name='votings')
