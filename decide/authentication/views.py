@@ -128,7 +128,7 @@ class AccountActivation:
             user.is_active = True
             user.profile.email_confirmed = True
             user.save()
-            login(request, user)
+            login(request, user, backend = 'base.backends.AuthBackend')
             return HttpResponse('Thank you for verifying your email, you can login your account now')
         else:
             return render(request, 'account_activation_invalid.html')
