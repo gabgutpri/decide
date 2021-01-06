@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import os
 
 from base import mods
 from base.models import Auth, Key
@@ -118,6 +119,17 @@ class Voting(models.Model):
 
         self.postproc = postp
         self.save()
+        
+        #Guardamos en local la votación
+        ruta= "ficheros/"+self.name + " - " +self.start_date.strftime('%d-%m-%y')+ ".txt"
+        file = open(ruta,"w")
+        file.write("Nombre: "+self.name+os.linesep)
+        if len(self.desc):
+            file.write("Descripción: "+self.desc+os.linesep)
+        
+        file.write("Fecha de inicio: "+self.start_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+        file.write("Fecha de fin: "+self.end_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+        file.write("Resultado: "+str(self.postproc)+os.linesep)
 
     def __str__(self):
         return self.name
