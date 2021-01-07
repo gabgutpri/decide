@@ -29,7 +29,7 @@ def tally(ModelAdmin, request, queryset):
 
 class QuestionOptionInline(admin.TabularInline):
     model = QuestionOption
-
+    fields= ('pref_number', 'option', 'number')
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [QuestionOptionInline]
