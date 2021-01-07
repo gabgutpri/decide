@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 15:55+0000\n"
+"POT-Creation-Date: 2021-01-07 13:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "Deutsch"
 
 #: visualizer/templates/visualizer/aboutUs.html:16
 #: visualizer/templates/visualizer/contactUs.html:20
-#: visualizer/templates/visualizer/visualizer.html:39
+#: visualizer/templates/visualizer/visualizer.html:38
 msgid "Decide Visualization"
 msgstr "Decide Visualization"
 
@@ -100,7 +100,7 @@ msgstr "Profile GitHub"
 
 #: visualizer/templates/visualizer/aboutUs.html:86
 #: visualizer/templates/visualizer/contactUs.html:94
-#: visualizer/templates/visualizer/visualizer.html:142
+#: visualizer/templates/visualizer/visualizer.html:176
 msgid "Evolution and Configuration Management"
 msgstr "Evolution et Gestion de la Configuration"
 
@@ -156,57 +156,66 @@ msgstr "Mode clair"
 msgid "Dark mode"
 msgstr "Mode sombre"
 
-#: visualizer/templates/visualizer/visualizer.html:57
+#: visualizer/templates/visualizer/visualizer.html:58
 msgid "Voting not started"
 msgstr "Le vote n'a pas commencé"
 
-#: visualizer/templates/visualizer/visualizer.html:58
+#: visualizer/templates/visualizer/visualizer.html:62
 msgid "Voting in progress"
 msgstr "Vote en cours"
 
-#: visualizer/templates/visualizer/visualizer.html:60
+#: visualizer/templates/visualizer/visualizer.html:76
+#: visualizer/templates/visualizer/visualizer.html:235
+msgid "Number of votes"
+msgstr "Nombre de votes"
+
+#: visualizer/templates/visualizer/visualizer.html:94
 msgid "Results"
 msgstr "Résultats"
 
-#: visualizer/templates/visualizer/visualizer.html:68
+#: visualizer/templates/visualizer/visualizer.html:102
 msgid "2nd place"
 msgstr "2ème place"
 
-#: visualizer/templates/visualizer/visualizer.html:69
+#: visualizer/templates/visualizer/visualizer.html:103
 msgid "WINNER"
 msgstr "GAGNANT"
 
-#: visualizer/templates/visualizer/visualizer.html:70
+#: visualizer/templates/visualizer/visualizer.html:104
 msgid "3rd place"
 msgstr "3ème place"
 
-#: visualizer/templates/visualizer/visualizer.html:89
+#: visualizer/templates/visualizer/visualizer.html:123
 msgid "Option"
 msgstr "Option"
 
-#: visualizer/templates/visualizer/visualizer.html:90
+#: visualizer/templates/visualizer/visualizer.html:124
 msgid "Punctuation"
 msgstr "Score"
 
-#: visualizer/templates/visualizer/visualizer.html:91
+#: visualizer/templates/visualizer/visualizer.html:125
 #, fuzzy
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Vote"
 
-#: visualizer/templates/visualizer/visualizer.html:114
+#: visualizer/templates/visualizer/visualizer.html:147
 msgid "Donut Chart"
 msgstr "Graphique en anneau"
 
-#: visualizer/templates/visualizer/visualizer.html:115
+#: visualizer/templates/visualizer/visualizer.html:148
 msgid "Bar Chart"
 msgstr "Graphique à barres"
 
-#: visualizer/templates/visualizer/visualizer.html:125
-#: visualizer/templates/visualizer/visualizer.html:127
+#: visualizer/templates/visualizer/visualizer.html:158
+#: visualizer/templates/visualizer/visualizer.html:160
 msgid "Save as PNG"
 msgstr "Sauver comme PNG"
 
-#: visualizer/templates/visualizer/visualizer.html:131
+#: visualizer/templates/visualizer/visualizer.html:164
 msgid "Save as PDF"
 msgstr "Sauver comme PDF"
+
+#: visualizer/templates/visualizer/visualizer.html:388
+msgid "This visualization page is pretty cool. Do you want to continue?"
+msgstr "Cette page de visualisation est plutôt cool. Voulez-vous continuer?"

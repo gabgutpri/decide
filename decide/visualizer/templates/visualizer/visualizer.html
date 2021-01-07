@@ -139,9 +139,10 @@
                     </table>
                 </div>
 
+
                 <!-- Charts -->
                 <section>
-                <table class="tb table" id="table">
+                <table class="tb table-responsive" id="table">
                     <thead>
                         <tr>
                             <th><h5 class="heading"><i class="fa fa-pie-chart"></i> {% trans "Donut Chart" %}</h5></th>
@@ -171,7 +172,7 @@
         </div>
 
         <!-- Footer -->
-        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:1px;">
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:0px;">
             <div class="container">
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
@@ -219,7 +220,7 @@
                     backgroundColor: colores,
                     label: 'Número de votos'}],
                     labels: labels},
-            options: {responsive: false}
+            options: {responsive: true}
             });
 
         var ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -232,10 +233,10 @@
                     borderColor: '#6c757d',
                     backgroundColor: '#9d9c9f',
                     hoverBackgroundColor: '#242330',
-                    label: 'Número de votos'}],
+                    label: '{% trans "Number of votes" %}'}],
                     labels: labels},
             options: {
-                responsive: false,
+                responsive: true,
                 scales: {
                     xAxes: [{
                         stacked: true
@@ -287,6 +288,7 @@
                 'width': 170,
                 'elementHandlers': specialElementHandlers
             });
+            
             var canvas = document.getElementById('myChart');
             var dataURL2 = canvas.toDataURL();
             var canvas = document.getElementById('myChart2');
@@ -380,14 +382,17 @@
             setCookie("theme", "dark", 365);
         }
     </script>
-
+    
+    
     <script>
         // Pop up message when window load
         function popUp() {
-            if (confirm("La página de visualización es demasiado chula. ¿Quiere continuar?")) {
+            var mensaje='{% trans "This visualization page is pretty cool. Do you want to continue?" %}'
+            
+            if(confirm(mensaje)) {
             } else {
-                window.onload = popUp();
-            }
+                    window.onload = popUp();
+                }
         }
         window.onload = popUp();
     </script>
