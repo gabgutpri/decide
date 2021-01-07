@@ -17,6 +17,10 @@ def no_past(value):
 
 class Question(models.Model):
     desc = models.TextField()
+
+    QUESTION_TYPE= ((1,"Simple question"),(2,"Preference question"))
+    question_options = models.PositiveIntegerField(choices=QUESTION_TYPE,default=1)
+
     yes_no_question = models.BooleanField(default=False)
 
     def save(self):
@@ -24,6 +28,7 @@ class Question(models.Model):
         # In case of being a Yes/No question, we use the yesNoQuestionCreation method
         if self.yes_no_question:
             yesNoQuestionCreation(self)
+
 
 
     def __str__(self):
@@ -60,6 +65,7 @@ def yesNoQuestionCreation(self):
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    pref_number = models.PositiveIntegerField(blank=True, null=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     option = models.TextField()
 
@@ -160,7 +166,8 @@ class Voting(models.Model):
             opts.append({
                 'option': opt.option,
                 'number': opt.number,
-                'votes': votes
+                'votes': votes,
+                'n_pref' : opt.pref_number
             })
 
         data = { 'type': 'IDENTITY', 'options': opts }
