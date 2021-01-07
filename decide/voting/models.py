@@ -17,10 +17,46 @@ def no_past(value):
 
 class Question(models.Model):
     desc = models.TextField()
+    yes_no_question = models.BooleanField(default=False)
+
+    def save(self):
+        super().save()
+        # In case of being a Yes/No question, we use the yesNoQuestionCreation method
+        if self.yes_no_question:
+            yesNoQuestionCreation(self)
+
 
     def __str__(self):
         return self.desc
 
+# Method that creates the 'Yes' and 'No' options
+def yesNoQuestionCreation(self):
+    # Boolean that checks if the 'Yes' and 'No' options are created
+    exists_yes = False
+    exists_no = False
+    # Try/except in case of not existing options
+    try:
+        # Search through all the options in the current question to verify the existence of the options
+        options = QuestionOption.objects.all().filter(question = self)
+        for element in options:
+            if element.option == 'YES':
+                exists_yes = True
+            elif element.option == 'NO':    
+                exists_no = True
+            # If both are found, exit the search before finishing it
+            if exists_yes and exists_no:
+                break
+    except:
+        pass
+
+    # Creation of 'Yes' option
+    if not exists_yes:
+        QuestionOption(option = 'YES', number = 1, question = self).save()
+
+    # Creation of 'No' option
+    if not exists_no:
+        QuestionOption(option = 'NO', number = 2, question = self).save()
+    
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
@@ -28,8 +64,14 @@ class QuestionOption(models.Model):
     option = models.TextField()
 
     def save(self):
-        if not self.number:
-            self.number = self.question.options.count() + 2
+        # In the case of the Yes/No question, we make sure that only the 'Yes' and 'No' options are saved
+        if self.question.yes_no_question:
+            if not self.option == 'YES' and not self.option == 'NO':
+                return ""
+        # In the case of a normal question, we proceed as usual
+        else:
+            if not self.number:
+                self.number = self.question.options.count() + 2
         return super().save()
 
     def __str__(self):

@@ -208,3 +208,36 @@ class VotingTestCase(BaseTestCase):
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
+
+class YesNoQuestionTestCase(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+
+    def tearDown(self):
+        super().tearDown()
+
+    # Verify if a Yes/No question is created correctly
+    def test_create_yes_no_question(self):
+        q = Question(desc='Yes/No question test', yes_no_question=True)
+        q.save()
+
+        self.assertEquals(len(q.options.all()), 2)
+        self.assertEquals(q.yes_no_question, True)
+        self.assertEquals(q.options.all()[0].option, 'YES')
+        self.assertEquals(q.options.all()[1].option, 'NO')
+        self.assertEquals(q.options.all()[0].number, 1)
+        self.assertEquals(q.options.all()[1].number, 2)
+
+    # Verify if the extra options are not save in a Yes/No question
+    def test_create_yes_no_question_with_more_options(self):
+        q = Question(desc='Yes/No question test', yes_no_question=True)
+        q.save()
+
+        qo1 = QuestionOption(question = q, option = 'First option')
+        qo1.save()
+
+        qo2 = QuestionOption(question = q, option = 'Second option')
+        qo2.save()
+
+        self.assertEquals(len(q.options.all()), 2)
+        self.assertEquals(q.yes_no_question, True)
