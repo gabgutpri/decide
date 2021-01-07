@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 
@@ -128,3 +128,69 @@ class AuthTestCase(APITestCase):
             sorted(list(response.json().keys())),
             ['token', 'user_pk']
         )
+class RegisterGuiTests(TestCase):
+#Tests for the Register Form
+
+    #Load up some data for easy access
+    def setUp(self) -> None:
+        self.username = 'epicTestUser'
+        self.email = 'epicTestUser@gmail.com'
+        self.first_name = 'Epic'
+        self.last_name = 'Test User'
+
+    #Testing the Get Access for the Register Form
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_page_access(self):
+        response = self.client.get("/authentication/registergui/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+
+    #Testing a post request with an invalid password
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+    def test_register_form_bad_pass(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : '123',
+            'password2' : '123'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+
+    #Testing a post request with no username given
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+    def test_register_form_no_user(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : '',
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : '123',
+            'password2' : '123'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+
+    #Testing a succesful post request
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : 'ganma421',
+            'password2' : 'ganma421'
+        })
+        #When the form is properly fulfilled it will redirect the users towards the page that ask checking their email
+        self.assertEqual(response.status_code, 302)
+        
+        #We check if the user has been registered to the database
+        user = User.objects.get(username=self.username)
+        #We use asserts different to the username and check if they correspond to what we have registered with the post request
+        self.assertEqual(user.email, self.email)
+        self.assertEqual(user.first_name, self.first_name)

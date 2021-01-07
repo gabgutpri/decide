@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 
 
 #Model for Profile
+#Adds email, first name, last name and check for email verification
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)

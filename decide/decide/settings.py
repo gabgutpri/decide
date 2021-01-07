@@ -80,6 +80,9 @@ SOCIAL_AUTH_TWITTER_KEY = 'YeLc8PNE10orRRnAMINCwyPWG'
 SOCIAL_AUTH_TWITTER_SECRET = 'K0I5W9xa2Btcv2xxO1IpacNXlTioplgeXVUlBG3XMbHwpei76B'
 
 #Email Auth Backend (For testing and debugging purposes, not yet ready for production)
+#If emails doesn't show up in the command prompt when performing an email dependant operation (Such as email verification)
+#Try running the following line is a new command prompt: python3 -m smtpd -n -c DebuggingServer localhost:1025 > mail.log
+#This command will run a dummy smtpd server in the port 1025 of your machine, note that this server may already been enabled
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
