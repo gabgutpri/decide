@@ -9,13 +9,15 @@ from base.models import Auth, Key
 
 class Question(models.Model):
     desc = models.TextField()
-
+    QUESTION_TYPE= ((1,"Simple question"),(2,"Preference question"))
+    question_options = models.PositiveIntegerField(choices=QUESTION_TYPE,default=1)
     def __str__(self):
         return self.desc
 
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    pref_number = models.PositiveIntegerField(blank=True, null=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     option = models.TextField()
 
@@ -110,7 +112,8 @@ class Voting(models.Model):
             opts.append({
                 'option': opt.option,
                 'number': opt.number,
-                'votes': votes
+                'votes': votes,
+                'n_pref' : opt.pref_number
             })
 
         data = { 'type': 'IDENTITY', 'options': opts }
