@@ -161,7 +161,7 @@
   width: 100%; }
 
 .mfb-component__wrap {
-  padding: 25px;
+  padding: 5px;
   margin: -25px; }
 
 [data-mfb-toggle="hover"]:hover .mfb-component__icon, [data-mfb-toggle="hover"]:hover .mfb-component__main-icon--active,
