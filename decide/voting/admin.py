@@ -12,14 +12,14 @@ def start(modeladmin, request, queryset):
     for v in queryset.all():
         v.create_pubkey()
         v.start_date = timezone.now()
-        v.enviarTelegram("La votación "+str(v.name)+" ha comenzado")
+        #v.enviarTelegram("La votación "+str(v.name)+" ha comenzado") comentado por mantenimiento
         v.save()
 
 
 def stop(ModelAdmin, request, queryset):
     for v in queryset.all():
         v.end_date = timezone.now()
-        v.enviarTelegram("La votación "+str(v.name)+" ha terminado")
+        #v.enviarTelegram("La votación "+str(v.name)+" ha terminado") comentado por mantenimiento
         v.save()
 
 
