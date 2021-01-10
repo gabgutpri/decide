@@ -56,6 +56,7 @@
         <div class="voting container">
             <div v-if="!voting.start_date">
                 <h2 id="text" ><i class="fa fa-ban"></i> {% trans "Voting not started" %}</h2>
+                <button class="btn btn-secondary" type="submit" style="position: fixed; bottom: 10%; right: 5%" onclick="window.history.go(-1);">{% trans "Return" %}</button>
             </div>
 
             <div v-else-if="!voting.end_date">
@@ -88,6 +89,7 @@
                         </tbody>
                     </table>
                 </div>
+                <button class="btn btn-secondary" type="submit" style="position: fixed; bottom: 10%; right: 5%" onclick="window.history.go(-1);">{% trans "Return" %}</button>
             </div>
 
             <div v-else>
@@ -170,6 +172,7 @@
                 </section>
             </div>
         </div>
+        <button class="btn btn-secondary" type="submit" style="position: fixed; bottom: 10%; right: 5%" onclick="window.history.go(-1);">{% trans "Return" %}</button>
 
         <!-- Footer -->
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:0px;">
@@ -432,6 +435,5 @@
             }
         }
     </script>
-
 
 {% endblock %}
