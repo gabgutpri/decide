@@ -5,7 +5,6 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
 
 <div class="container">
@@ -15,7 +14,7 @@
       <div class="card cardbox">
         <div class="card-header">Register</div>
         <div class="card-body">
-          <script type="text/javascript" src="functions.js"></script>
+          <script type="text/javascript" src="../templates/functions.js"></script>
       
     	  <!-- socail media group -->
           <div class="social-buttons">
@@ -25,7 +24,7 @@
           
           <div class="form-group">
             <br>
-            <form id="login-nav" method="post" role="form" class="form" accept-charset="UTF-8">
+            <form method="post" class="form">
               {% csrf_token %}
               <div class="form-group">
                 <label class="sr-only">Username</label>
@@ -59,22 +58,22 @@
                 <div id="reg_passwordrules" class="">
 
                   <br>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">
-						Your password can't be too similar to your other personal information.
-						</li>
-						<li class="list-group-item">
-						Your password must contain at least 8 characters.
-						</li>
-						<li class="list-group-item">
-						Your password can't be a commonly used password.
-						</li>
-						<li class="list-group-item">
-						Your password can't be entirely numeric.
-						</li>
-					</ul>
-                <br>
-                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    Your password can't be too similar to your other personal information.
+                    </li>
+                    <li class="list-group-item">
+                    Your password must contain at least 8 characters.
+                    </li>
+                    <li class="list-group-item">
+                    Your password can't be a commonly used password.
+                    </li>
+                    <li class="list-group-item">
+                    Your password can't be entirely numeric.
+                    </li>
+                  </ul>
+                  <br>
+                </div>
 
               </div>
               
@@ -120,7 +119,7 @@
        
               <!-- Submit -->
               <div class="form-group">
-                <button  type="submit" class="btn btn-block btn-primary">Create user</button>
+                <button id="id_submit" type="submit" class="btn btn-block btn-primary">Create user</button>
               </div>
              
 			  <!-- Remember -->

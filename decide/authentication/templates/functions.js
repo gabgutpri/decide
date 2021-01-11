@@ -1,44 +1,18 @@
 $(document).ready(function() { 
 
-    // şifre kurallı değilse butonu disable et
-    $('#reg_userpassword').keyup(function() {
-      var password = $('#reg_userpassword').val();
-      var confirmpassword = $('#reg_userpasswordconfirm').val();
+    $('#id_password1').keyup(function() {
+      var password = $('#id_password1').val();
+      var confirmpassword = $('#id_password2').val();
   
       if (checkStrength(password) == false) {
         $('#reg_submit').attr('disabled', true);
       }
     });
   
-    // password-rule divi hide/show
-    $('#reg_userpassword').keyup(function() {
-      if ($('#reg_userpassword').val()) {
-        $('#reg_passwordrules').removeClass('hide');
-        $('#reg-password-strength').removeClass('hide');
-      } else {
-        $('#reg_passwordrules').addClass('hide');
-        $('#reg-password-quality').addClass('hide')
-        $('#reg-password-quality-result').addClass('hide')
-        $('#reg-password-strength').addClass('hide')
-  
-      }
-    });
-  
-    // password-confirm error divi hide/show
-    $('#reg_userpasswordconfirm').blur(function() {
-      if ($('#reg_userpassword').val() !== $('#reg_userpasswordconfirm').val()) {
-        $('#error-confirmpassword').removeClass('hide');
-        $('#reg_submit').attr('disabled', true);
-      } else {
-        $('#error-confirmpassword').addClass('hide');
-        $('#reg_submit').attr('disabled', false);
-      }
-    });
-  
    
-    $('#reg_submit').hover(function() {
-      if ($('#reg_submit').prop('disabled')) {
-        $('#reg_submit').popover({
+    $('#id_submit').hover(function() {
+      if ($('#id_submit').prop('disabled')) {
+        $('#id_submit').popover({
           html: true,
           trigger: 'hover',
           placement: 'below',
@@ -49,7 +23,8 @@ $(document).ready(function() {
         });
       }
     });
-    // karakter doğrulama
+    
+
     function checkStrength(password) {
       var strength = 0;
   
@@ -134,11 +109,10 @@ $(document).ready(function() {
   
   
   });
-  
-  // Şifre gizle göster
+
   function togglePassword() {
   
-    var element = document.getElementById('reg_userpassword');
+    var element = document.getElementById('id_password1');
     element.type = (element.type == 'password' ? 'text' : 'password');
   
   };
