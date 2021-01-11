@@ -5,7 +5,7 @@
 {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/visualizer.css' %}" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -178,7 +178,7 @@
         <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:0px;">
             <div class="container">
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
-                <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro - Visualización &copy; 2021</span>
+                <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
             </div>
         </b-navbar>
     </div>
@@ -374,6 +374,7 @@
             document.getElementById("lightButton").style.display = "none"
             document.getElementById("darkButton").style.display = "inline"
             document.getElementById("text").style.color = "black"
+            setCookie("theme", "light", 365);
         }
 
         function activateDarkMode() {
@@ -381,6 +382,7 @@
             document.getElementById("lightButton").style.display = "inline"
             document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
+            setCookie("theme", "dark", 365);
         }
     </script>
 
