@@ -1,0 +1,1 @@
+En esta carpeta se guardarán los ficheros en local de las votaciones

@@ -1,14 +1,26 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import os
 
 from base import mods
 from base.models import Auth, Key
 
+def no_past(value):
+    today = timezone.now()
+    if value < today:
+        raise ValidationError('End date past')
+
 
 class Question(models.Model):
     desc = models.TextField()
+
+    QUESTION_TYPE= ((1,"Simple question"),(2,"Preference question"))
+    question_options = models.PositiveIntegerField(choices=QUESTION_TYPE,default=1)
+
     yes_no_question = models.BooleanField(default=False)
 
     def save(self):
@@ -16,6 +28,7 @@ class Question(models.Model):
         # In case of being a Yes/No question, we use the yesNoQuestionCreation method
         if self.yes_no_question:
             yesNoQuestionCreation(self)
+
 
 
     def __str__(self):
@@ -52,6 +65,7 @@ def yesNoQuestionCreation(self):
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    pref_number = models.PositiveIntegerField(blank=True, null=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     option = models.TextField()
 
@@ -73,10 +87,10 @@ class QuestionOption(models.Model):
 class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
-    question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
+    question =  models.ManyToManyField(Question, related_name='voting')
 
     start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True, validators=[no_past])
 
     pub_key = models.OneToOneField(Key, related_name='voting', blank=True, null=True, on_delete=models.SET_NULL)
     auths = models.ManyToManyField(Auth, related_name='votings')
@@ -139,9 +153,44 @@ class Voting(models.Model):
 
         self.do_postproc()
 
+    def votes_info_opciones(self):
+        options = set()
+        for q in self.question.all():
+            for o in q.options.all():
+                options.add(o)
+
+
+        opts = []
+        for opt in options:
+            opts.append('option:'+ str(opt.option)) 
+        return opts   
+
+    def votes_info_votos(self):
+        tally = self.tally
+        options = set()
+        for q in self.question.all():
+            for o in q.options.all():
+                options.add(o)
+
+
+        opts = []
+        for opt in options:
+            if isinstance(tally, list):
+                votes = tally.count(opt.number)
+            else:
+                votes = 0
+            opts.append(
+                str(votes)+" votes"
+            )  
+        
+        return opts
+
     def do_postproc(self):
         tally = self.tally
-        options = self.question.options.all()
+        options = set()
+        for q in self.question.all():
+            for o in q.options.all():
+                options.add(o)
 
         opts = []
         for opt in options:
@@ -152,7 +201,8 @@ class Voting(models.Model):
             opts.append({
                 'option': opt.option,
                 'number': opt.number,
-                'votes': votes
+                'votes': votes,
+                'n_pref' : opt.pref_number
             })
 
         data = { 'type': 'IDENTITY', 'options': opts }
@@ -160,6 +210,17 @@ class Voting(models.Model):
 
         self.postproc = postp
         self.save()
+        
+        #Guardamos en local la votación
+        ruta= "ficheros/"+self.name + " - " +self.start_date.strftime('%d-%m-%y')+ ".txt"
+        file = open(ruta,"w")
+        file.write("Nombre: "+self.name+os.linesep)
+        if len(self.desc):
+            file.write("Descripción: "+self.desc+os.linesep)
+        
+        file.write("Fecha de inicio: "+self.start_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+        file.write("Fecha de fin: "+self.end_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+        file.write("Resultado: "+str(self.postproc)+os.linesep)
 
     def __str__(self):
         return self.name
