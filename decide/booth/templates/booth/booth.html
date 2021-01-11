@@ -16,7 +16,7 @@
             <b-navbar-brand tag="h1">Decide</b-navbar-brand>
                 <b-navbar-nav class="ml-auto" v-if="!signup">
                     <b-nav-item href="#" v-on:click="decideLogout">
-                        {% trans "Logout" %}
+                        {% trans "logout" %}
                     </b-nav-item>
                 </b-navbar-nav>
         </b-navbar>
@@ -53,12 +53,12 @@
             <div v-if="!signup">
                 <h2>[[ voting.question.desc ]]</h2>
                 <b-form-group v-for="opt in voting.question.options" :key="opt.number">
-                    <b-form-radio v-model="selected"
+                    <b-form-input type="number" v-model="selected"
                                   :id="'q' + opt.number"
                                   name="question"
-                                  :value="opt.number">
+                                  :value="opt.number"></b-form-input>
                         [[ opt.option ]]
-                    </b-form-radio>
+                    
                 </b-form-group>
                 <b-button type="button" variant="primary" v-on:click="decideSend">
                     {% trans "Vote" %}
