@@ -36,9 +36,9 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class VotingAdmin(admin.ModelAdmin):
+    #He eliminado end_date de readonly_fields
     list_display = ('name', 'start_date', 'end_date')
-    readonly_fields = ('start_date', 'end_date', 'pub_key',
-                       'tally', 'postproc')
+    readonly_fields = ('start_date', 'pub_key', 'tally', 'postproc')
     date_hierarchy = 'start_date'
     list_filter = (StartedFilter,)
     search_fields = ('name', )
