@@ -114,5 +114,7 @@ $(document).ready(function() {
   
     var element = document.getElementById('id_password1');
     element.type = (element.type == 'password' ? 'text' : 'password');
+    var element2 = document.getElementById('id_password2');
+    element2.type = (element.type == 'password' ? 'text' : 'password');
   
   };
