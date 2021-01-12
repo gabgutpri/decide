@@ -241,3 +241,7 @@ class YesNoQuestionTestCase(BaseTestCase):
 
         self.assertEquals(len(q.options.all()), 2)
         self.assertEquals(q.yes_no_question, True)
+        self.assertEquals(q.options.all()[0].option, 'YES')
+        self.assertEquals(q.options.all()[1].option, 'NO')
+        self.assertEquals(q.options.all()[0].number, 1)
+        self.assertEquals(q.options.all()[1].number, 2)
