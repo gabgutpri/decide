@@ -194,3 +194,95 @@ class RegisterGuiTests(TestCase):
         #We use asserts different to the username and check if they correspond to what we have registered with the post request
         self.assertEqual(user.email, self.email)
         self.assertEqual(user.first_name, self.first_name)
+
+    #Testing a post request with bad pass confirmation (not the same password1 that password2)
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_bad_pass_confirmation(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : 'ganma421',
+            'password2' : 'ganma422'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+        
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+    #Testing a post request with empty mail
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_no_email(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : '',
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : 'ganma421',
+            'password2' : 'ganma421'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+        
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+    #Testing a post request with bad email format
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_bad_email(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : 'email$dominio.net',
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : 'ganma421',
+            'password2' : 'ganma421'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+        
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+    #Testing a post request with empty passwords
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_no_passwords(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : 'email$dominio.net',
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : '',
+            'password2' : ''
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+        
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+    #Testing a post request without password confirmation
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_no_pass_confirmation(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : 'ganma421',
+            'password2' : ''
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+        
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+        
