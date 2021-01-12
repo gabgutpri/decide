@@ -121,6 +121,7 @@ class Voting(models.Model):
         self.save()
         
         #Guardamos en local la votación
+    def saveFile(self):
         ruta= "ficheros/"+str(self.id)+ "-"+self.name + " - " +self.end_date.strftime('%d-%m-%y')+ ".txt"
         file = open(ruta,"w")
         file.write("Id: "+str(self.id)+os.linesep)
@@ -131,6 +132,8 @@ class Voting(models.Model):
         file.write("Fecha de inicio: "+self.start_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
         file.write("Fecha de fin: "+self.end_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
         file.write("Resultado: "+str(self.postproc)+os.linesep)
+        file.close()
+        self.save()
 
     def __str__(self):
         return self.name

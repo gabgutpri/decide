@@ -26,6 +26,9 @@ def tally(ModelAdmin, request, queryset):
         token = request.session.get('auth-token', '')
         v.tally_votes(token)
 
+def save(ModelAdmin, request ,queryset):
+    for v in queryset.all():
+        v.saveFile()
 
 class QuestionOptionInline(admin.TabularInline):
     model = QuestionOption
@@ -43,7 +46,7 @@ class VotingAdmin(admin.ModelAdmin):
     list_filter = (StartedFilter,)
     search_fields = ('name', )
 
-    actions = [ start, stop, tally ]
+    actions = [ start, stop, tally, save ]
 
 
 admin.site.register(Voting, VotingAdmin)
