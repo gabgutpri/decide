@@ -121,8 +121,9 @@ class Voting(models.Model):
         self.save()
         
         #Guardamos en local la votación
-        ruta= "ficheros/"+self.name + " - " +self.start_date.strftime('%d-%m-%y')+ ".txt"
+        ruta= "ficheros/"+str(self.id)+ "-"+self.name + " - " +self.end_date.strftime('%d-%m-%y')+ ".txt"
         file = open(ruta,"w")
+        file.write("Id: "+str(self.id)+os.linesep)
         file.write("Nombre: "+self.name+os.linesep)
         if len(self.desc):
             file.write("Descripción: "+self.desc+os.linesep)
