@@ -7,7 +7,7 @@
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" href="{% static 'css/aboutUs.css' %}" >
+    <link rel="stylesheet" href="../../static/css/aboutUs.css" >
 {% endblock %}
 
 {% block content %}
@@ -29,7 +29,7 @@
         <div class="containerr" style="text-align: center;">
             <div class="personalInfo">
                 <div class="columna card">
-                    <img src="{% static '/images/PabloF.jpeg' %}" class="card-img-top" alt="Pablo">
+                    <img src="../../static/images/PabloF.jpeg" class="card-img-top" alt="Pablo">
                     <h5 class="card-title">Pablo</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Franco Sánchez</h6>
                     <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
@@ -37,7 +37,7 @@
                         <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
                 </div>
                 <div class="columna card">
-                    <img src="{% static '/images/AbrahamG.jpg' %}" class="card-img-top"  alt="Abraham">
+                    <img src="../../static/images/AbrahamG.jpg" class="card-img-top"  alt="Abraham">
                     <h5 class="card-title">Abraham</h5>
                     <h6 class="card-subtitle mb-2 text-muted">García Villalobos</h6>
                     <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
@@ -45,7 +45,7 @@
                         <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
                 </div>
                 <div class="columna card">
-                    <img src="{% static '/images/MartinA.jpeg' %}" class="card-img-top" alt="Martin">
+                    <img src="../../static/images/MartinA.jpeg" class="card-img-top" alt="Martin">
                     <h5 class="card-title">Martín Arturo</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Guerrero Romero</h6>
                     <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
@@ -53,7 +53,7 @@
                         <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
                 </div>
                 <div class="columna col card">
-                    <img src="{% static '/images/GabrielG.jpg' %}" class="card-img-top" alt="Gabriel">
+                    <img src="../../static/images/GabrielG.jpg" class="card-img-top" alt="Gabriel">
                     <h5 class="card-title">Gabriel</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Gutiérrez Prieto</h6>
                     <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
@@ -61,7 +61,7 @@
                         <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
                 </div> 
                 <div class="columna col card">
-                    <img src="{% static '/images/ThibautL.jpeg' %}" class="card-img-top" alt="Thibaut">
+                    <img src="../../static/images/ThibautL.jpeg" class="card-img-top" alt="Thibaut">
                     <h5 class="card-title">Thibaut</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Lopez</h6>
                     <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
@@ -69,7 +69,7 @@
                         <i class="fa fa-github-alt"></i> {% trans "GitHub Profile" %}</a>
                 </div>
                 <div class="columna col card">
-                    <img src="{% static '/images/DavidS.jpeg' %}" class="card-img-top" alt="David">
+                    <img src="../../static/images/DavidS.jpeg" class="card-img-top" alt="David">
                     <h5 class="card-title">David</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Soto Ponce</h6>
                     <p class="card-text">{% trans "Computer Engineering student in Software Engineering" %}</p>
@@ -80,8 +80,8 @@
         </div>
     </section>
     
-    <!-- Footer -->
-    <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
+     <!-- Footer -->
+     <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:0px; ">
         <div class="container">
             <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
             <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
@@ -108,7 +108,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="{% static 'js/mfb.js' %}"></script>
+    <script src="../../static/js/mfb.js"></script>
     
     <script>
         // Cookies to change dark mode
