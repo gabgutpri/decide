@@ -272,5 +272,45 @@ class VotingModelTestCase(BaseTestCase):
         self.assertNotEquals(v.question.desc,"Hola")
         self.assertNotEquals(v.question.options.all()[0].option,"Hello")
         self.assertNotEquals(v.question.options.all()[1].option,"Hello")
+  
         
-        
+class VotacionPrefModelTestCase(BaseTestCase):
+
+    def setUp(self):
+        q=Question(desc="Pregunta de preferencia futbol",question_options=2)
+        q.save()
+
+        opt1=QuestionOption(number="1", question=q,option='betis')
+        opt1.save()
+
+        opt2=QuestionOption(number="2",question=q,option='sevilla')
+        opt2.save()
+
+        vp = Voting(name="Votacion de preferencia 1",desc="derbi de futbol",question=q )
+        vp.save()
+        super().setUp()
+
+    def tearDown(self):
+        super().tearDown()
+        self.vp = None
+    
+    def testExiste(self):
+        vp = Voting.objects.get(name="Votacion de preferencia 1")
+        self.assertEquals(vp.name,"Votacion de preferencia 1")
+        self.assertEquals(vp.desc,"derbi de futbol")
+        self.assertEquals(vp.question.desc,"Pregunta de preferencia futbol")
+        self.assertEquals(vp.question.question_options,2)
+        self.assertEquals(vp.question.options.all()[0].option,"betis")
+        self.assertEquals(vp.question.options.all()[0].number,1)
+        self.assertEquals(vp.question.options.all()[1].option,"sevilla")
+        self.assertEquals(vp.question.options.all()[1].number,2)
+
+        self.assertNotEquals(vp.name,"Votacion de prueba")
+        self.assertNotEquals(vp.desc,"Descripcion de prueba")
+        self.assertNotEquals(vp.question.desc,"Pregunta de prueba")
+        self.assertNotEquals(vp.question.question_options,1)
+        self.assertNotEquals(vp.question.options.all()[0].option,"ordenador")
+        self.assertNotEquals(vp.question.options.all()[0].number,3)
+        self.assertNotEquals(vp.question.options.all()[1].option,"movil")
+        self.assertNotEquals(vp.question.options.all()[1].number,4)
+              
