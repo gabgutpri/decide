@@ -241,3 +241,36 @@ class YesNoQuestionTestCase(BaseTestCase):
 
         self.assertEquals(len(q.options.all()), 2)
         self.assertEquals(q.yes_no_question, True)
+
+#TESTS MODELO
+class VotingModelTestCase(BaseTestCase):
+    def setUp(self):
+        q=Question(desc="Description")
+        q.save()
+
+        opt1=QuestionOption(question=q,option='option 1')
+        opt1.save()
+
+        opt2=QuestionOption(question=q,option='option 2')
+        opt2.save()
+
+        self.v =Voting(name="Votacion",question=q)
+        self.v.save()
+        super().setUp()
+    def tearDown(self):
+        super().tearDown()
+        self.v = None
+    
+    def testExiste(self):
+        v=Voting.objects.get(name="Votacion")
+        self.assertEquals(v.name,"Votacion")
+        self.assertEquals(v.question.desc,"Description")
+        self.assertEquals(v.question.options.all()[0].option,"option 1")
+        self.assertEquals(v.question.options.all()[1].option,"option 2")
+
+        self.assertNotEquals(v.name,"Hola")
+        self.assertNotEquals(v.question.desc,"Hola")
+        self.assertNotEquals(v.question.options.all()[0].option,"Hello")
+        self.assertNotEquals(v.question.options.all()[1].option,"Hello")
+        
+        
