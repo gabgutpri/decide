@@ -269,30 +269,35 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
         self.base.setUp()
 
         options = webdriver.ChromeOptions()
-        #options.headless = True
+        options.headless = True
         self.driver = webdriver.Chrome(options=options)
 
         super().setUp()     
 
+    # Verify if a Yes/No question is created correctly
     def test_create_yes_no_question(self):       
         driver = self.driver
+        # Creation of a super user to being able to create questions
         User.objects.create_superuser('egcVotacion', 'votacion@decide.com', 'egcVotacion')
         self.driver.get(f'{self.live_server_url}/admin/')
+        # Web log in
         self.driver.find_element_by_id('id_username').send_keys("egcVotacion")
         self.driver.find_element_by_id('id_password').send_keys("egcVotacion", Keys.ENTER)
         time.sleep(3)
 
-
+        # Access to add question form
         driver.find_element_by_link_text("Questions").click()
         time.sleep(1)
         driver.find_element_by_link_text("Add question").click()
         time.sleep(1)
 
+        # Creation of a yes/no question example
         driver.find_element_by_id('id_desc').send_keys("Si/No prueba")
         driver.find_element_by_xpath("//form[@id='question_form']/div/fieldset/div[3]/div/label").click()
         driver.find_element_by_name("_save").click()
         time.sleep(3)
 
+        # Verification of the creation of the question
         driver.find_element_by_xpath("(//a[contains(text(),'Si/No prueba')])[2]").click()
         time.sleep(2)
         self.assertEqual("Si/No prueba", driver.find_element_by_xpath("//textarea[@id='id_desc']").text)
@@ -304,20 +309,24 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
         #driver.find_element_by_link_text("Log out").click()
 
 
- 
+    # Verify if the extra options are not save in a Yes/No question
     def test_create_yes_no_question_extra(self):
         driver = self.driver
+        # Creation of a super user to being able to create questions
         User.objects.create_superuser('egcVotacion', 'votacion@decide.com', 'egcVotacion')
         self.driver.get(f'{self.live_server_url}/admin/')
+        # Web log in
         self.driver.find_element_by_id('id_username').send_keys("egcVotacion")
         self.driver.find_element_by_id('id_password').send_keys("egcVotacion", Keys.ENTER)
         time.sleep(3)
 
+        # Access to add question form
         driver.find_element_by_link_text("Questions").click()
         time.sleep(1)
         driver.find_element_by_link_text("Add question").click()
         time.sleep(1)
 
+        # Creation of a yes/no question example with extra answers
         driver.find_element_by_id('id_desc').send_keys("Si/No prueba con extra")
         driver.find_element_by_xpath("//form[@id='question_form']/div/fieldset/div[3]/div/label").click()
         driver.find_element_by_id("id_options-0-option").send_keys("Primer extra")
@@ -325,6 +334,7 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
         driver.find_element_by_name("_save").click()
         time.sleep(3)
 
+        # Verification of the creation of the question without the extra answers
         driver.find_element_by_xpath("(//a[contains(text(),'Si/No prueba con extra')])[2]").click()
         self.assertEqual("Si/No prueba con extra", driver.find_element_by_xpath("//textarea[@id='id_desc']").text)
         self.assertEqual("YES", driver.find_element_by_id("id_options-0-option").text)
