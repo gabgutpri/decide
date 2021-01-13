@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import botDis
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "decide.settings")
@@ -13,3 +14,4 @@ if __name__ == "__main__":
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
+    os.system('./decide/botDis.py')
