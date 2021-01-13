@@ -32,4 +32,6 @@ urlpatterns = [
     #Edit Profile
     path('editprofile/<username>', EditUserProfile.edit_user_profile, name='edit_user_profile'),
 
+
+
 ]
