@@ -130,7 +130,7 @@ class Voting(models.Model):
     
     #Método para enviar datos de los resultados por telegram (Pablo Franco Sánchez, visualización)
     def enviarTelegram(self,msn): 
-        id = "-406420323"
+        id = "-1001460398324"
         token = "1426657690:AAEmrAP5v4KFQvmzv5AyGdGvWwrbJbZup3M"
         url = "https://api.telegram.org/bot" + token + "/sendMessage"
 
