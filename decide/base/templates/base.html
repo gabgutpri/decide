@@ -4,9 +4,9 @@
     <head>
         <meta charset="utf-8" />
         <title>Decide Pícaro{% block title %}{% endblock %}</title>
-        <link rel="shortcut icon" type="image/png" href="{% static 'favicon/picaro.png' %}" />
+        <link rel="shortcut icon" type="image/png" href="../../static/favicon/picaro.png" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="{% static 'css/mfb.css' %}" >
+        <link rel="stylesheet" href="../../static/css/mfb.css" >
         {% block extrahead %}{% endblock %}
     </head>
     <body>
@@ -34,10 +34,10 @@
                                     {% elif lang.code == "en"%} data-mfb-label="Inglés" 
                                     {% elif lang.code == "de"%} data-mfb-label="Alemán"
                                         {% else %} data-mfb-label="Francés" {% endif %}>
-                                <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
-                                    {% elif lang.code == "en" %} src="{% static '/images/england.jpg' %}" 
-                                    {% elif lang.code == "de" %} src="{% static '/images/german.jpg' %}"
-                                        {% else %} src="{% static '/images/france.jpg' %}"{% endif %}> 
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg" 
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg" 
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}> 
                             </button>
                             {% elif LANGUAGE_CODE == "en"%}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
@@ -46,10 +46,10 @@
                                     {% elif lang.code == "en"%} data-mfb-label="English" 
                                     {% elif lang.code == "de"%} data-mfb-label="German"
                                         {% else %} data-mfb-label="French" {% endif %}>
-                                    <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
-                                        {% elif lang.code == "en" %} src="{% static '/images/england.jpg' %}" 
-                                        {% elif lang.code == "de" %} src="{% static '/images/german.jpg' %}"
-                                            {% else %} src="{% static '/images/france.jpg' %}"{% endif %}> 
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg" 
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg" 
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}>  
                             </button>
                             {% elif LANGUAGE_CODE == "de"%}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
@@ -58,10 +58,10 @@
                                     {% elif lang.code == "en"%} data-mfb-label="Englisch" 
                                     {% elif lang.code == "de"%} data-mfb-label="Deutsch"
                                         {% else %} data-mfb-label="Französisch" {% endif %}>
-                                    <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
-                                        {% elif lang.code == "en" %} src="{% static '/images/england.jpg' %}" 
-                                        {% elif lang.code == "de" %} src="{% static '/images/german.jpg' %}"
-                                            {% else %} src="{% static '/images/france.jpg' %}"{% endif %}> 
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg" 
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg" 
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}> 
                             </button>
                             {% else %}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
@@ -70,10 +70,10 @@
                                     {% elif lang.code == "en"%} data-mfb-label="Anglais" 
                                     {% elif lang.code == "de"%} data-mfb-label="Allemand"
                                         {% else %} data-mfb-label="Français" {% endif %}>
-                                    <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" 
-                                        {% elif lang.code == "en" %} src="{% static '/images/england.jpg' %}" 
-                                        {% elif lang.code == "de" %} src="{% static '/images/german.jpg' %}"
-                                            {% else %} src="{% static '/images/france.jpg' %}"{% endif %}>
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg" 
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg" 
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}> 
                             </button>
                             {% endif %}
                         </li>
