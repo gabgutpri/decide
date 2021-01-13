@@ -30,7 +30,7 @@ class VotingTestCase(BaseTestCase):
         k = MixCrypt(bits=bits)
         k.k = ElGamal.construct((p, g, y))
         return k.encrypt(msg)
-
+    
     def create_voting(self):
         q = Question(desc='test question')
         q.save()

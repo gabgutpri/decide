@@ -8,9 +8,11 @@ from django.dispatch import receiver
 from base import mods
 from base.models import Auth, Key
 
-def no_past(value):
-    today = timezone.now()
-    if value < today:
+#Javi
+#Restriccion para que no se pueda crear una votacion con una fecha de finalizacion pasada
+def end_date_past(value):
+    now = timezone.now()
+    if value < now:
         raise ValidationError('End date past')
 
 
@@ -41,7 +43,7 @@ class Voting(models.Model):
     question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
 
     start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True, validators=[no_past])
+    end_date = models.DateTimeField(blank=True, null=True, validators=[end_date_past])
 
     pub_key = models.OneToOneField(Key, related_name='voting', blank=True, null=True, on_delete=models.SET_NULL)
     auths = models.ManyToManyField(Auth, related_name='votings')
