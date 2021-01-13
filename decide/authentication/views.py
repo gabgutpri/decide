@@ -163,3 +163,30 @@ class ProfileView(APIView):
 
 
         return Response(request, 'user_profile.html', context)
+
+#User Profile
+class EditUserProfile:
+    def edit_user_profile(request, username):
+        user = User.objects.get(username=username)
+        username = user.username
+        first_name = user.first_name
+        last_name = user.last_name
+        email = user.email
+        context = {
+            "user": user
+        }
+        return render(request, 'edit_user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
+
+class EditProfileView(APIView):
+    def post(self, request):
+        key = request.data.get('token', '')
+        tk = get_object_or_404(Token, key=key)
+        if not tk.user.is_superuser:
+            return Response({}, status=HTTP_401_UNAUTHORIZED)
+
+        username = user.profile.username
+        if not username:
+            return Response({}, status=HTTP_400_BAD_REQUEST)
+
+
+        return Response(request, 'user_profile.html', context)
