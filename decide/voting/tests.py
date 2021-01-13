@@ -15,6 +15,19 @@ from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
+# Selenium imports
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+import unittest, time, re
 
 class VotingTestCase(BaseTestCase):
 
@@ -209,7 +222,8 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
 
-class YesNoQuestionTestCase(BaseTestCase):
+# Yes/No question model test
+class YesNoQuestionModelTestCase(BaseTestCase):
     def setUp(self):
         super().setUp()
 
@@ -245,3 +259,79 @@ class YesNoQuestionTestCase(BaseTestCase):
         self.assertEquals(q.options.all()[1].option, 'NO')
         self.assertEquals(q.options.all()[0].number, 1)
         self.assertEquals(q.options.all()[1].number, 2)
+
+# Yes/No question view test
+class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
+
+    def setUp(self):
+        #Load base test functionality for decide
+        self.base = BaseTestCase()
+        self.base.setUp()
+
+        options = webdriver.ChromeOptions()
+        #options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+
+        super().setUp()     
+
+    def test_create_yes_no_question(self):       
+        driver = self.driver
+        User.objects.create_superuser('egcVotacion', 'votacion@decide.com', 'egcVotacion')
+        self.driver.get(f'{self.live_server_url}/admin/')
+        self.driver.find_element_by_id('id_username').send_keys("egcVotacion")
+        self.driver.find_element_by_id('id_password').send_keys("egcVotacion", Keys.ENTER)
+        time.sleep(3)
+
+
+        driver.find_element_by_link_text("Questions").click()
+        time.sleep(1)
+        driver.find_element_by_link_text("Add question").click()
+        time.sleep(1)
+
+        driver.find_element_by_id('id_desc').send_keys("Si/No prueba")
+        driver.find_element_by_xpath("//form[@id='question_form']/div/fieldset/div[3]/div/label").click()
+        driver.find_element_by_name("_save").click()
+        time.sleep(3)
+
+        driver.find_element_by_xpath("(//a[contains(text(),'Si/No prueba')])[2]").click()
+        time.sleep(2)
+        self.assertEqual("Si/No prueba", driver.find_element_by_xpath("//textarea[@id='id_desc']").text)
+        self.assertEqual("YES", driver.find_element_by_id("id_options-0-option").text)
+        self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
+        #driver.find_element_by_link_text("Delete").click()
+        #driver.find_element_by_xpath("//input[@value=\"Yes, I'm sure\"]").click()
+        #self.assertEqual("The question \"Si/No prueba\" was deleted successfully.", driver.find_element_by_xpath("//div[@id='container']/ul/li").text)
+        #driver.find_element_by_link_text("Log out").click()
+
+
+ 
+    def test_create_yes_no_question_extra(self):
+        driver = self.driver
+        User.objects.create_superuser('egcVotacion', 'votacion@decide.com', 'egcVotacion')
+        self.driver.get(f'{self.live_server_url}/admin/')
+        self.driver.find_element_by_id('id_username').send_keys("egcVotacion")
+        self.driver.find_element_by_id('id_password').send_keys("egcVotacion", Keys.ENTER)
+        time.sleep(3)
+
+        driver.find_element_by_link_text("Questions").click()
+        time.sleep(1)
+        driver.find_element_by_link_text("Add question").click()
+        time.sleep(1)
+
+        driver.find_element_by_id('id_desc').send_keys("Si/No prueba con extra")
+        driver.find_element_by_xpath("//form[@id='question_form']/div/fieldset/div[3]/div/label").click()
+        driver.find_element_by_id("id_options-0-option").send_keys("Primer extra")
+        driver.find_element_by_id("id_options-1-option").send_keys("Segundo extra")
+        driver.find_element_by_name("_save").click()
+        time.sleep(3)
+
+        driver.find_element_by_xpath("(//a[contains(text(),'Si/No prueba con extra')])[2]").click()
+        self.assertEqual("Si/No prueba con extra", driver.find_element_by_xpath("//textarea[@id='id_desc']").text)
+        self.assertEqual("YES", driver.find_element_by_id("id_options-0-option").text)
+        self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
+        self.assertEqual("", driver.find_element_by_id("id_options-2-option").text)
+        self.assertEqual("", driver.find_element_by_id("id_options-3-option").text)
+        #driver.find_element_by_link_text("Delete").click()
+        #driver.find_element_by_xpath("//input[@value=\"Yes, I'm sure\"]").click()
+        #self.assertEqual("The question \"Si/No prueba con extra\" was deleted successfully.", driver.find_element_by_xpath("//div[@id='container']/ul/li").text)
+        #driver.find_element_by_link_text("Log out").click()
