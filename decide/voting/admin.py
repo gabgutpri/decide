@@ -27,7 +27,7 @@ def tally(ModelAdmin, request, queryset):
         v.tally_votes(token)
 
 def save(ModelAdmin, request ,queryset):
-    for v in queryset.all():
+    for v in queryset.filter(end_date__lt=timezone.now()):
         v.saveFile()
 
 class QuestionOptionInline(admin.TabularInline):
@@ -41,7 +41,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class VotingAdmin(admin.ModelAdmin):
     list_display = ('name', 'start_date', 'end_date')
     readonly_fields = ('start_date', 'end_date', 'pub_key',
-                       'tally', 'postproc')
+                       'tally', 'postproc', 'file')
     date_hierarchy = 'start_date'
     list_filter = (StartedFilter,)
     search_fields = ('name', )

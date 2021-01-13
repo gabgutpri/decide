@@ -43,6 +43,8 @@ class Voting(models.Model):
     tally = JSONField(blank=True, null=True)
     postproc = JSONField(blank=True, null=True)
 
+    file = models.FileField(blank=True)
+
     def create_pubkey(self):
         if self.pub_key or not self.auths.count():
             return
@@ -134,6 +136,7 @@ class Voting(models.Model):
             file.write("Fecha de fin: "+self.end_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
             file.write("Resultado: "+str(self.postproc)+os.linesep)
             file.close()
+            self.file=ruta
             self.save()
             
 
