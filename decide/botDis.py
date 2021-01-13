@@ -2,8 +2,8 @@ import discord
 import os
 
 dis = 'Nzk4ODg0NDIyODUzNTkxMDQx.X_7hGA'
-token = '.eTn5kivzPC9JP1gRK5JDgmqzvbI'
-TOKEN =  dis+token   #'Nzk4ODg0NDIyODUzNTkxMDQx.X_7hGA.eTn5kivzPC9JP1gRK5JDgmqzvbI' #dis.join(token)
+token = '.E04N6tkXDMNNjahAF6jwH-8KgCU'
+TOKEN =  dis+token
 
 client = discord.Client()
 
