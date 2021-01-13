@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 12:57+0000\n"
+"POT-Creation-Date: 2021-01-07 13:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,9 +61,13 @@ msgstr "Español"
 msgid "French"
 msgstr "Français"
 
+#: decide/settings.py:165
+msgid "German"
+msgstr "Alemán"
+
 #: visualizer/templates/visualizer/aboutUs.html:16
 #: visualizer/templates/visualizer/contactUs.html:20
-#: visualizer/templates/visualizer/visualizer.html:37
+#: visualizer/templates/visualizer/visualizer.html:38
 msgid "Decide Visualization"
 msgstr "Decide Visualización"
 
@@ -96,7 +100,7 @@ msgstr "Perfil en GitHub"
 
 #: visualizer/templates/visualizer/aboutUs.html:86
 #: visualizer/templates/visualizer/contactUs.html:94
-#: visualizer/templates/visualizer/visualizer.html:119
+#: visualizer/templates/visualizer/visualizer.html:176
 msgid "Evolution and Configuration Management"
 msgstr "Evolución y Gestión de la Configuración"
 
@@ -136,59 +140,90 @@ msgstr "Escriba aquí su mensaje"
 msgid "Send"
 msgstr "Enviar"
 
-#: visualizer/templates/visualizer/visualizer.html:42
+#: visualizer/templates/visualizer/visualizer.html:44
 msgid "Contact us"
 msgstr "Contáctanos"
 
-#: visualizer/templates/visualizer/visualizer.html:43
+#: visualizer/templates/visualizer/visualizer.html:45
 msgid "About us"
 msgstr "Sobre nosotros"
 
-#: visualizer/templates/visualizer/visualizer.html:48
+#: visualizer/templates/visualizer/visualizer.html:50
 msgid "Light mode"
 msgstr "Modo claro"
 
-#: visualizer/templates/visualizer/visualizer.html:50
+#: visualizer/templates/visualizer/visualizer.html:52
 msgid "Dark mode"
 msgstr "Modo oscuro"
 
-#: visualizer/templates/visualizer/visualizer.html:55
+#: visualizer/templates/visualizer/visualizer.html:58
 msgid "Voting not started"
 msgstr "Votación no comenzada"
 
-#: visualizer/templates/visualizer/visualizer.html:56
+#: visualizer/templates/visualizer/visualizer.html:62
 msgid "Voting in progress"
 msgstr "Votación en curso"
 
-#: visualizer/templates/visualizer/visualizer.html:58
+#: visualizer/templates/visualizer/visualizer.html:76
+#: visualizer/templates/visualizer/visualizer.html:235
+msgid "Number of votes"
+msgstr "Número de votos"
+
+#: visualizer/templates/visualizer/visualizer.html:94
 msgid "Results"
 msgstr "Resultados"
 
-#: visualizer/templates/visualizer/visualizer.html:72
+#: visualizer/templates/visualizer/visualizer.html:102
+msgid "2nd place"
+msgstr "2º puesto"
+
+#: visualizer/templates/visualizer/visualizer.html:103
+msgid "WINNER"
+msgstr "GANADOR"
+
+#: visualizer/templates/visualizer/visualizer.html:104
+msgid "3rd place"
+msgstr "3º puesto"
+
+#: visualizer/templates/visualizer/visualizer.html:123
 msgid "Option"
 msgstr "Opción"
 
-#: visualizer/templates/visualizer/visualizer.html:73
+#: visualizer/templates/visualizer/visualizer.html:124
 msgid "Punctuation"
 msgstr "Puntuación"
 
-#: visualizer/templates/visualizer/visualizer.html:74
+#: visualizer/templates/visualizer/visualizer.html:125
 #, fuzzy
 #| msgid "Vote"
 msgid "Votes"
 msgstr "Voto"
 
-#: visualizer/templates/visualizer/visualizer.html:95
+#: visualizer/templates/visualizer/visualizer.html:147
 msgid "Donut Chart"
 msgstr "Gráfico Circular"
 
-#: visualizer/templates/visualizer/visualizer.html:103
+#: visualizer/templates/visualizer/visualizer.html:148
+msgid "Bar Chart"
+msgstr "Gráfico de Barras"
+
+#: visualizer/templates/visualizer/visualizer.html:158
+#: visualizer/templates/visualizer/visualizer.html:160
 msgid "Save as PNG"
 msgstr "Guardar como PNG"
 
-#: visualizer/templates/visualizer/visualizer.html:104
+#: visualizer/templates/visualizer/visualizer.html:164
 msgid "Save as PDF"
 msgstr "Guardar como PDF"
+
+#: visualizer/templates/visualizer/visualizer.html:388
+msgid "This visualization page is pretty cool. Do you want to continue?"
+msgstr "Esta página de visualización está muy chula. ¿Quieres continuar?"
+
+#, fuzzy
+#~| msgid "Number of votes"
+#~ msgid "Número de votos"
+#~ msgstr "Número de votos"
 
 #~ msgid "Last name"
 #~ msgstr "Apellidos"

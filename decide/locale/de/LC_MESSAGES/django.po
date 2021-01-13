@@ -16,50 +16,48 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: booth/templates/booth/booth.html:19
-#, fuzzy
-#| msgid "logout"
 msgid "Logout"
-msgstr "Fermer session"
+msgstr "Ausloggen"
 
 #: booth/templates/booth/booth.html:33
 msgid "Username"
-msgstr "Utilisateur"
+msgstr "Nutzername"
 
 #: booth/templates/booth/booth.html:41
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Passwort"
 
 #: booth/templates/booth/booth.html:49
 msgid "Login"
-msgstr "S'identifier"
+msgstr "Anmeldung"
 
 #: booth/templates/booth/booth.html:64
 msgid "Vote"
-msgstr "Voter"
+msgstr "Abstimmung"
 
 #: booth/templates/booth/booth.html:160 booth/templates/booth/booth.html:170
 #: booth/templates/booth/booth.html:201
 msgid "Error: "
-msgstr "Erreur: "
+msgstr "Fehler: "
 
 #: booth/templates/booth/booth.html:198
 msgid "Conglatulations. Your vote has been sent"
-msgstr "Felicitations. Votre vote a été envoyé"
+msgstr "Herzliche Glückwünsche. Ihre Stimme wurde gesendet"
 
 #: decide/settings.py:162
 msgid "English"
-msgstr "Anglais"
+msgstr "Englisch"
 
 #: decide/settings.py:163
 msgid "Spanish"
-msgstr "Espagnol"
+msgstr "Spanisch"
 
 #: decide/settings.py:164
 msgid "French"
-msgstr "Français"
+msgstr "Französisch"
 
 #: decide/settings.py:165
 msgid "German"
@@ -69,16 +67,16 @@ msgstr "Deutsch"
 #: visualizer/templates/visualizer/contactUs.html:20
 #: visualizer/templates/visualizer/visualizer.html:38
 msgid "Decide Visualization"
-msgstr "Decide Visualization"
+msgstr "Decide Visualisierung"
 
 #: visualizer/templates/visualizer/aboutUs.html:20
 #: visualizer/templates/visualizer/contactUs.html:24
 msgid "Return"
-msgstr "Retour"
+msgstr "Rückkehr"
 
 #: visualizer/templates/visualizer/aboutUs.html:26
 msgid "Visualization Team"
-msgstr "Equipe de visualization"
+msgstr "Anzeigegeräte"
 
 #: visualizer/templates/visualizer/aboutUs.html:35
 #: visualizer/templates/visualizer/aboutUs.html:43
@@ -87,7 +85,7 @@ msgstr "Equipe de visualization"
 #: visualizer/templates/visualizer/aboutUs.html:67
 #: visualizer/templates/visualizer/aboutUs.html:75
 msgid "Computer Engineering student in Software Engineering"
-msgstr "Etudiant en Ingénierie Informatique en Ingénerie de Software"
+msgstr "Student der Computertechnik in Software Engineering"
 
 #: visualizer/templates/visualizer/aboutUs.html:37
 #: visualizer/templates/visualizer/aboutUs.html:45
@@ -96,126 +94,124 @@ msgstr "Etudiant en Ingénierie Informatique en Ingénerie de Software"
 #: visualizer/templates/visualizer/aboutUs.html:69
 #: visualizer/templates/visualizer/aboutUs.html:77
 msgid "GitHub Profile"
-msgstr "Profile GitHub"
+msgstr "GitHub-Profil"
 
 #: visualizer/templates/visualizer/aboutUs.html:86
 #: visualizer/templates/visualizer/contactUs.html:94
 #: visualizer/templates/visualizer/visualizer.html:176
 msgid "Evolution and Configuration Management"
-msgstr "Evolution et Gestion de la Configuration"
+msgstr "Entwicklung und Konfiguration des Managements"
 
 #: visualizer/templates/visualizer/contactUs.html:33
 msgid "Contact Info"
-msgstr "Information de contact"
+msgstr "Kontaktinformation"
 
 #: visualizer/templates/visualizer/contactUs.html:37
 msgid "Higher Technical School of Computer Engineering,"
-msgstr "Ecole Technique Supérieur d'Ingénerie Informatique,"
+msgstr "Höhere technische Fakultät für Computertechnik,"
 
 #: visualizer/templates/visualizer/contactUs.html:38
 msgid "Sevilla University, 41012"
-msgstr "Universiter de Seville, 41012"
+msgstr "Sevilla Universität, 41012"
 
 #: visualizer/templates/visualizer/contactUs.html:63
 msgid "Send a Message"
-msgstr "Envoyer en méssage"
+msgstr "Eine Nachricht schicken"
 
 #: visualizer/templates/visualizer/contactUs.html:68
 msgid "Full name"
-msgstr "Nom et prénom"
+msgstr "Vollständiger Name"
 
 #: visualizer/templates/visualizer/contactUs.html:72
 msgid "Subject"
-msgstr "Sujet"
+msgstr "Gegenstand"
 
 #: visualizer/templates/visualizer/contactUs.html:76
 msgid "Email address"
-msgstr "Adresse email"
+msgstr "E-Mail-Addresse"
 
 #: visualizer/templates/visualizer/contactUs.html:80
 msgid "Write your message here"
-msgstr "Ecrivez votre méssage ici"
+msgstr "Schreibe deine Nachricht hier"
 
 #: visualizer/templates/visualizer/contactUs.html:83
 msgid "Send"
-msgstr "Evoyer"
+msgstr "Senden"
 
 #: visualizer/templates/visualizer/visualizer.html:44
 msgid "Contact us"
-msgstr "Contacter nous"
+msgstr "Kontaktiere uns"
 
 #: visualizer/templates/visualizer/visualizer.html:45
 msgid "About us"
-msgstr "A propos de nous"
+msgstr "Über uns"
 
 #: visualizer/templates/visualizer/visualizer.html:50
 msgid "Light mode"
-msgstr "Mode clair"
+msgstr "Licht Modus"
 
 #: visualizer/templates/visualizer/visualizer.html:52
 msgid "Dark mode"
-msgstr "Mode sombre"
+msgstr "Dunkler Modus"
 
 #: visualizer/templates/visualizer/visualizer.html:58
 msgid "Voting not started"
-msgstr "Le vote n'a pas commencé"
+msgstr "Abstimmung nicht gestartet"
 
 #: visualizer/templates/visualizer/visualizer.html:62
 msgid "Voting in progress"
-msgstr "Vote en cours"
+msgstr "Abstimmung läuft"
 
 #: visualizer/templates/visualizer/visualizer.html:76
 #: visualizer/templates/visualizer/visualizer.html:235
 msgid "Number of votes"
-msgstr "Nombre de votes"
+msgstr "Anzahl der Stimmen"
 
 #: visualizer/templates/visualizer/visualizer.html:94
 msgid "Results"
-msgstr "Résultats"
+msgstr "Ergebnisse"
 
 #: visualizer/templates/visualizer/visualizer.html:102
 msgid "2nd place"
-msgstr "2ème place"
+msgstr "2. Platz"
 
 #: visualizer/templates/visualizer/visualizer.html:103
 msgid "WINNER"
-msgstr "GAGNANT"
+msgstr "GEWINNER"
 
 #: visualizer/templates/visualizer/visualizer.html:104
 msgid "3rd place"
-msgstr "3ème place"
+msgstr "3. Platz"
 
 #: visualizer/templates/visualizer/visualizer.html:123
 msgid "Option"
-msgstr "Option"
+msgstr "Möglichkeit"
 
 #: visualizer/templates/visualizer/visualizer.html:124
 msgid "Punctuation"
-msgstr "Score"
+msgstr "Interpunktion"
 
 #: visualizer/templates/visualizer/visualizer.html:125
-#, fuzzy
-#| msgid "Vote"
 msgid "Votes"
-msgstr "Vote"
+msgstr "Stimmen"
 
 #: visualizer/templates/visualizer/visualizer.html:147
 msgid "Donut Chart"
-msgstr "Graphique en anneau"
+msgstr "Kreisdiagramm"
 
 #: visualizer/templates/visualizer/visualizer.html:148
 msgid "Bar Chart"
-msgstr "Graphique à barres"
+msgstr "Balkendiagramm"
 
 #: visualizer/templates/visualizer/visualizer.html:158
 #: visualizer/templates/visualizer/visualizer.html:160
 msgid "Save as PNG"
-msgstr "Sauver comme PNG"
+msgstr "Als PNG speichern"
 
 #: visualizer/templates/visualizer/visualizer.html:164
 msgid "Save as PDF"
-msgstr "Sauver comme PDF"
+msgstr "Als PDF speichern"
 
 #: visualizer/templates/visualizer/visualizer.html:388
 msgid "This visualization page is pretty cool. Do you want to continue?"
-msgstr "Cette page de visualisation est plutôt cool. Voulez-vous continuer?"
+msgstr "Diese Visualisierungsseite ist ziemlich cool. Wollen Sie fortfahren?"
