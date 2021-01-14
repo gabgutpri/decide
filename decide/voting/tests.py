@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
+from django.core.exceptions import ValidationError
 
 from base import mods
 from base.tests import BaseTestCase
@@ -13,7 +14,7 @@ from census.models import Census
 from mixnet.mixcrypt import ElGamal
 from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
-from voting.models import Voting, Question, QuestionOption
+from voting.models import Voting, Question, QuestionOption, end_date_past
 
 
 class VotingTestCase(BaseTestCase):
@@ -208,3 +209,56 @@ class VotingTestCase(BaseTestCase):
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
+
+    #Test Javi
+    def create_voting_end_date(self):
+        q = Question(desc='test end date')
+        end = "2021-02-15 14:30:59.993048Z"
+        q.save()
+        for i in range(5):
+            opt = QuestionOption(question=q, option='option {}'.format(i+1))
+            opt.save()
+        v = Voting(name='test voting end date', question=q, end_date=end)
+        v.save()
+
+        a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
+                                          defaults={'me': True, 'name': 'test auth'})
+        a.save()
+        v.auths.add(a)
+
+        return v
+
+    def test_end_date(self):
+        v = self.create_voting_end_date()
+
+        self.assertEquals(v.name, "test voting end date")
+        self.assertEquals(v.question.desc, "test end date")
+        self.assertEqual(v.end_date,"2021-02-15 14:30:59.993048Z")
+
+        v.end_date = timezone.now() - timezone.timedelta(days=1)
+        v.save()
+        self.assertRaises(ValidationError, end_date_past, v.end_date)
+
+    def test_end_date_past(self):
+            f = timezone.now() - timezone.timedelta(days=10)
+            self.assertRaises(ValidationError, end_date_past, f)
+            f = timezone.now() - timezone.timedelta(days=1)
+            self.assertRaises(ValidationError, end_date_past, f)
+            f = timezone.now() - timezone.timedelta(minutes=10)
+            self.assertRaises(ValidationError, end_date_past, f)
+            f = timezone.now() - timezone.timedelta(minutes=1)
+            self.assertRaises(ValidationError, end_date_past, f)
+            
+            raised = False
+            try:
+                f = timezone.now() + timezone.timedelta(minutes=1)
+                end_date_past(f)
+                f = timezone.now() + timezone.timedelta(minutes=10)
+                end_date_past(f)
+                f = timezone.now() + timezone.timedelta(days=1)
+                end_date_past(f)
+                f = timezone.now() + timezone.timedelta(days=10)
+                end_date_past(f)
+            except:
+                raised = True
+            self.assertFalse(raised, 'Exception raised')
