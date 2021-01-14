@@ -5,13 +5,15 @@ from .models import Question
 from .models import Voting
 from .filters import StartedFilter
 
+ESTADO = 'Sin inicar'
 
 def start(modeladmin, request, queryset):
     for v in queryset.all():
         v.create_pubkey()
         v.start_date = timezone.now()
     #    v.enviarTelegram("La votación "+str(v.name)+" ha comenzado")
-        v.enviarDiscord("La votación "+str(v.name)+" ha comenzado")
+    #    v.enviarDiscord("La votación "+str(v.name)+" ha comenzado")
+        ESTADO = "La votación "+str(v.name)+" ha comenzado"
         v.save()
 
 

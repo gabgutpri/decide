@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
-from botDis import enviarMensaje, client
+#from botDis import enviarMensaje, client
 from base import mods
 from base.models import Auth, Key
 
@@ -141,7 +141,7 @@ class Voting(models.Model):
         requests.post(url, params=params)
 
     # Método para enviar mensajes a Didcord (gabgutpri, visualización)
-    def enviarDiscord(self, msn):
-        client.start()
-        client.loop.create_task(enviarMensaje(msn))
-        client.close()
+#    def enviarDiscord(self, msn):
+#       client.start()
+#       client.loop.create_task(enviarMensaje(msn))
+#       client.close()
