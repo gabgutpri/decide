@@ -190,8 +190,11 @@ class EditUserProfile:
          form.actual_user = request.user
          if form.is_valid():
              form.save()
-             username = user.username
-             return render(request, 'user_profile.html', context={'username': username})
+             username = form.actual_user.username
+             first_name = form.actual_user.first_name
+             last_name = form.actual_user.last_name
+             email = form.actual_user.email
+             return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
         else:
             form = UpdateProfile()
         return render(request, 'edit_user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
