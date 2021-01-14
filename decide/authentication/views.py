@@ -20,6 +20,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .forms import RegisterForm
 from django.contrib.auth import logout, login, authenticate
@@ -29,6 +31,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .tokens import account_activation_token
  
 from .models import Profile
+from .forms import UpdateProfile
 
 
 class GetUserView(APIView):
@@ -136,3 +139,67 @@ class AccountActivation:
     #Account activation sent view
     def account_activation_sent(request):
         return render(request, 'account_activation_sent.html')
+
+#User Profile
+class UserProfile:
+    def user_profile(request, username):
+        user = User.objects.get(username=username)
+        username = user.username
+        first_name = user.first_name
+        last_name = user.last_name
+        email = user.email
+        context = {
+            "user": user
+        }
+        return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
+
+class ProfileView(APIView):
+    def post(self, request):
+        key = request.data.get('token', '')
+        tk = get_object_or_404(Token, key=key)
+        if not tk.user.is_superuser:
+            return Response({}, status=HTTP_401_UNAUTHORIZED)
+
+        username = user.profile.username
+        if not username:
+            return Response({}, status=HTTP_400_BAD_REQUEST)
+
+
+        return Response(request, 'user_profile.html', context)
+
+#User Profile
+class EditUserProfile:
+    def edit_user_profile(request, username):
+        user = User.objects.get(username=username)
+        username = user.username
+        first_name = user.first_name
+        last_name = user.last_name
+        email = user.email
+        password = user.password
+        context = {
+            "user": user
+        }
+        if request.method == 'POST':
+         form = UpdateProfile(request.POST, instance=request.user)
+         form.actual_user = request.user
+         if form.is_valid():
+             form.save()
+             username = user.username
+             return render(request, 'user_profile.html', context={'username': username})
+        else:
+            form = UpdateProfile()
+        return render(request, 'edit_user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
+
+class EditProfileView(APIView):
+    def post(self, request):
+        key = request.data.get('token', '')
+        tk = get_object_or_404(Token, key=key)
+        if not tk.user.is_superuser:
+            return Response({}, status=HTTP_401_UNAUTHORIZED)
+
+        username = user.profile.username
+        if not username:
+            return Response({}, status=HTTP_400_BAD_REQUEST)
+
+
+        return Response(request, 'user_profile.html', context)
