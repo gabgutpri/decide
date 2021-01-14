@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.utils import timezone
-from botDis import enviarMensaje, client
 from .models import QuestionOption
 from .models import Question
 from .models import Voting
@@ -12,7 +11,7 @@ def start(modeladmin, request, queryset):
         v.create_pubkey()
         v.start_date = timezone.now()
     #    v.enviarTelegram("La votación "+str(v.name)+" ha comenzado")
-        client.loop.create_task(enviarMensaje("La votación "+str(v.name)+" ha comenzado"))
+        v.enviarDiscord("La votación "+str(v.name)+" ha comenzado")
         v.save()
 
 
