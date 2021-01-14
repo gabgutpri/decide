@@ -7,6 +7,8 @@ from rest_framework.authtoken.models import Token
 
 from base import mods
 
+from urllib.parse import urlparse
+
 
 class AuthTestCase(APITestCase):
 
@@ -145,6 +147,19 @@ class RegisterGuiTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name = 'register.html')
 
+    #Testing the Get Access for the Register Form
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_page_access_logged(self):
+        usertest = User.objects.create_user(username='testuser')
+        usertest.set_password('ganma231')
+        usertest.save()
+        login = self.client.force_login(usertest)
+
+        response = self.client.get("/authentication/registergui/")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(urlparse(response.url).path, "/")
+        self.client.logout()
+
     #Testing a post request with an invalid password
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
     def test_register_form_bad_pass(self):
@@ -196,3 +211,4 @@ class RegisterGuiTests(TestCase):
         #We use asserts different to the username and check if they correspond to what we have registered with the post request
         self.assertEqual(user.email, self.email)
         self.assertEqual(user.first_name, self.first_name)
+
