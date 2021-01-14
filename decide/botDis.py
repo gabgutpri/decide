@@ -1,4 +1,5 @@
 from discord.ext import commands
+from voting import admin
 import os
 
 dis = 'Nzk4ODg0NDIyODUzNTkxMDQx.X_7hGA'
@@ -25,9 +26,9 @@ async def votaciones(ctx):
     await ctx.send(response)
     
 @client.command(name='estado')
-async def enviarMensaje(mensaje):
-    canal = client.get_channel(799052293080743946) # ID del canal de votaciones en el servidor de prueba.
-    await canal.send(mensaje)
+async def enviarMensaje(ctx):
+    #canal = client.get_channel(799052293080743946) # ID del canal de votaciones en el servidor de prueba.
+    await ctx.send(admin.ESTADO)
 
 
 client.run(TOKEN)
