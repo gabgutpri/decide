@@ -123,7 +123,7 @@ class Voting(models.Model):
 
         self.postproc = postp
         self.save()
-       # self.enviarTelegram(msn) Comentado por mantenimiento
+        self.enviarTelegram(msn)
 
     def __str__(self):
         return self.name
