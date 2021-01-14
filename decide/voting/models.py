@@ -129,7 +129,7 @@ class Voting(models.Model):
             file = open(ruta,"w")
             file.write("Id: "+str(self.id)+os.linesep)
             file.write("Nombre: "+self.name+os.linesep)
-            if len(self.desc):
+            if self.desc:
                 file.write("Descripción: "+self.desc+os.linesep)
             
             file.write("Fecha de inicio: "+self.start_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
