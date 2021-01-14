@@ -159,6 +159,8 @@ class RegisterGuiTests(TestCase):
         #The form returns the user to the form in case of a failure
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name = 'register.html')
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
 
     #Testing a post request with no username given
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
