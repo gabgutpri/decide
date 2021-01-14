@@ -9,6 +9,8 @@ from base import mods
 
 from urllib.parse import urlparse
 
+from .models import Profile
+
 
 class AuthTestCase(APITestCase):
 
@@ -212,3 +214,49 @@ class RegisterGuiTests(TestCase):
         self.assertEqual(user.email, self.email)
         self.assertEqual(user.first_name, self.first_name)
 
+class ProfileModelTest(TestCase):
+    #Test for the Profile model
+    def setUp(self):
+        super().setUp()
+    
+    def tearDown(self):
+        super().tearDown()
+
+
+    def test_create_and_delete_profile(self):
+        #El modelo Profile se crea junto al usuario debido al metodo "update_user_profile" presente en models.py
+        #Es una relación one-to-one, basicamente uno extiende del otro
+        usertest = User(username="testnewuser", password="ganma231", first_name= "TestNew", last_name= "User", email="TestUser@gmail.com")
+        usertest.save()
+
+        dbuser = User.objects.get(username = "testnewuser")
+        #Comprobamos si se ha añadido uno de los campos correctamente
+        self.assertEqual(dbuser.email , usertest.email)
+        #Comprobamos el campo de Email Confirmed que es exclusivo de Profile
+        self.assertEqual(dbuser.profile.email_confirmed, False)
+
+        prof = Profile.objects.get(user = usertest)
+        #Comprobamos si existe un modelo Profile en el usuario
+        self.assertTrue(Profile.objects.filter(user = dbuser).exists())
+        us = User.objects.get(username = "testnewuser")
+        #Borramos el Profile del usuario
+        prof.delete()
+        #Comprobamos si se ha borrado el Profile del usuario correctamente
+        self.assertFalse(Profile.objects.filter(user = dbuser).exists())
+        us.delete()
+
+    def test_profile_tostring(self):
+        usertest = User(username="testnewuser", password="ganma231", first_name= "TestNew", last_name= "User", email="TestUser@gmail.com")
+        usertest.save()
+
+        dbuser = User.objects.get(username = "testnewuser")
+        #Probamos los strings de profile
+        self.assertEqual(str(dbuser.email), "TestUser@gmail.com")
+        self.assertEqual(str(dbuser.first_name), "TestNew")
+        self.assertEqual(str(dbuser.last_name), "User")
+        self.assertEqual(str(dbuser.profile.email_confirmed), "False")
+
+        prof = Profile.objects.get(user = usertest)
+        us = User.objects.get(username = "testnewuser")
+        prof.delete()
+        us.delete()
