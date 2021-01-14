@@ -7,6 +7,8 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
+import time
 
 class TestGraficaDonut():
     def setUp(self):
@@ -71,6 +73,85 @@ class TestBotonReturn():
 
     def tearDown(self):
         self.driver.quit()
+
+
+class TestVotacionNoEmpezada():
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        
+    def test_graficaDonut(self):
+        
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/6/")
+        #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
+        assert self.driver.find_element(By.ID, "text").text == "Votación no comenzada"
+        
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+class TestVotacionNoFinalizada():
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        
+    def test_votacionEnCurso(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
+        assert self.driver.find_element(By.ID, "text").text == "Votación en curso"
+
+    def test_tabla(self):
+        
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        #Aquí se comprueba que la tabla con el número de votos existe y tiene la fila con el número de votos que hay
+        elements = self.driver.find_elements(By.CSS_SELECTOR, "tbody > tr > th")
+        assert len(elements) > 0
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+#class TestNumeroVotos():
+#    def setUp(self):
+#        self.driver = webdriver.Chrome()
+#        
+#    def test_aumentaNumeroVotos(self):
+#        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+#        self.driver.find_element_by_id('id_username').send_keys("admin")
+#        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+#        self.driver.find_element_by_id('login-form').click()
+#        self.driver.get("https://picaro-decide.herokuapp.com/admin")
+#        
+#        time.sleep(5)
+#        
+#       
+#        self.driver.find_element(By.ID, "id_voting_id").send_keys("7")
+#        self.driver.find_element(By.ID, "id_voter_id").send_keys("1")
+#        self.driver.find_element(By.ID, "id_a").send_keys("1")
+#        self.driver.find_element(By.ID, "id_b").send_keys("1")
+#        self.driver.find_element(By.NAME, "_addanother").click()
+#        self.driver.find_element(By.ID, "id_voting_id").send_keys("7")
+#        self.driver.find_element(By.ID, "id_voter_id").send_keys("2")
+#        self.driver.find_element(By.ID, "id_a").send_keys("1")
+#        self.driver.find_element(By.ID, "id_b").send_keys("3")
+#        self.driver.find_element(By.NAME, "_save").click()
+#        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+#        assert self.driver.find_element(By.CSS_SELECTOR, "tbody > tr > th").text =="4"
+
+#    def tearDown(self):
+#        self.driver.quit()
+        
 
 # if __name__ == '__main__':
 #     unittest.main()
