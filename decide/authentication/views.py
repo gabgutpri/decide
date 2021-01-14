@@ -151,6 +151,10 @@ class UserProfile:
         context = {
             "user": user
         }
+        selfusername = request.user.username
+        if not username == selfusername:
+            return HttpResponse('You are not authorized to see this page.')
+
         return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
 
 class ProfileView(APIView):
@@ -159,11 +163,10 @@ class ProfileView(APIView):
         tk = get_object_or_404(Token, key=key)
         if not tk.user.is_superuser:
             return Response({}, status=HTTP_401_UNAUTHORIZED)
-
+        
         username = user.profile.username
         if not username:
             return Response({}, status=HTTP_400_BAD_REQUEST)
-
 
         return Response(request, 'user_profile.html', context)
 
@@ -179,6 +182,9 @@ class EditUserProfile:
         context = {
             "user": user
         }
+        selfusername = request.user.username
+        if not username == selfusername:
+            return HttpResponse('You are not authorized to see this page.')
         if request.method == 'POST':
          form = UpdateProfile(request.POST, instance=request.user)
          form.actual_user = request.user
@@ -200,6 +206,5 @@ class EditProfileView(APIView):
         username = user.profile.username
         if not username:
             return Response({}, status=HTTP_400_BAD_REQUEST)
-
 
         return Response(request, 'user_profile.html', context)
