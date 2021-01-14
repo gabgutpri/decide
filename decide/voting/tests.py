@@ -148,8 +148,8 @@ class VotingTestCase(BaseTestCase):
         voting = self.create_voting()
 
         data = {'action': 'start'}
-        #response = self.client.post('/voting/{}/'.format(voting.pk), data, format='json')
-        #self.assertEqual(response.status_code, 401)
+        response = self.client.post('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 401)
 
         # login with user no admin
         self.login(user='noadmin')
@@ -303,10 +303,6 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
         self.assertEqual("Si/No prueba", driver.find_element_by_xpath("//textarea[@id='id_desc']").text)
         self.assertEqual("YES", driver.find_element_by_id("id_options-0-option").text)
         self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
-        #driver.find_element_by_link_text("Delete").click()
-        #driver.find_element_by_xpath("//input[@value=\"Yes, I'm sure\"]").click()
-        #self.assertEqual("The question \"Si/No prueba\" was deleted successfully.", driver.find_element_by_xpath("//div[@id='container']/ul/li").text)
-        #driver.find_element_by_link_text("Log out").click()
 
 
     # Verify if the extra options are not save in a Yes/No question
@@ -341,7 +337,3 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
         self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
         self.assertEqual("", driver.find_element_by_id("id_options-2-option").text)
         self.assertEqual("", driver.find_element_by_id("id_options-3-option").text)
-        #driver.find_element_by_link_text("Delete").click()
-        #driver.find_element_by_xpath("//input[@value=\"Yes, I'm sure\"]").click()
-        #self.assertEqual("The question \"Si/No prueba con extra\" was deleted successfully.", driver.find_element_by_xpath("//div[@id='container']/ul/li").text)
-        #driver.find_element_by_link_text("Log out").click()
