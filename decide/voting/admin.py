@@ -4,7 +4,6 @@ from django.utils import timezone
 from .models import QuestionOption
 from .models import Question
 from .models import Voting
-from botDis import enviarMensaje
 from .filters import StartedFilter
 
 
