@@ -233,6 +233,7 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), 'Voting has been saved in local')
 
+
     def test_guardar_local_no_admin(self):    
         voting = self.create_voting()
 
@@ -251,12 +252,60 @@ class VotingTestCase(BaseTestCase):
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
 
         # Intento guardar la votación logueado con otra cuenta que no se admin 
+        self.logout
         self.login(user="noadmin")
 
         data = {'action': 'save'}
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
         self.assertEqual(response.status_code, 403)
 
+
+    def test_guardar_local_antes_iniciar(self):
+        voting = self.create_voting()
+
+        self.login()
+
+        # Intento guardar antes de empezar la votacion
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), 'Voting is not started')
+
+
+    def test_guardar_local_antes_parar(self):
+        voting = self.create_voting()
+
+        self.login()
+        
+        #Inicio la votacion
+        data = {'action': 'start'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Intento guardar antes de cerrar la votacion
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), 'Voting is not stopped')
+
+
+    def test_guardar_local_antes_recuento(self):
+        voting = self.create_voting()
+
+        self.login()
+
+        #Inicio la votacion
+        data = {'action': 'start'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')       
+        
+        #Paro la votacion
+        data = {'action': 'stop'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Intento guardar antes de hacer el recuento de la votacion
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), 'Voting has not being tallied')
 
 
     
