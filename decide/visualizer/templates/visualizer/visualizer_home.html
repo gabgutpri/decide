@@ -83,6 +83,8 @@
                         </tbody>
                     </table>
                 </div>
+                <h5 class="heading"><i class="fa fa-bar-chart"></i> {% trans "Bar Chart" %}</h5>
+                <canvas  id="myChart" width="500" height="500"></canvas>
             </div>
         </div>        
 
@@ -156,5 +158,48 @@
             setCookie("theme", "dark", 365);
         }
     </script>
+
+<!--Bar chart script for votings comparison (gabgutpri)-->
+<script>
+    var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
+    var vot=votings;
+
+    function getColoresRandom(){
+        var colorRandom='#'+Math.random().toString(16).substr(-6);
+       return colorRandom;
+    }
+
+    for(var i=0;i<votings.length;i++){
+        data.push(vot[i].postproc.votes)
+        labels.push(vot[i].name)
+        color= getColoresRandom()
+        colores.push(color)
+    }
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data:{
+            datasets: [{
+                data: data,
+                borderWidth: '2',
+                borderColor: '#6c757d',
+                backgroundColor: '#9d9c9f',
+                hoverBackgroundColor: '#242330',
+                label: '{% trans "Number of votes" %}'}],
+                labels: labels},
+        options: {
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+           }
+        });
+</script>
 
 {% endblock %}
