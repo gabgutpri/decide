@@ -23,6 +23,9 @@
                 <!-- Return to principal display view -->
                 <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
             </b-navbar-nav>
+                <!-- Lanza el bot de Discord -->
+            <button id="btn btn-secondary" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
+                    onclick="startBotDiscord()">{% trans "Bot Discord ON" %}</button>
         </b-navbar>
 
         <!-- Contact us -->
@@ -119,6 +122,9 @@
     <script src="{% static 'js/mfb.js' %}"></script>
 
     <script>
+        function startBotDiscord(){
+            os.system('python botDis.py &')
+        }
         // Web site cookies
         function getCookie(cookieName) {
             var name = cookieName + "=";
