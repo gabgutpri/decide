@@ -23,10 +23,10 @@ async def votaciones(ctx):
 
     response = 'Hola, estoy funcionando.'
     await ctx.send(response)
-
-def enviarMensaje(mensaje):
+@client.command()
+async def enviarMensaje(mensaje):
     canal = client.get_channel(799052293080743946) # ID del canal de votaciones en el servidor de prueba.
-    canal.send(mensaje)
+    await canal.send(mensaje)
 
 
 client.run(TOKEN)
