@@ -247,6 +247,10 @@ class TestAboutUs():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         self.driver.find_element(By.CSS_SELECTOR, ".btn-group > .btn:nth-child(3)").click()
         assert self.driver.find_element(By.CSS_SELECTOR, ".columna:nth-child(2) > .card-title").text == "Abraham"
         assert self.driver.find_element(By.CSS_SELECTOR, ".columna:nth-child(3) > .card-title").text == "Martín Arturo"
@@ -271,6 +275,10 @@ class TestAboutUsBack():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         self.driver.find_element(By.CSS_SELECTOR, ".btn-group > .btn:nth-child(3)").click()
         assert self.driver.find_element(By.CSS_SELECTOR, ".columna:nth-child(2) > .card-title").text == "Abraham"
         assert self.driver.find_element(By.CSS_SELECTOR, ".columna:nth-child(3) > .card-title").text == "Martín Arturo"
@@ -297,6 +305,10 @@ class TestPNG1PNG2PDF():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         #self.driver.find_element(By.CSS_SELECTOR, "#saveAsPDF").click()
         assert self.driver.find_element(By.ID, "saveAsPNG1").text == "Save as PNG"
         assert self.driver.find_element(By.ID, "saveAsPNG2").text == "Save as PNG"
@@ -317,6 +329,10 @@ class TestDarkModeCookies():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         self.driver.find_element(By.ID, "darkButton").click()
         assert self.driver.find_element_by_tag_name('body').get_attribute("class") == "bg-dark"
         assert self.driver.find_element(By.ID, "lightButton").text == "Light mode" 
@@ -339,6 +355,10 @@ class TestLightModeCookies():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         self.driver.find_element(By.ID, "darkButton").click()
         assert self.driver.find_element_by_tag_name('body').get_attribute("class") == "bg-dark"
         assert self.driver.find_element(By.ID, "lightButton").text == "Light mode"
@@ -365,6 +385,10 @@ class TestGraficaBarras():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         assert self.driver.find_element(By.CSS_SELECTOR, "th:nth-child(2) > .heading").text == "Bar Chart"
         #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficabarras.png aparece esta gráfica, solo que aparece algo distosionada
         #las barras miden 1/5 menos de lo que miden en realidad, pero podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
