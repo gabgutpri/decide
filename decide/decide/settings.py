@@ -130,7 +130,7 @@ ROOT_URLCONF = 'decide.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["decide/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
