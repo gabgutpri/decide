@@ -1,5 +1,4 @@
 from discord.ext import commands
-from voting import admin
 import os
 
 dis = 'Nzk4ODg0NDIyODUzNTkxMDQx.X_7hGA'
@@ -20,15 +19,19 @@ async def salir(ctx):
 
 @client.command(name='votaciones', help='Devuelve todas las votaciones con sus resultados')
 async def votaciones(ctx):
-    
-
-    response = 'Hola, estoy funcionando.'
+    queryset = Voting.objects.all()
+    for q in queryset:
+        nombre = 'Nombre de la votacion: '+str(q.name)+'/n'
+        pregunta = 'Pregunta de la votacion: '+str(q.question)+'/n'
+        fechaInicio = 'Fecha de inicio: '+str(q.start_date)+'/n'
+        fechaFinal = 'Fecha de fin: '+str(q.end_date)+'/n'
+    response = nombre+pregunta+fechaInicio+fechaFinal+'----------------------'
     await ctx.send(response)
     
-@client.command(name='estado')
-async def enviarMensaje(ctx):
+#@client.command(name='estado')
+#async def enviarMensaje(ctx):
     #canal = client.get_channel(799052293080743946) # ID del canal de votaciones en el servidor de prueba.
-    await ctx.send(admin.ESTADO)
+#    await ctx.send()
 
 
 client.run(TOKEN)

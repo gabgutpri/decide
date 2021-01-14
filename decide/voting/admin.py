@@ -13,7 +13,6 @@ def start(modeladmin, request, queryset):
         v.start_date = timezone.now()
     #    v.enviarTelegram("La votación "+str(v.name)+" ha comenzado")
     #    v.enviarDiscord("La votación "+str(v.name)+" ha comenzado")
-        ESTADO = "La votación "+str(v.name)+" ha comenzado"
         v.save()
 
 
