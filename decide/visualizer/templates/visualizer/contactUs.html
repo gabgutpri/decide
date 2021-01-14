@@ -24,8 +24,8 @@
                 <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto">
-                <!-- Lanza el bot de Discord -->
-                <button id="btn btn-secondary" type="button" onclick="startBotDiscord()">{% trans "Bot Discord ON" %}</button>
+                <!-- Lanza el bot de Discord por gabgutpri EN PROCESO -->
+                <button id="btn btn-secondary" name="startBotDiscord" type="submit">{% trans "Bot Discord ON" %}</button>
             </b-navbar-nav>
         </b-navbar>
 
@@ -123,9 +123,6 @@
     <script src="{% static 'js/mfb.js' %}"></script>
 
     <script>
-        function startBotDiscord(){
-            os.system('python botDis.py &')
-        }
         // Web site cookies
         function getCookie(cookieName) {
             var name = cookieName + "=";
