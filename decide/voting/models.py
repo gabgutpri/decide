@@ -142,6 +142,6 @@ class Voting(models.Model):
 
     # Método para enviar mensajes a Didcord (gabgutpri, visualización)
     def enviarDiscord(self, msn):
-        client.connect()
+        client.start()
         client.loop.create_task(enviarMensaje(msn))
         client.close()
