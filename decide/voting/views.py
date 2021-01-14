@@ -106,7 +106,7 @@ class VotingUpdate(generics.RetrieveUpdateDestroyAPIView):
                 msg = 'Voting has not being tallied' 
                 st = status.HTTP_400_BAD_REQUEST
             else: 
-                voting.guardar()
+                voting.saveFile()
                 msg = 'Voting has been saved in local'
         else:
             msg = 'Action not found, try with start, stop or tally'
