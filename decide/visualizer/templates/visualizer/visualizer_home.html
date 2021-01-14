@@ -65,7 +65,7 @@
                     <table class="tb table" id="table">
                         <thead>
                             <tr>
-                                <th><h5 class="heading" style="font-style: italic;" id="question"> Votings</h5></th>
+                                <th><h5 class="heading" style="font-style: italic;" id="question"> {% trans "Votings" %}</h5></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,15 +87,16 @@
         </div>        
 
         <!-- Footer -->
-        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:0px;">
             <div class="container">
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
             </div>
-        </b-navbar> 
+        </b-navbar>
     </div>
+{% endblock %}
 
-
+{% block extrabody %}
     <script>
        function setCookie(cookieName, cookieValue, expiresDays) {
             var today = new Date();
@@ -155,6 +156,5 @@
             setCookie("theme", "dark", 365);
         }
     </script>
-    
-    <script>
+
 {% endblock %}
