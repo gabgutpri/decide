@@ -12,3 +12,4 @@ jsonnet==0.12.1
 django-heroku
 gunicorn
 social-auth-app-django
+python-environ
