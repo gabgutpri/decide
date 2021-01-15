@@ -22,6 +22,7 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 
 from .forms import RegisterForm
 from django.contrib.auth import logout, login, authenticate
@@ -178,7 +179,6 @@ class EditUserProfile:
         first_name = user.first_name
         last_name = user.last_name
         email = user.email
-        password = user.password
         context = {
             "user": user
         }
@@ -189,12 +189,17 @@ class EditUserProfile:
          form = UpdateProfile(request.POST, instance=request.user)
          form.actual_user = request.user
          if form.is_valid():
-             form.save()
-             username = form.actual_user.username
-             first_name = form.actual_user.first_name
-             last_name = form.actual_user.last_name
-             email = form.actual_user.email
-             return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
+                form.save()
+                username = form.actual_user.username
+                first_name = form.actual_user.first_name
+                last_name = form.actual_user.last_name
+                email = form.actual_user.email
+                return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email}) 
+         elif request.POST.get('username') == '':         
+             messages.error(request, 'El nombre de usuario de puede estar vacío.')
+         elif User.objects.get(username=request.POST.get('username')).DoesNotExist:
+             print("aaaa")
+             messages.error(request, 'El nombre de usuario ya está en uso.')
         else:
             form = UpdateProfile()
         return render(request, 'edit_user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})

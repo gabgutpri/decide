@@ -11,7 +11,12 @@
     <article class="card-body">	
         <hr>
         <form method="POST">
-			{% csrf_token %}
+            {% csrf_token %}
+            {% if messages %}
+            {% for message in messages %}
+        <div class="card-title mb-4 mt-1 text-center">{{ message|safe }}</div>
+            {% endfor %}
+            {% endif %}
         <div class="form-group">
             <h6>Nombre de usuario:</h6>
             <input name="username" class="form-control" placeholder="" type="text" value="{{username}}">
