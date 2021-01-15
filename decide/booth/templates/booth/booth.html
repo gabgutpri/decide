@@ -56,14 +56,15 @@
                     <h3>[[ q.desc ]]</h3>
                 <b-form-group v-for="opt in q.options" :key="opt.number">
                     
-                        [[ opt.option ]] <select v-model="selected" v-value="opt.pref_number">
+                        [[ opt.option ]] <select v-model="selected_{{opt.option}}" v-value="opt.pref_number">
+                            
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
                             <option>5</option>
                             </select>
-                   
+                    
                 </b-form-group>
                 </b-form-group>
                     
