@@ -399,7 +399,7 @@ class TestGraficaBarras():
     def tearDown(self):
         self.driver.quit()
 
-class TestPodium(unittest.TestCase):
+class TestPodium():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -469,7 +469,7 @@ class TestTraduccionAleman():
     assert self.driver.find_element(By.ID, "text").text == "Ergebnisse"
 
 """ Comentado porque estos cambios no estan todavia en heroku
-class TestHomeVisualizer(unittest.TestCase):
+class TestHomeVisualizer():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
