@@ -28,9 +28,16 @@
             <h6>Email:</h6>
             <input name="email" class="form-control" placeholder="" type="text" value="{{email}}">
         </div> <!-- form-group// -->  
-        <div class="col-md-6 text-right">
+        <div>
             <button  href="../profile/{{username}}"  type="submit" class="float-right btn btn-outline-primary">Actualizar usuario</button>
-        </div>                                                                                                    
+        </div>       
+        <br><br><br>
+        <p>
+         <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-outline-info"> <i class="fab fa-twitter"></i> Enlazar a Twitter</a>
+        </p>  
+        <p>
+         <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i> Enlazar a facebook</a>
+        </p>  
     </form>
     </article>
     </div> <!-- card.// -->
