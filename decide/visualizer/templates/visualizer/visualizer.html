@@ -43,7 +43,7 @@
                     <a class="btn btn-secondary" href="https://t.me/decidePicaro">Telegram</a>
                     <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLContactUs();">{% trans "Contact us" %}</button>
                     <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLAboutUs();">{% trans "About us" %}</button>
-                    <button class="btn btn-secondary" type="submit" onclick="window.history.go(-1);">{% trans "Return" %}</button>
+                    <a class="btn btn-secondary" type="submit" href="/visualizer">{% trans "Visualizer" %}</a>
                 </div>
 
                 <!-- Dark mode and light mode buttons -->
@@ -336,6 +336,14 @@
             var newURL = url.replace(page,"aboutUs")
             return newURL
         }
+        // function getURLVisualizer() {
+        //     var url = document.location.href;
+        //     partes = url.split('/');
+        //     var page = partes[partes.length-2];
+        //     var newURL = url.replace(page,"")
+        //     ultimateURL=newURL.substring(0, newULR().length-2)
+        //     return ultimateURL
+        // }
     </script>
 
     <!-- VIEW MODES WITH COOKIES -->
@@ -365,7 +373,7 @@
         function checkCookie() {
             if (getCookie("theme") == "dark") {
                 activateDarkMode();
-            }
+            } 
         }
         window.onload = checkCookie();
 
