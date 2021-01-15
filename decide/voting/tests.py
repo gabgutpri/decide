@@ -256,6 +256,29 @@ class YesNoQuestionModelTestCase(BaseTestCase):
         self.assertEquals(q.options.all()[0].number, 1)
         self.assertEquals(q.options.all()[1].number, 2)
 
+    def test_create_yes_no_voting(self):
+        q = Question(desc='Yes/No question test', yes_no_question=True)
+        q.save()
+
+        self.assertEquals(len(q.options.all()), 2)
+        self.assertEquals(q.yes_no_question, True)
+
+        v = Voting(name='Yes/No voting test', question=q)
+        v.save()
+
+        a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
+                                          defaults={'me': True, 'name': 'auth test'})
+        a.save()
+        v.auths.add(a)
+
+        elf.assertEquals(len(v.options.all()), 2)
+        self.assertEquals(v.question.yes_no_question, True)
+        self.assertEquals(v.name, 'Yes/No voting test')
+        self.assertEquals(v.question.all()[0].option, 'YES')
+        self.assertEquals(v.question.all()[1].option, 'NO')
+        self.assertEquals(v.question.all()[0].number, 1)
+        self.assertEquals(v.question.all()[1].number, 2)
+
 # Yes/No question view test
 class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
 
