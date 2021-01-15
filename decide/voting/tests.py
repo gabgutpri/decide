@@ -15,7 +15,21 @@ from mixnet.mixcrypt import ElGamal
 from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption, end_date_past
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+import time
 
 class VotingTestCase(BaseTestCase):
 
@@ -262,3 +276,106 @@ class VotingTestCase(BaseTestCase):
             except:
                 raised = True
             self.assertFalse(raised, 'Exception raised')
+
+class EndDateTestCase(StaticLiveServerTestCase):
+
+    def setUp(self):
+        self.base = BaseTestCase()
+        self.base.setUp()
+
+        self.driver = webdriver.Firefox()
+        self.vars = {}
+
+        super().setUp()
+
+    def wait_for_window(self, timeout = 2):
+        time.sleep(round(timeout / 1000))
+        wh_now = self.driver.window_handles
+        wh_then = self.vars["window_handles"]
+        if len(wh_now) > len(wh_then):
+            return set(wh_now).difference(set(wh_then)).pop()        
+
+    def test_end_date_p(self):
+        driver = self.driver
+        #Iniciar sesion
+        driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("practica")
+        time.sleep(1)
+        self.driver.find_element_by_id('id_password').send_keys("practica", Keys.ENTER)
+        time.sleep(1)
+        #Crear votacion
+        driver.find_element_by_link_text("Votings").click()
+        time.sleep(1)
+        driver.find_element_by_link_text("AÑADIR VOTING").click()
+        time.sleep(1)
+        self.driver.find_element(By.ID, "id_name").click()
+        self.driver.find_element(By.ID, "id_name").send_keys("prueba")
+        self.driver.find_element(By.ID, "id_desc").click()
+        self.driver.find_element(By.ID, "id_desc").send_keys("prueba")
+        #Crear question
+        self.driver.find_element(By.CSS_SELECTOR, ".field-question .related-widget-wrapper").click()
+        self.vars["window_handles"] = self.driver.window_handles
+        self.driver.find_element(By.CSS_SELECTOR, "#add_id_question > img").click()
+        self.vars["win8304"] = self.wait_for_window(2000)
+        self.vars["root"] = self.driver.current_window_handle
+        self.driver.switch_to.window(self.vars["win8304"])
+        self.driver.find_element(By.ID, "id_desc").send_keys("prueba")
+        self.driver.find_element(By.ID, "id_options-0-number").send_keys("1")
+        self.driver.find_element(By.ID, "id_options-0-number").click()
+        self.driver.find_element(By.ID, "id_options-1-number").send_keys("2")
+        self.driver.find_element(By.ID, "id_options-1-number").click()
+        self.driver.find_element(By.ID, "id_options-0-option").click()
+        self.driver.find_element(By.ID, "id_options-0-option").send_keys("prueba 1")
+        self.driver.find_element(By.ID, "id_options-1-option").click()
+        self.driver.find_element(By.ID, "id_options-1-option").send_keys("prueba 2")
+        self.driver.find_element(By.NAME, "_save").click()
+        self.driver.switch_to.window(self.vars["root"])
+        self.driver.find_element(By.LINK_TEXT, "Hoy").click()
+        self.driver.find_element(By.ID, "id_end_date_1").click()
+        self.driver.find_element(By.ID, "id_end_date_1").send_keys("23:50:00")
+        #Seleccionar auth
+        dropdown = self.driver.find_element(By.ID, "id_auths")
+        dropdown.find_element(By.XPATH, "//option[. = 'http://localhost:8000']").click()
+        #Sigue con la votacion
+        self.driver.find_element(By.NAME, "_save").click()
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Start']").click()
+        element = self.driver.find_element(By.NAME, "action")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).click_and_hold().perform()
+        element = self.driver.find_element(By.NAME, "action")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        element = self.driver.find_element(By.NAME, "action")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).release().perform()
+        self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.NAME, "index").click()
+        #Crear censo
+        driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        driver.find_element_by_link_text("Censuss").click()
+        driver.find_element_by_link_text("AÑADIR CENSUS").click()
+        self.driver.find_element(By.ID, "id_voting_id").click()
+        self.driver.find_element(By.ID, "id_voting_id").send_keys("1")
+        self.driver.find_element(By.ID, "id_voter_id").click()
+        self.driver.find_element(By.ID, "id_voter_id").send_keys("1")
+        self.driver.find_element(By.NAME, "_save").click()
+        #Realizar votacion
+        driver.get("http://localhost:8000/booth/1")
+        self.driver.find_element(By.ID, "username").click()
+        self.driver.find_element(By.ID, "username").send_keys("practica")
+        self.driver.find_element(By.ID, "password").click()
+        self.driver.find_element(By.ID, "password").send_keys("practica")
+        self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+        time.sleep(5)
+        self.driver.find_element(By.CSS_SELECTOR, "#\\__BVID__12 .custom-control-label").click()
+        time.sleep(5)
+        self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
+        time.sleep(5)
+        self.driver.find_element(By.LINK_TEXT, "Logout").click()
+
+    def tearDown(self):           
+        super().tearDown()
+        self.driver.quit()
+        self.base.tearDown()
