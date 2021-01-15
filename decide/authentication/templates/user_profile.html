@@ -28,9 +28,13 @@
             <h6>Email:</h6>
             <input readonly name="email" class="form-control" placeholder="" type="text" value="{{email}}">
         </div> <!-- form-group// -->
-        <div class="col-md-9 text-center">
-          <a href="../editprofile/{{username}}" class="float-right btn btn-outline-primary">Editar Perfil</a>
-            <a href="../deleteprofile/{{username}}" class="float-right btn btn-outline-danger btn-lg">Borrar usuario</a>    
+        <div class="col-md-5">
+            <div class="form-group">
+                <a href="../editprofile/{{username}}" class="btn btn-outline-primary">Editar Perfil</a>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <a href="../deleteprofile/{{username}}" class="btn btn-outline-danger">Borrar usuario</a>    
         </div>                                                                                                                                                                                                
     </form>
     </article>
