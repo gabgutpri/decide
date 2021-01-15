@@ -285,4 +285,58 @@ class RegisterGuiTests(TestCase):
         #Checking that the user hasn't been created
         self.assertFalse(User.objects.filter(username=self.username).exists())
 
+    #Testing a post request with bad first_name characters length
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_bad_firstname_length(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : self.email,
+            'first_name': 'TESTNAMETESTNAMETESTNAMETESTNAMETESTNAME',
+            'last_name' : self.last_name,
+            'password1' : 'ganma421',
+            'password2' : 'ganma421'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
         
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+    #Testing a post request with bad lastname characters length
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_bad_lastname_length(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : 'TESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAMETESTNAME',
+            'password1' : 'ganma421',
+            'password2' : 'ganma421'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+        
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+    #Testing a post request with bad email characters length
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_register_form_bad_email_length(self):
+        response = self.client.post("/authentication/registergui/", data={
+            'username' : self.username,
+            'email' : 'TESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAILTESTEMAIL@gmail.com',
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+            'password1' : 'ganma421',
+            'password2' : 'ganma421'
+        })
+        #The form returns the user to the form in case of a failure
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'register.html')
+        
+        #Checking that the user hasn't been created
+        self.assertFalse(User.objects.filter(username=self.username).exists())
+
+       
