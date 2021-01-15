@@ -5,7 +5,7 @@
 {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/visualizer.css' %}" />
+    <link type="text/css" rel="stylesheet" href="../../static/css/visualizer.css" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -159,9 +159,10 @@
         }
     </script>
 
-<!--Bar chart script for votings comparison (gabgutpri)-->
+<!--Bar chart script for votings comparison (gabgutpri, visualización)-->
 <script>
     var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
+    var listNumVotos = votos
     var vot=votings;
 
     function getColoresRandom(){
@@ -169,8 +170,8 @@
        return colorRandom;
     }
 
-    for(var i=0;i<votings.length;i++){
-        data.push(vot[i].postproc.votes)
+    for(var i=0;i<vot.length;i++){
+        data.push(listNumVotos[i])
         labels.push(vot[i].name)
         color= getColoresRandom()
         colores.push(color)
