@@ -124,7 +124,7 @@ class Voting(models.Model):
         
         #Guardamos en local la votación
     def saveFile(self):
-        if self.tally:
+        if self.postproc:
             ruta= "ficheros/"+str(self.id)+ "-"+self.name + " - " +self.end_date.strftime('%d-%m-%y')+ ".txt"
             file = open(ruta,"w")
             file.write("Id: "+str(self.id)+os.linesep)

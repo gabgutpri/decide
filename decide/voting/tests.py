@@ -15,6 +15,17 @@ from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 
+#imports de pruebas de interfaz
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+
 
 class VotingTestCase(BaseTestCase):
 
@@ -314,5 +325,133 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.json(), 'Voting has not being tallied')
 
 
-    
+class VotingLocalSaveTestCase(StaticLiveServerTestCase):
 
+    def setUp(self):
+        self.base=BaseTestCase()
+        self.base.setUp()
+
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        super().setUp()
+
+
+
+
+    def test_guardar(self):
+        driver=self.driver
+        User.objects.create_superuser('egcVotacion','votacion@decide.com','egcVotacion')
+
+        # Login
+        self.driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        self.driver.find_element_by_id("id_username").send_keys("egcVotacion")
+        self.driver.find_element_by_id("id_password").send_keys("egcVotacion")
+        self.driver.find_element_by_id("id_password").send_keys(Keys.ENTER)
+
+
+        # Añado pregunta
+        self.driver.find_element_by_link_text("Questions").click()
+        self.driver.find_element_by_link_text("ADD QUESTION").click()
+        self.driver.find_element(By.ID, "id_desc").click()
+        self.driver.find_element(By.ID, "id_desc").send_keys("pregunta de prueba")
+        self.driver.find_element_by_id("id_options-0-option").click()
+        self.driver.find_element_by_id("id_options-0-option").send_keys("opcion1")
+        self.driver.find_element_by_id("id_options-0-option").click()
+        self.driver.find_element(By.ID, "id_options-1-option").send_keys("opcion2")
+        self.driver.find_element(By.NAME, "_save").click()
+
+        # Añado auth
+        self.driver.get("http://localhost:8000/admin/")
+        self.driver.find_element_by_link_text("Auths").click()
+        self.driver.find_element_by_link_text("ADD AUTH").click()
+        self.driver.find_element(By.ID, "id_name").click()
+        self.driver.find_element(By.ID, "id_name").send_keys("localhost")
+        self.driver.find_element(By.ID, "id_url").click()
+        self.driver.find_element(By.ID, "id_url").send_keys("http://localhost:8000")
+        self.driver.find_element(By.ID, "id_me").click()
+        self.driver.find_element(By.NAME, "_save").click()
+
+        # Añado votacion
+        self.driver.get("http://localhost:8000/admin/")
+        self.driver.find_element_by_link_text("Votings").click()
+        self.driver.find_element_by_link_text("ADD VOTING").click()
+        self.driver.find_element(By.ID, "id_name").send_keys("prueba")
+        self.driver.find_element(By.ID, "id_desc").send_keys("descripcion de prueba")
+        dropdown = self.driver.find_element(By.NAME, "question")
+        dropdown.find_element(By.XPATH, "//option[. = 'pregunta de prueba']").click()
+        Select(driver.find_element(By.ID,"id_auths")).select_by_visible_text("http://localhost:8000")
+        self.driver.find_element(By.NAME, "_save").click()
+
+
+        # Inicio votacion
+        self.driver.get("http://localhost:8000/admin/")
+        self.driver.find_element_by_link_text("Votings").click()
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Start']").click()
+        self.driver.find_element(By.NAME, "index").click()
+
+        #Termino votacion
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Stop']").click()
+        self.driver.find_element(By.NAME, "index").click()
+
+        #Recuento de votacion
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Tally']").click()
+        self.driver.find_element(By.NAME, "index").click()
+       
+        # Accedo a la votacion 
+        self.driver.find_element(By.LINK_TEXT, "prueba").click()
+        # Compruebo que está vacío el campo
+        self.assertEqual("",self.driver.find_element(By.CSS_SELECTOR, ".field-file .readonly").text)
+        
+        # Guardo la votacion
+        self.driver.find_element(By.LINK_TEXT, "Votings").click()
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Save']").click()
+        self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.NAME, "index").click()
+        
+        # Accedo a la votacion
+        self.driver.find_element(By.LINK_TEXT, "prueba").click()
+        # Compruebo que se ha guardado
+        self.assertNotEqual("",self.driver.find_element(By.CSS_SELECTOR, ".field-file .readonly").text)
+
+        # Borro la votacion
+        self.driver.find_element(By.LINK_TEXT,"Delete").click()
+        self.driver.find_element(By.XPATH,"//input[@value=\"Yes, I'm sure\"]").click()
+
+        # Borro la pregunta
+        self.driver.get("http://localhost:8000/admin/voting/")
+        self.driver.find_element_by_link_text("Questions").click()
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.XPATH, "//option[. = 'Delete selected questions']").click()
+        self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.NAME, "index").click()
+        self.driver.find_element(By.XPATH,"//input[@value=\"Yes, I'm sure\"]").click()
+
+        # Borro el auth
+        self.driver.get("http://localhost:8000/admin/base/auth/")
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.XPATH, "//option[. = 'Delete selected auths']").click()
+        self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.NAME, "index").click()
+        self.driver.find_element(By.XPATH,"//input[@value=\"Yes, I'm sure\"]").click()
+
+        
+
+
+
+#
+    def tearDown(self):
+        super().tearDown()
+        self.driver.quit()
+
+        self.base.tearDown()
