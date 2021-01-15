@@ -65,14 +65,18 @@
                     <table class="tb table" id="table">
                         <thead>
                             <tr>
-                                <th><h5 class="heading" style="font-style: italic;" id="question"> {% trans "Votings" %}</h5></th>
+                                <th><h5 class="heading" style="font-style: italic; text-align: left;" id="question"> {% trans "Votings" %}</h5></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <td>
                                 {% for voting in votings %}
                                 <tr>   
-                                    <td class="options" style="text-align: left;"><a href="./{{voting.id}}">{{ voting.name }}</a></td> 
+                                    <td class="options" style="text-align: left;"><a href="./{{voting.id}}">{{ voting.name }}</a></td>
+                                    <td style="text-align: left;">{{ voting.start_date }}</td>
+                                    <td style="text-align: left;">{{ voting.end_date }}</td>  
                                 </tr>
                                 {% endfor %}
 
