@@ -4,8 +4,10 @@
     <head>
         <meta charset="utf-8" />
         <title>Decide Pícaro{% block title %}{% endblock %}</title>
-        <link rel="shortcut icon" type="image/png" href="{% static 'favicon/picaro.png' %}" />
-        <link rel="stylesheet" href="{% static 'css/mfb.css' %}" >
+        <link rel="shortcut icon" type="image/png" href="../../static/favicon/picaro.png" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../../static/css/mfb.css" >
+
         {% block extrahead %}{% endblock %}
     </head>
     <body>
@@ -17,8 +19,8 @@
             <input name="next" type="hidden" value="{{ redirect_to }}" />
             <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
                 <li class="mfb-component__wrap">
-                    <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary">
-                        <i class="fa fa-globe"></i>
+                    <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-dark">
+                        <i class="fa fa-language"></i>
                     </a>
                     <ul class="mfb-component__list">
                         {% get_available_languages as LANGUAGES %}
@@ -29,16 +31,54 @@
                             {% if LANGUAGE_CODE == "es" %}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
                                 type="submit" value="{{lang.code}}" name="language"
-                                {% if lang.code == "es" %} data-mfb-label="Español" {% else %} data-mfb-label="Inglés" {% endif %}>
-                                <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" {% else %}
-                                    src="{% static '/images/england.jpg' %}" {% endif %}> 
+
+                                {% if lang.code == "es" %} data-mfb-label="Español"
+                                    {% elif lang.code == "en"%} data-mfb-label="Inglés"
+                                    {% elif lang.code == "de"%} data-mfb-label="Alemán"
+                                        {% else %} data-mfb-label="Francés" {% endif %}>
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg"
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg"
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}>
+                            </button>
+                            {% elif LANGUAGE_CODE == "en"%}
+                            <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
+                                type="submit" value="{{lang.code}}" name="language"
+                                {% if lang.code == "es" %} data-mfb-label="Spanish"
+                                    {% elif lang.code == "en"%} data-mfb-label="English"
+                                    {% elif lang.code == "de"%} data-mfb-label="German"
+                                        {% else %} data-mfb-label="French" {% endif %}>
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg"
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg"
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}>  
+                            </button>
+                            {% elif LANGUAGE_CODE == "de"%}
+                            <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
+                                type="submit" value="{{lang.code}}" name="language"
+                                {% if lang.code == "es" %} data-mfb-label="Spanisch"
+                                    {% elif lang.code == "en"%} data-mfb-label="Englisch"
+                                    {% elif lang.code == "de"%} data-mfb-label="Deutsch"
+                                        {% else %} data-mfb-label="Französisch" {% endif %}>
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg"
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg"
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}>
+
                             </button>
                             {% else %}
                             <button class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-light"
                                 type="submit" value="{{lang.code}}" name="language"
-                                {% if lang.code == "es" %} data-mfb-label="Spanish" {% else %} data-mfb-label="English" {% endif %}>
-                                <img width="30" {% if lang.code == "es" %} src="{% static '/images/spain.jpg' %}" {% else %}
-                                    src="{% static '/images/england.jpg' %}" {% endif %}> 
+
+                                {% if lang.code == "es" %} data-mfb-label="Espagnol"
+                                    {% elif lang.code == "en"%} data-mfb-label="Anglais"
+                                    {% elif lang.code == "de"%} data-mfb-label="Allemand"
+                                        {% else %} data-mfb-label="Français" {% endif %}>
+                                <img width="30" {% if lang.code == "es" %} src="../../static/images/spain.jpg"
+                                    {% elif lang.code == "en" %} src="../../static/images/england.jpg"
+                                    {% elif lang.code == "de" %} src="../../static/images/german.jpg"
+                                        {% else %} src="../../static/images/france.jpg"{% endif %}>
+
                             </button>
                             {% endif %}
                         </li>
