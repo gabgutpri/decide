@@ -221,8 +221,7 @@ class DeleteProfile:
     def delete(request, username):
         try:
             user = User.objects.get(username=username)
-            user.delete()
-            messages.success(request, "Usuario borrado correctamente")
+            user.delete() 
             return redirect('../../')
         except User.DoesNotExist:
             messages.error(request, "El usuario no existe")
