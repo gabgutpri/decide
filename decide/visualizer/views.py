@@ -75,11 +75,13 @@ class VisualizerHome(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         queryset = Voting.objects.all()
-
+        
+        # Parte de la gráfica --- gabgutpri (visualizacion)
         votaciones = mods.get('voting', params={}) # Todas las votaciones
         context['votaciones']= json.dumps(votaciones) # Transformación para que no de problemas en el script JS
         votos = get_todos_votos(queryset) # Traer todos los votos de cada votación
         context['votos'] = votos
+        # ------------
 
         context.update({'votings': queryset})
         return context
