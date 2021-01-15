@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
-
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -87,6 +85,8 @@ SOCIAL_AUTH_TWITTER_SECRET = 'K0I5W9xa2Btcv2xxO1IpacNXlTioplgeXVUlBG3XMbHwpei76B
 #This command will run a dummy smtpd server in the port 1025 of your machine, note that this server may already been enabled
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+#Url to redirect after successfull login
+LOGIN_REDIRECT_URL = '/'
 
 MODULES = [
     'authentication',
@@ -100,7 +100,7 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://decide-picaro-authentication.herokuapp.com'
+BASEURL = 'https://picaro-decide.herokuapp.com'
 
 APIS = {
     'authentication': BASEURL ,

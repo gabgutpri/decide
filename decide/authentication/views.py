@@ -22,6 +22,7 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 
 from .forms import RegisterForm
 from django.contrib.auth import logout, login, authenticate
@@ -151,6 +152,10 @@ class UserProfile:
         context = {
             "user": user
         }
+        selfusername = request.user.username
+        if not username == selfusername:
+            return HttpResponse('You are not authorized to see this page.')
+
         return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
 
 class ProfileView(APIView):
@@ -159,11 +164,10 @@ class ProfileView(APIView):
         tk = get_object_or_404(Token, key=key)
         if not tk.user.is_superuser:
             return Response({}, status=HTTP_401_UNAUTHORIZED)
-
+        
         username = user.profile.username
         if not username:
             return Response({}, status=HTTP_400_BAD_REQUEST)
-
 
         return Response(request, 'user_profile.html', context)
 
@@ -175,17 +179,26 @@ class EditUserProfile:
         first_name = user.first_name
         last_name = user.last_name
         email = user.email
-        password = user.password
         context = {
             "user": user
         }
+        selfusername = request.user.username
+        if not username == selfusername:
+            return HttpResponse('You are not authorized to see this page.')
         if request.method == 'POST':
          form = UpdateProfile(request.POST, instance=request.user)
          form.actual_user = request.user
          if form.is_valid():
-             form.save()
-             username = user.username
-             return render(request, 'user_profile.html', context={'username': username})
+                form.save()
+                username = form.actual_user.username
+                first_name = form.actual_user.first_name
+                last_name = form.actual_user.last_name
+                email = form.actual_user.email
+                return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email}) 
+         elif request.POST.get('username') == '':         
+             messages.error(request, 'El nombre de usuario de puede estar vacío.')
+         elif User.objects.get(username=request.POST.get('username')).DoesNotExist:
+             messages.error(request, 'El nombre de usuario ya está en uso.')
         else:
             form = UpdateProfile()
         return render(request, 'edit_user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email})
@@ -200,6 +213,5 @@ class EditProfileView(APIView):
         username = user.profile.username
         if not username:
             return Response({}, status=HTTP_400_BAD_REQUEST)
-
 
         return Response(request, 'user_profile.html', context)
