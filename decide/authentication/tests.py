@@ -141,14 +141,12 @@ class RegisterGuiTests(TestCase):
         self.last_name = 'Test User'
 
     #Testing the Get Access for the Register Form
-    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
     def test_register_page_access(self):
         response = self.client.get("/authentication/registergui/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name = 'register.html')
 
     #Testing the Get Access for the Register Form
-    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
     def test_register_page_access_logged(self):
         usertest = User.objects.create_user(username='testuser')
         usertest.set_password('ganma231')
@@ -161,7 +159,6 @@ class RegisterGuiTests(TestCase):
         self.client.logout()
 
     #Testing a post request with an invalid password
-    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
     def test_register_form_bad_pass(self):
         response = self.client.post("/authentication/registergui/", data={
             'username' : self.username,
@@ -178,7 +175,6 @@ class RegisterGuiTests(TestCase):
         self.assertFalse(User.objects.filter(username=self.username).exists())
 
     #Testing a post request with no username given
-    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
     def test_register_form_no_user(self):
         response = self.client.post("/authentication/registergui/", data={
             'username' : '',
@@ -193,7 +189,6 @@ class RegisterGuiTests(TestCase):
         self.assertTemplateUsed(response, template_name = 'register.html')
 
     #Testing a succesful post request
-    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
     def test_register_form(self):
         response = self.client.post("/authentication/registergui/", data={
             'username' : self.username,
