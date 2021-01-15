@@ -198,7 +198,6 @@ class EditUserProfile:
          elif request.POST.get('username') == '':         
              messages.error(request, 'El nombre de usuario de puede estar vacío.')
          elif User.objects.get(username=request.POST.get('username')).DoesNotExist:
-             print("aaaa")
              messages.error(request, 'El nombre de usuario ya está en uso.')
         else:
             form = UpdateProfile()
