@@ -138,4 +138,7 @@ class Voting(models.Model):
         'chat_id': id,
         'text' : str(msn)
         }
-        requests.post(url, params=params)
+        try:
+            requests.post(url, params=params)
+        except:
+            pass

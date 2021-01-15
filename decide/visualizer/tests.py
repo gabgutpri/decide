@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-import unittest
+import unittest, time, re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
@@ -9,6 +9,8 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
 
 from PIL import Image
 
@@ -397,5 +399,115 @@ class TestGraficaBarras():
     def tearDown(self):
         self.driver.quit()
 
+class TestPodium(unittest.TestCase):
+    def setUp(self):
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
+    
+    def test_p(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
+        try: self.assertEqual("WINNER", self.driver.find_element_by_xpath("(//div[@id='winner'])[2]").text)
+        except AssertionError as e: self.verificationErrors.append(str(e))
+        try: self.assertEqual("2nd place", self.driver.find_element_by_id("winner").text)
+        except AssertionError as e: self.verificationErrors.append(str(e))
+        try: self.assertEqual("3rd place", self.driver.find_element_by_xpath("(//div[@id='winner'])[3]").text)
+        except AssertionError as e: self.verificationErrors.append(str(e))
+    
+    def is_element_present(self, how, what):
+        try: self.driver.find_element(by=how, value=what)
+        except NoSuchElementException as e: return False
+        return True
+    
+    def is_alert_present(self):
+        try: self.driver.switch_to_alert()
+        except NoAlertPresentException as e: return False
+        return True
+    
+    def close_alert_and_get_its_text(self):
+        try:
+            alert = self.driver.switch_to_alert()
+            alert_text = alert.text
+            if self.accept_next_alert:
+                alert.accept()
+            else:
+                alert.dismiss()
+            return alert_text
+        finally: self.accept_next_alert = True
+    
+    def tearDown(self):
+        # To know more about the difference between verify and assert,
+        # visit https://www.seleniumhq.org/docs/06_test_design_considerations.jsp#validating-results
+        self.driver.quit()
+
+class TestTraduccionAleman():
+  def setup(self):
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    options.add_argument("--no-sandbox")
+    self.driver = webdriver.Chrome(options=options)
+  
+  def teardown(self):
+    self.driver.quit()
+  
+  def test_traduccionAleman(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+    self.driver.set_window_size(1552, 840)
+    element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(4) img").click()
+    assert self.driver.find_element(By.ID, "text").text == "Ergebnisse"
+
+""" Comentado porque estos cambios no estan todavia en heroku
+class TestHomeVisualizer(unittest.TestCase):
+    def setUp(self):
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
+  
+    def test_home_visualizer(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer")
+        try: self.assertEqual("Votings", self.driver.find_element_by_id("question").text)
+        except AssertionError as e: self.verificationErrors.append(str(e))
+    
+    def is_element_present(self, how, what):
+        try: self.driver.find_element(by=how, value=what)
+        except NoSuchElementException as e: return False
+        return True
+    
+    def is_alert_present(self):
+        try: self.driver.switch_to_alert()
+        except NoAlertPresentException as e: return False
+        return True
+    
+    def close_alert_and_get_its_text(self):
+        try:
+            alert = self.driver.switch_to_alert()
+            alert_text = alert.text
+            if self.accept_next_alert:
+                alert.accept()
+            else:
+                alert.dismiss()
+            return alert_text
+        finally: self.accept_next_alert = True
+
+    def tearDown(self):
+        self.driver.quit()
+"""
 # if __name__ == '__main__':
 #     unittest.main()
