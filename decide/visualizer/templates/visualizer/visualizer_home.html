@@ -70,21 +70,30 @@
                         </thead>
                         <tbody>
                             <td>
-                                <thead>
                                 {% for voting in votings %}
                                 <tr>   
-                                    <td class="options"><a href="./{{voting.id}}">{{ voting.name }}</a></td>
+                                    <td class="options" style="text-align: left;"><a href="./{{voting.id}}">{{ voting.name }}</a></td> 
                                 </tr>
-                                {% endfor %}  
-                                </tbody>
-                                </table>
-                                </div>
+                                {% endfor %}
+
                             </td>
                         </tbody>
                     </table>
                 </div>
-                <h5 class="heading"><i class="fa fa-bar-chart"></i> {% trans "Bar Chart" %}</h5>
-                <canvas  id="myChart" width="500" height="500"></canvas>
+                <section>
+                    <table class="tb table-responsive" id="table">
+                        <thead>
+                            <tr>
+                                <th><h5 class="heading"><i class="fa fa-bar-chart"></i> {% trans "Bar Chart" %}</h5>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><canvas id="myChart" width="1000" height="500"></canvas></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
             </div>
         </div>        
 
@@ -162,17 +171,17 @@
 <!--Bar chart script for votings comparison (gabgutpri, visualización)-->
 <script>
     var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
-    var listNumVotos = votos
-    var vot=votings;
+    var votaciones = {{votaciones|safe}};
+    var votos = {{votos|safe}};
 
     function getColoresRandom(){
         var colorRandom='#'+Math.random().toString(16).substr(-6);
        return colorRandom;
     }
 
-    for(var i=0;i<vot.length;i++){
-        data.push(listNumVotos[i])
-        labels.push(vot[i].name)
+    for(var i=0;i<votaciones.length;i++){
+        data.push(votos[i])
+        labels.push(votaciones[i].name)
         color= getColoresRandom()
         colores.push(color)
     }
