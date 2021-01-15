@@ -170,7 +170,7 @@
 
 <!--Bar chart script for votings comparison (gabgutpri, visualización)-->
 <script>
-    var data=[];var labels=[];var colores=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
+    var data=[];var labels=[]; var numeros="0123456789ABCDEF";var almohadilla="#";var color="";
     var votaciones = {{votaciones|safe}};
     var votos = {{votos|safe}};
 
@@ -183,7 +183,6 @@
         data.push(votos[i])
         labels.push(votaciones[i].name)
         color= getColoresRandom()
-        colores.push(color)
     }
 
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -194,7 +193,7 @@
                 data: data,
                 borderWidth: '2',
                 borderColor: '#6c757d',
-                backgroundColor: '#9d9c9f',
+                backgroundColor: getColoresRandom(),
                 hoverBackgroundColor: '#242330',
                 label: '{% trans "Number of votes" %}'}],
                 labels: labels},
