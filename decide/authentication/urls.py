@@ -4,7 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation
+from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation, ProfileView, UserProfile, EditUserProfile, EditProfileView
 
 
 
@@ -13,6 +13,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view()),
     path('getuser/', GetUserView.as_view()),
     path('register/', RegisterView.as_view()),
+    path('profile/', ProfileView.as_view()),
+    path('editprofile/', EditProfileView.as_view()),
     #Register URL
     path('registergui/', RegisterGUI.register, name='account_activation_sent'),
     #Login URL Built In
@@ -25,5 +27,11 @@ urlpatterns = [
     path('activate/<slug:uidb64>/<slug:token>/', AccountActivation.activate, name='activate'),
     #OAuth Social Login URL
     path('oauth/', include('social_django.urls', namespace='social')),
+    #User Profile
+    path('profile/<username>', UserProfile.user_profile, name='user_profile'),
+    #Edit Profile
+    path('editprofile/<username>', EditUserProfile.edit_user_profile, name='edit_user_profile'),
+
+
 
 ]
