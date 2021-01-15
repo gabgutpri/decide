@@ -27,10 +27,11 @@
         <div class="form-group">
             <h6>Email:</h6>
             <input readonly name="email" class="form-control" placeholder="" type="text" value="{{email}}">
-        </div> <!-- form-group// -->   
-        <div>
-            <a href="../editprofile/{{username}}" class="float-right btn btn-outline-primary">Editar Perfil</a>
-        </div>                                                                                                
+        </div> <!-- form-group// -->
+        <div class="col-md-9 text-center">
+          <a href="../editprofile/{{username}}" class="float-right btn btn-outline-primary">Editar Perfil</a>
+            <a href="../deleteprofile/{{username}}" class="float-right btn btn-outline-danger btn-lg">Borrar usuario</a>    
+        </div>                                                                                                                                                                                                
     </form>
     </article>
     </div> <!-- card.// -->

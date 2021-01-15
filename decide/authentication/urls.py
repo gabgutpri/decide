@@ -4,7 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation, ProfileView, UserProfile, EditUserProfile, EditProfileView
+from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation, ProfileView, UserProfile, EditUserProfile, EditProfileView, DeleteProfile
 
 
 
@@ -31,6 +31,8 @@ urlpatterns = [
     path('profile/<username>', UserProfile.user_profile, name='user_profile'),
     #Edit Profile
     path('editprofile/<username>', EditUserProfile.edit_user_profile, name='edit_user_profile'),
+    #Delete user
+    path('deleteprofile/<username>', DeleteProfile.delete, name='delete'),
 
 
 
