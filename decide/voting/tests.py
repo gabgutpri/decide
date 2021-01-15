@@ -94,6 +94,8 @@ class VotingTestCase(BaseTestCase):
         clear = self.store_votes(v)
 
         self.login()  # set token
+
+        v.end_date=timezone.now()
         v.tally_votes(self.token)
 
         tally = v.tally
@@ -105,6 +107,10 @@ class VotingTestCase(BaseTestCase):
 
         for q in v.postproc:
             self.assertEqual(tally.get(q["number"], 0), q["votes"])
+
+        v.saveFile()
+        nombre_guardado=str(v.file)
+        self.assertEqual(nombre_guardado,'ficheros/'+str(v.id)+'-'+v.name+' - '+v.end_date.strftime('%d-%m-%y')+'.txt')
 
     def test_create_voting_from_api(self):
         data = {'name': 'Example'}
