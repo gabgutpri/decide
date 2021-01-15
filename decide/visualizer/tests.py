@@ -406,7 +406,7 @@ class TestPodium():
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
     
-    def test_p(self):
+    def test_podium(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
@@ -416,12 +416,9 @@ class TestPodium():
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
         self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
-        try: self.assertEqual("WINNER", self.driver.find_element_by_xpath("(//div[@id='winner'])[2]").text)
-        except AssertionError as e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("2nd place", self.driver.find_element_by_id("winner").text)
-        except AssertionError as e: self.verificationErrors.append(str(e))
-        try: self.assertEqual("3rd place", self.driver.find_element_by_xpath("(//div[@id='winner'])[3]").text)
-        except AssertionError as e: self.verificationErrors.append(str(e))
+        assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(2) > #winner").text == "WINNER"
+        assert self.driver.find_element(By.ID, "winner").text == "2nd place"
+        assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(3) > #winner").text == "3rd place"
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -467,6 +464,27 @@ class TestTraduccionAleman():
     actions.move_to_element(element).perform()
     self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(4) img").click()
     assert self.driver.find_element(By.ID, "text").text == "Ergebnisse"
+
+class TestPodiumTraduccionEspañol():
+  def setup(self):
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    options.add_argument("--no-sandbox")
+    self.driver = webdriver.Chrome(options=options)
+  
+  def teardown(self):
+    self.driver.quit()
+  
+  def test_podiumTraduccionEspañol(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+    self.driver.set_window_size(1552, 840)
+    element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) img").click()
+    assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(2) > #winner").text == "GANADOR"
+    assert self.driver.find_element(By.ID, "winner").text == "2º puesto"
+    assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(3) > #winner").text == "3º puesto"
 
 """ Comentado porque estos cambios no estan todavia en heroku
 class TestHomeVisualizer():
