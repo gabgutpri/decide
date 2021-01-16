@@ -271,14 +271,9 @@ class YesNoQuestionModelTestCase(BaseTestCase):
         a.save()
         v.auths.add(a)
 
-        elf.assertEquals(len(v.options.all()), 2)
+        elf.assertEquals(len(v.questio_op.all()), 2)
         self.assertEquals(v.question.yes_no_question, True)
-        self.assertEquals(v.name, 'Yes/No voting test')
-        self.assertEquals(v.question.all()[0].option, 'YES')
-        self.assertEquals(v.question.all()[1].option, 'NO')
-        self.assertEquals(v.question.all()[0].number, 1)
-        self.assertEquals(v.question.all()[1].number, 2)
-
+        
 # Yes/No question view test
 class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
 
