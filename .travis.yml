@@ -16,7 +16,8 @@ install:
 script:
 - cd decide
 - cp travis_local_settings.py local_settings.py
-- coverage run --branch --source=. ./manage.py test authentication visualizer voting --keepdb
+- coverage run --branch --source=. ./manage.py test authentication visualizer voting
+  --keepdb
 - coverage xml
 - python-codacy-coverage -r coverage.xml
 deploy:
@@ -24,4 +25,4 @@ deploy:
   app: picaro-decide
   strategy: git
   api_key:
-    secure: SDt7FSvAfUp9J0aA0vhQGKN7ZUfHvbyX/GMr/gVQmlkobFNWu9Wk8f5O2jzxEcHJfP9DKRPwzK5CF2d422bd/toKXEJldIoZL57YQnomlKElqetaLBoETyydhn/oZkkF+aTv/zZF92m2dQGetTlG6Zp1sqFSW9BwXFKBrMIh9XjqFton6AFDZ5DPCy6Gn9303OAkxtWmqG4EGTEzJ2VV9ambCEMs30ZSeAGn4eVbWC92CvSaef32aOBvKcHKSKIrBkN5Y0olYGHRj00s+tr0iBlVfxKyVb1lI6vwuuh85+8w2UGVXp+NCAEy+Dm1RLz3lhDi3hpIyXK1V9JCqw6arbuNgvB0vHvRuldAj8cw3lmpD9kLlmDfstyw5MJd8UAf22rwsI1nUA6Ga/qycAD1kOIOgPwF6oWLW16M+MOGE/+loZIj4NmQTs3wiYAemqwVqEHc9enViEAaSD2M2zUWPI7L2m9gd2iOll6UleKosqz9f8hQFBLKcaTuaoH5qRHAIPeSVIAZA+GmJhbj9lM++yVhZW5aJ0SVzx+RhGAXcgweVNtUIH8F2DU1Es001zNML90k+G47MpnGqfIHuZcxSVtttLS6raoJIHEQSNUzfwXsy4mBjnUzZvy4YeOf/DId8kb/Wrk0+8P/MOoaDVUEePae7rz4jRcHfHj1UXMPpd0=
+    secure: WMSJx2u4rO6cEvOA6jf9Dr5UVGFs0i6ENiX2Fy+/iO01PpKCCPOF0jibwpbzJSDJEB+ba99+qe0GuF3WdhvYE56ZTXE3RafWDz+EPrGgF9glHNmk3CLFNAkcADFTF2ply5h0LBoLpPTbgTB2Smkak1JXIpD/0Mfy+KLRooFcYqHCN7NteE8aErNzVjDzfCY3Rv/Mj/I0dEfb4A6jcrcv4iKRwcw5SwNORr+Ucq8uT6MVfh7kv3arTc2IxXWNSW2SeZ/sMKThunqNUgxT+gKtaKv8yWhF8GO7rQeZbTNC55w3ofaTmy8ftJBBgh/wiZBdJKJiBidqypuYLz4asOaly7SNiyTNdyKgJV69Lqdd+QzrLr/vvvz3+7yyVnGR0dNgfiRxDg+i48MaJV8WgbCQ/yrNVup/Vfs9delS5SAyZlt0k6k1IhAuTWRntxg6NRtYB1a5p1kF2WIu0cWJCoO6gsCwH3oFB5NzrH+vRLZGtFoNma39Z2LDwuSb2S78GMzy5RKXxiolIXz8Yo2Nld1kDdt7axTw7KiKuAFdGs8bebfZt/0ZcSGt/QH55AQJOxQIfX3+05apxyZ69d4E81FDB37oSpmcN2BLsqUIkdPg7DJTBrIRznP/ZBhPMDBbhpqjA2CbTVrPAdpGz38sv5uz+clO1p8QdYOO6KeNBXvsXvc=
