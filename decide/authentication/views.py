@@ -26,6 +26,7 @@ from django.contrib import messages
 
 from .forms import RegisterForm
 from django.contrib.auth import logout, login, authenticate
+from django.contrib import messages
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
  
@@ -196,7 +197,7 @@ class EditUserProfile:
                 email = form.actual_user.email
                 return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email}) 
          elif request.POST.get('username') == '':         
-             messages.error(request, 'El nombre de usuario de puede estar vacío.')
+             messages.error(request, 'El nombre de usuario no puede estar vacío.')
          elif User.objects.get(username=request.POST.get('username')).DoesNotExist:
              messages.error(request, 'El nombre de usuario ya está en uso.')
         else:
@@ -215,3 +216,37 @@ class EditProfileView(APIView):
             return Response({}, status=HTTP_400_BAD_REQUEST)
 
         return Response(request, 'user_profile.html', context)
+
+class DeleteProfile:
+    def delete(request, username):
+        user = User.objects.get(username=username)
+        username = user.username
+        selfusername = request.user.username
+        if not username == selfusername:
+            return HttpResponse('You are not authorized to see this page.')
+        if request.method == 'POST':
+            form = UpdateProfile(request.POST, instance=request.user)
+            form.actual_user = request.user
+            if request.POST.get('deleteprofile') == 'BORRAR':
+                try:
+                    user = User.objects.get(username=username)
+                    user.delete()
+                    return redirect('../../')
+                except User.DoesNotExist:
+                    messages.error(request, "El usuario no existe")
+            elif request.POST.get('deleteprofile') != 'BORRAR':         
+                messages.error(request, 'Por favor, escriba la parabra solicitada.')
+        return render(request, 'delete_profile.html')
+
+class DeleteProfileView(APIView):
+    def post(self, request):
+        key = request.data.get('token', '')
+        tk = get_object_or_404(Token, key=key)
+        if not tk.user.is_superuser:
+            return Response({}, status=HTTP_401_UNAUTHORIZED)
+
+        username = user.profile.username
+        if not username:
+            return Response({}, status=HTTP_400_BAD_REQUEST)
+
+        return Response(request, 'logingui.html')
