@@ -70,14 +70,14 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 #Social Login Keys
-
+import environ
 #Facebook App Keys
-SOCIAL_AUTH_FACEBOOK_KEY = '1611054769087460'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'e5a981424b175589a87110c712dc3584'
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 #Twitter App keys
-SOCIAL_AUTH_TWITTER_KEY = 'YeLc8PNE10orRRnAMINCwyPWG'
-SOCIAL_AUTH_TWITTER_SECRET = 'K0I5W9xa2Btcv2xxO1IpacNXlTioplgeXVUlBG3XMbHwpei76B'
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
 
 #Email Auth Backend (For testing and debugging purposes, not yet ready for production)
 #If emails doesn't show up in the command prompt when performing an email dependant operation (Such as email verification)
@@ -85,6 +85,8 @@ SOCIAL_AUTH_TWITTER_SECRET = 'K0I5W9xa2Btcv2xxO1IpacNXlTioplgeXVUlBG3XMbHwpei76B
 #This command will run a dummy smtpd server in the port 1025 of your machine, note that this server may already been enabled
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+#Url to redirect after successfull login
+LOGIN_REDIRECT_URL = '/'
 
 MODULES = [
     'authentication',
@@ -130,7 +132,7 @@ ROOT_URLCONF = 'decide.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["decide/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

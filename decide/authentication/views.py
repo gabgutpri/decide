@@ -26,6 +26,7 @@ from django.contrib import messages
 
 from .forms import RegisterForm
 from django.contrib.auth import logout, login, authenticate
+from django.contrib import messages
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
  
@@ -215,3 +216,14 @@ class EditProfileView(APIView):
             return Response({}, status=HTTP_400_BAD_REQUEST)
 
         return Response(request, 'user_profile.html', context)
+
+class DeleteProfile:
+    def delete(request, username):
+        try:
+            user = User.objects.get(username=username)
+            user.delete() 
+            return redirect('../../')
+        except User.DoesNotExist:
+            messages.error(request, "El usuario no existe")
+
+        
