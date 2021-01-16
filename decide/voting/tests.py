@@ -306,16 +306,14 @@ class EndDateTestCase(StaticLiveServerTestCase):
         if len(wh_now) > len(wh_then):
             return set(wh_now).difference(set(wh_then)).pop()      
 
+    #Test de selenium de la fecha de finalizacion caso positivo
     def test_end_date_p(self):
         driver = self.driver
-        User.objects.create_superuser('egcVotacion','votacion@decide.com','egcVotacion')
         
         #Iniciar sesion
         driver.get("http://localhost:8000/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("practica")
-        time.sleep(1)
         self.driver.find_element_by_id('id_password').send_keys("practica", Keys.ENTER)
-        time.sleep(1)
 
         #Crear auths
         self.driver.find_element_by_link_text("Auths").click()
@@ -327,16 +325,16 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_me").click()
         self.driver.find_element(By.NAME, "_save").click()
 
+        #Crear votacion
         self.driver.get("http://localhost:8000/admin/")
         driver.find_element_by_link_text("Votings").click()
-        time.sleep(1)
         driver.find_element_by_link_text("AÑADIR VOTING").click()
-        time.sleep(1)
         self.driver.find_element(By.ID, "id_name").click()
         self.driver.find_element(By.ID, "id_name").send_keys("prueba")
         self.driver.find_element(By.ID, "id_desc").click()
         self.driver.find_element(By.ID, "id_desc").send_keys("prueba")
-        #Crear question
+
+        #Crear question dentro de crear votacion
         self.driver.find_element(By.CSS_SELECTOR, ".field-question .related-widget-wrapper").click()
         self.vars["window_handles"] = self.driver.window_handles
         self.driver.find_element(By.CSS_SELECTOR, "#add_id_question > img").click()
@@ -357,11 +355,15 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.LINK_TEXT, "Hoy").click()
         self.driver.find_element(By.ID, "id_end_date_1").click()
         self.driver.find_element(By.ID, "id_end_date_1").send_keys("23:50:00")
+
         #Seleccionar auth
         dropdown = self.driver.find_element(By.ID, "id_auths")
         dropdown.find_element(By.XPATH, "//option[. = 'http://localhost:8000']").click()
-        #Sigue con la votacion
+
+        #Guardar la votacion
         self.driver.find_element(By.NAME, "_save").click()
+
+        #Iniciar la votacion
         self.driver.find_element(By.NAME, "_selected_action").click()
         dropdown = self.driver.find_element(By.NAME, "action")
         dropdown.find_element(By.XPATH, "//option[. = 'Start']").click()
@@ -376,6 +378,7 @@ class EndDateTestCase(StaticLiveServerTestCase):
         actions.move_to_element(element).release().perform()
         self.driver.find_element(By.NAME, "action").click()
         self.driver.find_element(By.NAME, "index").click()
+
         #Crear censo
         driver.get("http://localhost:8000/admin/login/?next=/admin/")
         driver.find_element_by_link_text("Censuss").click()
@@ -385,38 +388,47 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_voter_id").click()
         self.driver.find_element(By.ID, "id_voter_id").send_keys("1")
         self.driver.find_element(By.NAME, "_save").click()
-        #Realizar votacion
+
+        #Realizar la votacion
         driver.get("http://localhost:8000/booth/1")
         self.driver.find_element(By.ID, "username").click()
         self.driver.find_element(By.ID, "username").send_keys("practica")
         self.driver.find_element(By.ID, "password").click()
         self.driver.find_element(By.ID, "password").send_keys("practica")
         self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
-        time.sleep(5)
         self.driver.find_element(By.CSS_SELECTOR, "#\\__BVID__12 .custom-control-label").click()
-        time.sleep(5)
+
+        #Cerrar sesion
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
-        time.sleep(5)
         self.driver.find_element(By.LINK_TEXT, "Logout").click()
 
+    #Test de selenium de la fecha de finalizacion caso negativo
     def test_end_date_n(self):
         driver = self.driver
-        User.objects.create_superuser('egcVotacion','votacion@decide.com','egcVotacion')
+
         #Iniciar sesion
         driver.get("http://localhost:8000/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("practica")
-        time.sleep(1)
         self.driver.find_element_by_id('id_password').send_keys("practica", Keys.ENTER)
-        time.sleep(1)
+
+        #Crear auths
+        self.driver.find_element_by_link_text("Auths").click()
+        self.driver.find_element_by_link_text("AÑADIR AUTH").click()
+        self.driver.find_element(By.ID, "id_name").click()
+        self.driver.find_element(By.ID, "id_name").send_keys("localhost")
+        self.driver.find_element(By.ID, "id_url").click()
+        self.driver.find_element(By.ID, "id_url").send_keys("http://localhost:8000")
+        self.driver.find_element(By.ID, "id_me").click()
+        self.driver.find_element(By.NAME, "_save").click()
+
         #Crear votacion
         driver.find_element_by_link_text("Votings").click()
-        time.sleep(1)
         driver.find_element_by_link_text("AÑADIR VOTING").click()
-        time.sleep(1)
         self.driver.find_element(By.ID, "id_name").click()
         self.driver.find_element(By.ID, "id_name").send_keys("prueba")
         self.driver.find_element(By.ID, "id_desc").click()
         self.driver.find_element(By.ID, "id_desc").send_keys("prueba")
+
         #Crear question
         self.driver.find_element(By.CSS_SELECTOR, ".field-question .related-widget-wrapper").click()
         self.vars["window_handles"] = self.driver.window_handles
@@ -438,14 +450,21 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.LINK_TEXT, "Hoy").click()
         self.driver.find_element(By.ID, "id_end_date_1").click()
         self.driver.find_element(By.ID, "id_end_date_1").send_keys("00:10:00")
+
         #Seleccionar auth
         dropdown = self.driver.find_element(By.ID, "id_auths")
         dropdown.find_element(By.XPATH, "//option[. = 'http://localhost:8000']").click()
+
+        #Guardar la votacion
         self.driver.find_element(By.NAME, "_save").click()
+        
+        #Comprobar que no se ha aceptado el guardado y sigue en la pagina de creacion
         p = driver.find_element(By.ID, "id_name")
         self.assertEqual("prueba", p.get_attribute('value'))
         d = driver.find_element(By.ID, "id_desc")
         self.assertEqual("prueba", d.get_attribute('value'))
+
+        #Cerrar sesion
         self.driver.find_element(By.CSS_SELECTOR, "a:nth-child(4)").click()
 
     def tearDown(self):           
