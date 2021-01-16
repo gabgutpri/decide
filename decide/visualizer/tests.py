@@ -16,11 +16,11 @@ from selenium.common.exceptions import NoAlertPresentException
 from PIL import Image
 
 class VisualizerTestCase(APITestCase):
-    def setup(self):
-        options = webdriver.ChromeOptions()
-        options.headless = True
-        options.add_argument("--no-sandbox")
-        self.driver = webdriver.Chrome(options=options)
+   
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    options.add_argument("--no-sandbox")
+    self.driver = webdriver.Chrome(options=options)
   
     def test_email(self):
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
