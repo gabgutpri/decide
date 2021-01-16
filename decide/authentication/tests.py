@@ -12,6 +12,7 @@ from urllib.parse import urlparse
 from .models import Profile
 
 
+
 class AuthTestCase(APITestCase):
 
     def setUp(self):
@@ -132,6 +133,23 @@ class AuthTestCase(APITestCase):
             sorted(list(response.json().keys())),
             ['token', 'user_pk']
         )
+
+class LogOutGuiTests(TestCase):
+#Tests for the Logout Function
+
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def logout_test_template(self):
+        #Check that after the redirection it goes to the correct template
+        response = self.client.get("/authentication/logoutgui/", follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name="home.html")
+    
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def logout_test(self):
+        #Check that a redirection is happening
+        response = self.client.get("/authentication/logoutgui/")
+        self.assertEqual(response.status_code, 302)
+
 class RegisterGuiTests(TestCase):
 #Tests for the Register Form
 
