@@ -196,7 +196,7 @@ class EditUserProfile:
                 email = form.actual_user.email
                 return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email}) 
          elif request.POST.get('username') == '':         
-             messages.error(request, 'El nombre de usuario de puede estar vacío.')
+             messages.error(request, 'El nombre de usuario no puede estar vacío.')
          elif User.objects.get(username=request.POST.get('username')).DoesNotExist:
              messages.error(request, 'El nombre de usuario ya está en uso.')
         else:
