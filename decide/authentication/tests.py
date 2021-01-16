@@ -308,6 +308,17 @@ class EditProfileTests(TestCase):
         messages = list(response.context['messages'])
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), 'El nombre de usuario ya está en uso.')
+
+    #Probamos que los datos que se muestran en la página de editar perfil antes de actualizar son correctos
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_correct_edit_profile(self):
+        response = self.client.get("/authentication/editprofile/testouser")
+        self.assertEqual(response.context['username'], 'testouser')
+        self.assertEqual(response.context['first_name'], 'pablo')
+        self.assertEqual(response.context['last_name'], 'elro bot')
+        self.assertEqual(response.context['email'], 'testuseremail@gmail.com')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'edit_user_profile.html')
     
     #Probamos que el perfil se actualiza correctamente
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
