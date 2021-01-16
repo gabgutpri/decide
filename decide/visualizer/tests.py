@@ -14,7 +14,7 @@ from selenium.common.exceptions import NoAlertPresentException
 
 
 
-class TestEmail():
+class TestEmail(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -42,7 +42,7 @@ class TestEmail():
     self.driver.find_element(By.NAME, "Comment").send_keys("test")
     self.driver.find_element(By.CSS_SELECTOR, ".inputBox:nth-child(5) > input").click()
 
-class TestTraduccionFrances():
+class TestTraduccionFrances(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -65,7 +65,7 @@ class TestTraduccionFrances():
     self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(3) img").click()
     assert self.driver.find_element(By.ID, "text").text == "Résultats"
 
-class TestTraduccionContactUs():
+class TestTraduccionContactUs(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -85,7 +85,7 @@ class TestTraduccionContactUs():
     self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary:nth-child(2)").click()
     assert self.driver.find_element(By.CSS_SELECTOR, ".contactForm > h2").text == "Envoyer en méssage"
 
-class TestQuestion():
+class TestQuestion(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -105,7 +105,7 @@ class TestQuestion():
     elements = self.driver.find_elements(By.ID, "question")
     assert len(elements) > 0
 
-class TestMaps():
+class TestMaps(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -126,7 +126,7 @@ class TestMaps():
     elements = self.driver.find_elements(By.CSS_SELECTOR, "a > img")
     assert len(elements) > 0
   
-class TestContactUs():
+class TestContactUs(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -150,7 +150,7 @@ class TestContactUs():
     def tearDown(self):
         self.driver.quit()
 
-class TestContactUsBack():
+class TestContactUsBack(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -176,7 +176,7 @@ class TestContactUsBack():
     def tearDown(self):
         self.driver.quit()
 
-class TestDarkMode():
+class TestDarkMode(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -201,7 +201,7 @@ class TestDarkMode():
     def tearDown(self):
         self.driver.quit()
 
-class TestLightMode():
+class TestLightMode(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -227,7 +227,7 @@ class TestLightMode():
     def tearDown(self):
         self.driver.quit()
         
-class TestTraduccionEspanyol():
+class TestTraduccionEspanyol(APITestCase):
     def setup(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -250,7 +250,7 @@ class TestTraduccionEspanyol():
     def teardown(self):
         self.driver.quit()
         
-class TestTraduccionIngles():
+class TestTraduccionIngles(APITestCase):
     def setup(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -278,7 +278,7 @@ class TestTraduccionIngles():
     def teardown(self):
         self.driver.quit()
 
-class TestAboutUs():
+class TestAboutUs(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -307,7 +307,7 @@ class TestAboutUs():
     def tearDown(self):
         self.driver.quit()
 
-class TestAboutUsBack():
+class TestAboutUsBack(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -338,7 +338,7 @@ class TestAboutUsBack():
     def tearDown(self):
         self.driver.quit()
 
-class TestPNG1PNG2PDF():
+class TestPNG1PNG2PDF(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -363,7 +363,7 @@ class TestPNG1PNG2PDF():
     def tearDown(self):
         self.driver.quit()
 
-class TestDarkModeCookies():
+class TestDarkModeCookies(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -390,7 +390,7 @@ class TestDarkModeCookies():
     def tearDown(self):
         self.driver.quit()
 
-class TestLightModeCookies():
+class TestLightModeCookies(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -421,7 +421,7 @@ class TestLightModeCookies():
     def tearDown(self):
         self.driver.quit()
 
-class TestGraficaBarras():
+class TestGraficaBarras(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -447,7 +447,7 @@ class TestGraficaBarras():
     def tearDown(self):
         self.driver.quit()
 
-class TestPodium():
+class TestPodium(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -495,7 +495,7 @@ class TestPodium():
         # visit https://www.seleniumhq.org/docs/06_test_design_considerations.jsp#validating-results
         self.driver.quit()
 
-class TestTraduccionAleman():
+class TestTraduccionAleman(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -518,7 +518,7 @@ class TestTraduccionAleman():
     self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(4) img").click()
     assert self.driver.find_element(By.ID, "text").text == "Ergebnisse"
 
-class TestPodiumTraduccionEspanol():
+class TestPodiumTraduccionEspanol(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -544,7 +544,7 @@ class TestPodiumTraduccionEspanol():
     assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(3) > #winner").text == "3º puesto"
     
     
-class TestGraficaDonut():
+class TestGraficaDonut(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -571,7 +571,7 @@ class TestGraficaDonut():
         self.driver.quit()
 
 
-class TestTablaResultados():
+class TestTablaResultados(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -603,7 +603,7 @@ class TestTablaResultados():
         self.driver.quit()
 
 
-class TestBotonReturn():
+class TestBotonReturn(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -629,7 +629,7 @@ class TestBotonReturn():
         self.driver.quit()
 
 
-class TestVotacionNoEmpezada():
+class TestVotacionNoEmpezada(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -656,7 +656,7 @@ class TestVotacionNoEmpezada():
         self.driver.quit()
 
 
-class TestVotacionNoFinalizada():
+class TestVotacionNoFinalizada(APITestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
@@ -730,7 +730,7 @@ class TestVotacionNoFinalizada():
 # if __name__ == '__main__':
 #     unittest.main()
 
-class TestTestBotonTelegram():
+class TestTestBotonTelegram(APITestCase):
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
