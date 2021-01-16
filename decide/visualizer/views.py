@@ -22,19 +22,34 @@ class VisualizerView(TemplateView):
             if r[0]['start_date'] is None:
                 print('asd')
             elif r[0]['end_date'] is None:
-                #print('asd')
+
+                context['options'] = json.dumps(r[0]['question']['options']) # Datos para gráfica en tiempo real. (gabgutpri, visualización)
+                votosOpcion = votos_opcion(vid, r[0])
+                context['votosOpcion'] = votosOpcion                         # Fin de datos para gráfica
+
                 numero_votos = get_numero_votos(vid)
-                
-               
                 context['numero_votos'] = numero_votos
-                print(context)
                 
-            
         except:
             raise Http404
 
         return context
 
+# Método para obtener los votos por opción en una votación
+def votos_opcion(vid, voting):
+    opciones = voting['question']['options']
+    numOp=[]
+    for i in range(len(opciones)):
+        numOp.append(opciones[i]['number'])
+    votos = mods.get('store',params={'voting_id':vid})
+    votosPorOpcion = []
+    for op in numOp:
+        cuenta = 0
+        for v in votos:
+            if(op==v['b']):
+                cuenta = cuenta + 1
+        votosPorOpcion.append(cuenta)
+    return votosPorOpcion
 
 
 def get_numero_votos (vid):
