@@ -15,13 +15,20 @@ from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
+
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
+# Selenium imports
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+
 
 class VotingTestCase(BaseTestCase):
 
@@ -142,8 +149,8 @@ class VotingTestCase(BaseTestCase):
         voting = self.create_voting()
 
         data = {'action': 'start'}
-        #response = self.client.post('/voting/{}/'.format(voting.pk), data, format='json')
-        #self.assertEqual(response.status_code, 401)
+        response = self.client.post('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 401)
 
         # login with user no admin
         self.login(user='noadmin')
@@ -216,7 +223,8 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
 
-class YesNoQuestionTestCase(BaseTestCase):
+# Yes/No question model test
+class YesNoQuestionModelTestCase(BaseTestCase):
     def setUp(self):
         super().setUp()
 
@@ -248,8 +256,109 @@ class YesNoQuestionTestCase(BaseTestCase):
 
         self.assertEquals(len(q.options.all()), 2)
         self.assertEquals(q.yes_no_question, True)
+        self.assertEquals(q.options.all()[0].option, 'YES')
+        self.assertEquals(q.options.all()[1].option, 'NO')
+        self.assertEquals(q.options.all()[0].number, 1)
+        self.assertEquals(q.options.all()[1].number, 2)
 
-#TESTS MODELO
+    def test_create_yes_no_voting(self):
+        q = Question(desc='Yes/No question test', yes_no_question=True)
+        q.save()
+
+        self.assertEquals(len(q.options.all()), 2)
+        self.assertEquals(q.yes_no_question, True)
+
+        v = Voting(name='Yes/No voting test', question=q)
+        v.save()
+
+        a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
+                                          defaults={'me': True, 'name': 'auth test'})
+        a.save()
+        v.auths.add(a)
+
+        elf.assertEquals(len(v.questio_op.all()), 2)
+        self.assertEquals(v.question.yes_no_question, True)
+        
+# Yes/No question view test
+class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
+
+    def setUp(self):
+        #Load base test functionality for decide
+        self.base = BaseTestCase()
+        self.base.setUp()
+
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+
+        super().setUp()     
+
+    # Verify if a Yes/No question is created correctly
+    def test_create_yes_no_question(self):       
+        driver = self.driver
+        # Creation of a super user to being able to create questions
+        User.objects.create_superuser('egcVotacion', 'votacion@decide.com', 'egcVotacion')
+        self.driver.get(f'{self.live_server_url}/admin/')
+        # Web log in
+        self.driver.find_element_by_id('id_username').send_keys("egcVotacion")
+        self.driver.find_element_by_id('id_password').send_keys("egcVotacion", Keys.ENTER)
+        time.sleep(3)
+
+        # Access to add question form
+        driver.find_element_by_link_text("Questions").click()
+        time.sleep(1)
+        driver.find_element_by_link_text("Add question").click()
+        time.sleep(1)
+
+        # Creation of a yes/no question example
+        driver.find_element_by_id('id_desc').send_keys("Si/No prueba")
+        driver.find_element_by_xpath("//form[@id='question_form']/div/fieldset/div[3]/div/label").click()
+        driver.find_element_by_name("_save").click()
+        time.sleep(3)
+
+        # Verification of the creation of the question
+        driver.find_element_by_xpath("(//a[contains(text(),'Si/No prueba')])[2]").click()
+        time.sleep(2)
+        self.assertEqual("Si/No prueba", driver.find_element_by_xpath("//textarea[@id='id_desc']").text)
+        self.assertEqual("YES", driver.find_element_by_id("id_options-0-option").text)
+        self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
+
+
+    # Verify if the extra options are not save in a Yes/No question
+    def test_create_yes_no_question_extra(self):
+        driver = self.driver
+        # Creation of a super user to being able to create questions
+        User.objects.create_superuser('egcVotacion', 'votacion@decide.com', 'egcVotacion')
+        self.driver.get(f'{self.live_server_url}/admin/')
+        # Web log in
+        self.driver.find_element_by_id('id_username').send_keys("egcVotacion")
+        self.driver.find_element_by_id('id_password').send_keys("egcVotacion", Keys.ENTER)
+        time.sleep(3)
+
+        # Access to add question form
+        driver.find_element_by_link_text("Questions").click()
+        time.sleep(1)
+        driver.find_element_by_link_text("Add question").click()
+        time.sleep(1)
+
+        # Creation of a yes/no question example with extra answers
+        driver.find_element_by_id('id_desc').send_keys("Si/No prueba con extra")
+        driver.find_element_by_xpath("//form[@id='question_form']/div/fieldset/div[3]/div/label").click()
+        driver.find_element_by_id("id_options-0-option").send_keys("Primer extra")
+        driver.find_element_by_id("id_options-1-option").send_keys("Segundo extra")
+        driver.find_element_by_name("_save").click()
+        time.sleep(3)
+
+        # Verification of the creation of the question without the extra answers
+        driver.find_element_by_xpath("(//a[contains(text(),'Si/No prueba con extra')])[2]").click()
+        self.assertEqual("Si/No prueba con extra", driver.find_element_by_xpath("//textarea[@id='id_desc']").text)
+        self.assertEqual("YES", driver.find_element_by_id("id_options-0-option").text)
+        self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
+        self.assertEqual("", driver.find_element_by_id("id_options-2-option").text)
+        self.assertEqual("", driver.find_element_by_id("id_options-3-option").text)
+
+        
+#TESTS MODELO FLOR
 class VotingModelTestCase(BaseTestCase):
     def setUp(self):
         q=Question(desc="Description")
@@ -390,4 +499,3 @@ class TestQues(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-              
