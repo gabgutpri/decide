@@ -404,7 +404,7 @@ class TestGraficaDonut():
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
-    def test_graficaBarras(self):
+    def test_graficaDonut(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
@@ -414,7 +414,7 @@ class TestGraficaDonut():
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
         self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
-        assert self.driver.find_element(By.CSS_SELECTOR, "th:first-child(1) > .heading").text == "Donut Chart"
+        assert self.driver.find_element(By.CSS_SELECTOR, "th:first-child > .heading").text == "Donut Chart"
         #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficadonut.png aparece esta gráfica.
         #Podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
         self.driver.find_element_by_id('myChart').screenshot('screenshotgraficadonut.png')
