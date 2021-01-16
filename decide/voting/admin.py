@@ -12,12 +12,14 @@ def start(modeladmin, request, queryset):
     for v in queryset.all():
         v.create_pubkey()
         v.start_date = timezone.now()
+        #v.enviarTelegram("La votación "+str(v.name)+" ha comenzado") comentado por mantenimiento
         v.save()
 
 
 def stop(ModelAdmin, request, queryset):
     for v in queryset.all():
         v.end_date = timezone.now()
+        #v.enviarTelegram("La votación "+str(v.name)+" ha terminado") comentado por mantenimiento
         v.save()
 
 
@@ -39,9 +41,12 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class VotingAdmin(admin.ModelAdmin):
+    #Javi
+    #He eliminado end_date de readonly_fields para poder meterlo al crear una votacion
     list_display = ('name', 'start_date', 'end_date')
-    readonly_fields = ('start_date', 'end_date', 'pub_key',
-                       'tally', 'postproc', 'file')
+
+    readonly_fields = ('start_date', 'pub_key', 'tally', 'postproc', 'file')
+
     date_hierarchy = 'start_date'
     list_filter = (StartedFilter,)
     search_fields = ('name', )
