@@ -91,7 +91,7 @@ SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #Url to redirect after successfull login
-#LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 MODULES = [
     'authentication',
