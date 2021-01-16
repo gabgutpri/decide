@@ -4,6 +4,7 @@ from rest_framework.test import APITestCase
 
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from django.contrib.messages import get_messages  
 
 from base import mods
 
@@ -214,6 +215,126 @@ class RegisterGuiTests(TestCase):
         self.assertEqual(user.email, self.email)
         self.assertEqual(user.first_name, self.first_name)
 
+
+class EditProfileTests(TestCase):
+
+    #Creamos usuarios de prueba que usaremos
+    def setUp(self) -> None:
+        usertest = User(username="testouser", password="password1234", first_name= "pablo", last_name= "elro bot", email="testouseremail@gmail.com",is_active=True)
+        usertest.save()
+        self.username = 'testouser'
+        self.email = 'testuseremail@gmail.com'
+        self.first_name = 'pablo'
+        self.last_name = 'elro bot'
+        self.is_active = True
+        
+        login = self.client.force_login(usertest)
+
+         #Probamos que puede acceder a su página de perfil
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_profile_access(self):
+        response = self.client.get("/authentication/profile/testouser")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'user_profile.html')
+
+        #Probamos que no se puede acceder al perfil personal de otra persona
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_profile_access(self):
+        usertest2 = User(username="testouser2", password="password1234", first_name= "pablo2", last_name= "elrom bot", email="testouseremail2@gmail.com",is_active=True)
+        usertest2.save()
+        response = self.client.get("/authentication/profile/testouser2")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b'You are not authorized to see this page.')
+
+    #Probamos que cuando se introduzca un username vacio, el username no se actualice
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+    def test_update_empty_username(self):
+        usertest2 = User(username="testouser2", password="password1234", first_name= "paco", last_name= "elroa bot", email="testouseremail2@gmail.com",is_active=True)
+        usertest2.save()
+        self.username = 'testouser2'
+        self.email = 'testuseremail2@gmail.com'
+        self.first_name = 'paco'
+        self.last_name = 'elroa bot'
+        self.is_active = True
+        login = self.client.force_login(usertest2)
+        response = self.client.post("/authentication/editprofile/testouser2", follow=True, data={
+            'username' : '',
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+        })
+        usertest2.refresh_from_db()
+        #Comprobamos que el username sigue siendo el mismo
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(usertest2.username, "testouser2")
+        self.assertTemplateUsed(response, template_name = 'edit_user_profile.html')
+        messages = list(response.context['messages'])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), 'El nombre de usuario no puede estar vacío.')
+
+    #Probamos que cuando se introduzca un username ya existente, el username no se actualice
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+    def test_taken_username(self):
+        usertest2 = User(username="testouser2", password="password1234", first_name= "paco", last_name= "elroa bot", email="testouseremail2@gmail.com",is_active=True)
+        usertest2.save()
+        self.username = 'testouser2'
+        self.email = 'testuseremail2@gmail.com'
+        self.first_name = 'paco'
+        self.last_name = 'elroa bot'
+        self.is_active = True
+        login = self.client.force_login(usertest2)
+        response = self.client.post("/authentication/editprofile/testouser2", follow=True, data={
+            'username' : 'testouser',
+            'email' : self.email,
+            'first_name': self.first_name,
+            'last_name' : self.last_name,
+        })
+        usertest2.refresh_from_db()
+        #Comprobamos que el username sigue siendo el mismo
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.username, "testouser2")
+        self.assertTemplateUsed(response, template_name = 'edit_user_profile.html')
+        messages = list(response.context['messages'])
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), 'El nombre de usuario ya está en uso.')
+    
+    #Probamos que el perfil se actualiza correctamente
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+    def test_update_user(self):
+        usertest2 = User(username="testouser2", password="password1234", first_name= "paco", last_name= "elroa bot", email="testouseremail2@gmail.com",is_active=True)
+        usertest2.save()
+        self.username = 'testouser2'
+        self.email = 'testuseremail2@gmail.com'
+        self.first_name = 'paco'
+        self.last_name = 'elroa bot'
+        self.is_active = True
+        
+        login = self.client.force_login(usertest2)
+        response = self.client.post("/authentication/editprofile/testouser2", follow=True, data={
+            'username' : 'exito',
+            'email' : self.email,
+            'first_name': 'prueba',
+            'last_name' : 'su perada'
+        })
+        usertest2.refresh_from_db()
+        #Comprobamos que se ha actualizado correctamente
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'user_profile.html')
+        self.assertEqual(usertest2.username, "exito")
+        self.assertEqual(usertest2.email, 'testuseremail2@gmail.com')
+        self.assertEqual(usertest2.first_name, 'prueba')
+        self.assertEqual(usertest2.last_name, 'su perada')
+
+    #Probamos que no se puede acceder a la página de edición de perfil de otra persona
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_profile_access(self):
+        usertest2 = User(username="testouser2", password="password1234", first_name= "pablo2", last_name= "elrom bot", email="testouseremail2@gmail.com",is_active=True)
+        usertest2.save()
+        response = self.client.get("/authentication/editprofile/testouser2")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b'You are not authorized to see this page.')
+   
+
     #Testing a post request with bad pass confirmation (not the same password1 that password2)
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
     def test_register_form_bad_pass_confirmation(self):
@@ -404,4 +525,5 @@ class ProfileModelTest(TestCase):
         us = User.objects.get(username = "testnewuser")
         prof.delete()
         us.delete()
+
 
