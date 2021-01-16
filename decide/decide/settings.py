@@ -82,7 +82,17 @@ SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET')
 #If emails doesn't show up in the command prompt when performing an email dependant operation (Such as email verification)
 #Try running the following line is a new command prompt: python3 -m smtpd -n -c DebuggingServer localhost:1025 > mail.log
 #This command will run a dummy smtpd server in the port 1025 of your machine, note that this server may already been enabled
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Email Auth Configuration for Production
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+DEFAULT_FROM_EMAIL = 'noreply<no_reply@domain.com>'
 
 #Url to redirect after successfull login
 LOGIN_REDIRECT_URL = '/'
