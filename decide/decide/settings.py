@@ -72,7 +72,6 @@ AUTHENTICATION_BACKENDS = [
 #Social Login Keys
 import environ
 env = environ.Env()
-environ.Env.read_end()
 #Facebook App Keys
 SOCIAL_AUTH_FACEBOOK_KEY = env('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET =env('SOCIAL_AUTH_FACEBOOK_SECRET')
