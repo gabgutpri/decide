@@ -373,6 +373,15 @@ class EditProfileTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, b'You are not authorized to see this page.')
 
+class RegisterGuiTests2(TestCase):
+#Tests for the Register Form
+
+    #Load up some data for easy access
+    def setUp(self) -> None:
+        self.username = 'epicTestUser'
+        self.email = 'epicTestUser@gmail.com'
+        self.first_name = 'Epic'
+        self.last_name = 'Test User'
 
     #Testing a post request with bad pass confirmation (not the same password1 that password2)
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
