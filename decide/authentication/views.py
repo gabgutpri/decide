@@ -217,6 +217,7 @@ class EditProfileView(APIView):
 
         return Response(request, 'user_profile.html', context)
 
+#Creamos los controladores para el borrado de usuario y su conveniente redireción 
 class DeleteProfile:
     def delete(request, username):
         user = User.objects.get(username=username)

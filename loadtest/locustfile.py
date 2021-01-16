@@ -62,7 +62,9 @@ class DefVoters(SequentialTaskSet):
     def on_quit(self):
         self.voter = None
 
-
+#Definimos las actividades de las que se compone el test de carga.
+#Estas son cargar los usuarios del .json, iniciar sesión con esos datos, visitar el perfil
+#y cerrar la sesión
 class DefAuth(SequentialTaskSet):
 
     def on_start(self):
@@ -102,6 +104,7 @@ class Voters(HttpUser):
     tasks = [DefVoters]
     wait_time= between(3,5)
 
+#Definimos la ejecución del test con sus atributos
 class Auth(HttpUser):
     host = HOST
     tasks = [DefAuth]
