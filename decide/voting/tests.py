@@ -14,6 +14,7 @@ from census.models import Census
 from mixnet.mixcrypt import ElGamal
 from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
+
 from voting.models import Voting, Question, QuestionOption, end_date_past
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
@@ -25,11 +26,15 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
+
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+
 import time
 import datetime
+
 
 class VotingTestCase(BaseTestCase):
 
@@ -52,7 +57,7 @@ class VotingTestCase(BaseTestCase):
         for i in range(5):
             opt = QuestionOption(question=q, option='option {}'.format(i+1))
             opt.save()
-        v = Voting(name='test voting', question=q)
+        v = Voting(name='test voting',desc='Voting test', question=q)
         v.save()
 
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
@@ -109,6 +114,8 @@ class VotingTestCase(BaseTestCase):
         clear = self.store_votes(v)
 
         self.login()  # set token
+
+        v.end_date=timezone.now()
         v.tally_votes(self.token)
 
         tally = v.tally
@@ -120,6 +127,10 @@ class VotingTestCase(BaseTestCase):
 
         for q in v.postproc:
             self.assertEqual(tally.get(q["number"], 0), q["votes"])
+
+        v.saveFile()
+        nombre_guardado=str(v.file)
+        self.assertEqual(nombre_guardado,'ficheros/'+str(v.id)+'-'+v.name+' - '+v.end_date.strftime('%d-%m-%y')+'.txt')
 
     def test_create_voting_from_api(self):
         data = {'name': 'Example'}
@@ -224,6 +235,8 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
 
+
+   
     #Test Javi
     #Crear votacion con una fecha de finalizacion
     def create_voting_end_date(self):
@@ -316,6 +329,105 @@ class VotingTestCase(BaseTestCase):
         f = timezone.now() - timezone.timedelta(minutes=1)
         self.assertRaises(ValidationError, end_date_past, f)
 
+    # Test del guardado en local de votaciones    
+    def test_guardar_local(self):    
+        voting = self.create_voting()
+
+        self.login()
+
+        # Inicio la votacion
+        data = {'action': 'start'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')       
+
+        # Paro la votacion
+        data = {'action': 'stop'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Recuento de la votacion
+        data = {'action': 'tally'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Guardo la votación 
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), 'Voting has been saved in local')
+
+
+    def test_guardar_local_no_admin(self):    
+        voting = self.create_voting()
+
+        self.login()
+
+        # Inicio la votacion
+        data = {'action': 'start'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')       
+
+        # Paro la votacion
+        data = {'action': 'stop'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Recuento de la votacion
+        data = {'action': 'tally'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Intento guardar la votación logueado con otra cuenta que no se admin 
+        self.logout
+        self.login(user="noadmin")
+
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 403)
+
+
+    def test_guardar_local_antes_iniciar(self):
+        voting = self.create_voting()
+
+        self.login()
+
+        # Intento guardar antes de empezar la votacion
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), 'Voting is not started')
+
+
+    def test_guardar_local_antes_parar(self):
+        voting = self.create_voting()
+
+        self.login()
+        
+        #Inicio la votacion
+        data = {'action': 'start'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Intento guardar antes de cerrar la votacion
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), 'Voting is not stopped')
+
+
+    def test_guardar_local_antes_recuento(self):
+        voting = self.create_voting()
+
+        self.login()
+
+        #Inicio la votacion
+        data = {'action': 'start'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')       
+        
+        #Paro la votacion
+        data = {'action': 'stop'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+
+        # Intento guardar antes de hacer el recuento de la votacion
+        data = {'action': 'save'}
+        response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), 'Voting has not being tallied')        
+        
+        
 class EndDateTestCase(StaticLiveServerTestCase):
 
     def setUp(self):
@@ -323,7 +435,7 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.base.setUp()
 
         options = webdriver.ChromeOptions()
-        #options.headless = True
+        options.headless = True
         self.driver = webdriver.Chrome(options=options)
         self.vars = {}
 
@@ -357,6 +469,7 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "id_url").send_keys("http://localhost:8000")
         self.driver.find_element(By.ID, "id_me").click()
         self.driver.find_element(By.NAME, "_save").click()
+
 
         #Crear votacion
         self.driver.get("http://localhost:8000/admin/")
@@ -517,4 +630,132 @@ class EndDateTestCase(StaticLiveServerTestCase):
     def tearDown(self):           
         super().tearDown()
         self.driver.quit()
+        self.base.tearDown()
+
+class VotingLocalSaveTestCase(StaticLiveServerTestCase):
+
+    def setUp(self):
+        self.base=BaseTestCase()
+        self.base.setUp()
+
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        super().setUp()
+
+
+
+    # Test selenium de guardar
+    def test_guardar(self):
+        driver=self.driver
+        User.objects.create_superuser('egcVotacion','votacion@decide.com','egcVotacion')
+
+        # Login
+        self.driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        self.driver.find_element_by_id("id_username").send_keys("egcVotacion")
+        self.driver.find_element_by_id("id_password").send_keys("egcVotacion")
+        self.driver.find_element_by_id("id_password").send_keys(Keys.ENTER)
+
+
+        # Añado pregunta
+        self.driver.find_element_by_link_text("Questions").click()
+        self.driver.find_element_by_link_text("ADD QUESTION").click()
+        self.driver.find_element(By.ID, "id_desc").click()
+        self.driver.find_element(By.ID, "id_desc").send_keys("pregunta de prueba")
+        self.driver.find_element_by_id("id_options-0-option").click()
+        self.driver.find_element_by_id("id_options-0-option").send_keys("opcion1")
+        self.driver.find_element_by_id("id_options-0-option").click()
+        self.driver.find_element(By.ID, "id_options-1-option").send_keys("opcion2")
+        self.driver.find_element(By.NAME, "_save").click()
+
+        # Añado auth
+        self.driver.get("http://localhost:8000/admin/")
+        self.driver.find_element_by_link_text("Auths").click()
+        self.driver.find_element_by_link_text("ADD AUTH").click()
+        self.driver.find_element(By.ID, "id_name").click()
+        self.driver.find_element(By.ID, "id_name").send_keys("localhost")
+        self.driver.find_element(By.ID, "id_url").click()
+        self.driver.find_element(By.ID, "id_url").send_keys("http://localhost:8000")
+        self.driver.find_element(By.ID, "id_me").click()
+        self.driver.find_element(By.NAME, "_save").click()
+
+        # Añado votacion
+        self.driver.get("http://localhost:8000/admin/")
+        self.driver.find_element_by_link_text("Votings").click()
+        self.driver.find_element_by_link_text("ADD VOTING").click()
+        self.driver.find_element(By.ID, "id_name").send_keys("prueba")
+        self.driver.find_element(By.ID, "id_desc").send_keys("descripcion de prueba")
+        dropdown = self.driver.find_element(By.NAME, "question")
+        dropdown.find_element(By.XPATH, "//option[. = 'pregunta de prueba']").click()
+        Select(driver.find_element(By.ID,"id_auths")).select_by_visible_text("http://localhost:8000")
+        self.driver.find_element(By.NAME, "_save").click()
+
+
+        # Inicio votacion
+        self.driver.get("http://localhost:8000/admin/")
+        self.driver.find_element_by_link_text("Votings").click()
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Start']").click()
+        self.driver.find_element(By.NAME, "index").click()
+
+        #Termino votacion
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Stop']").click()
+        self.driver.find_element(By.NAME, "index").click()
+
+        #Recuento de votacion
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Tally']").click()
+        self.driver.find_element(By.NAME, "index").click()
+       
+        # Accedo a la votacion 
+        self.driver.find_element(By.LINK_TEXT, "prueba").click()
+        # Compruebo que está vacío el campo
+        self.assertEqual("",self.driver.find_element(By.CSS_SELECTOR, ".field-file .readonly").text)
+        
+        # Guardo la votacion
+        self.driver.find_element(By.LINK_TEXT, "Votings").click()
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action")
+        dropdown.find_element(By.XPATH, "//option[. = 'Save']").click()
+        self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.NAME, "index").click()
+        
+        # Accedo a la votacion
+        self.driver.find_element(By.LINK_TEXT, "prueba").click()
+        # Compruebo que se ha guardado
+        self.assertNotEqual("",self.driver.find_element(By.CSS_SELECTOR, ".field-file .readonly").text)
+
+        # Borro la votacion
+        self.driver.find_element(By.LINK_TEXT,"Delete").click()
+        self.driver.find_element(By.XPATH,"//input[@value=\"Yes, I'm sure\"]").click()
+
+        # Borro la pregunta
+        self.driver.get("http://localhost:8000/admin/voting/")
+        self.driver.find_element_by_link_text("Questions").click()
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.XPATH, "//option[. = 'Delete selected questions']").click()
+        self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.NAME, "index").click()
+        self.driver.find_element(By.XPATH,"//input[@value=\"Yes, I'm sure\"]").click()
+
+        # Borro el auth
+        self.driver.get("http://localhost:8000/admin/base/auth/")
+        self.driver.find_element(By.NAME, "_selected_action").click()
+        dropdown = self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.XPATH, "//option[. = 'Delete selected auths']").click()
+        self.driver.find_element(By.NAME, "action").click()
+        self.driver.find_element(By.NAME, "index").click()
+        self.driver.find_element(By.XPATH,"//input[@value=\"Yes, I'm sure\"]").click()
+
+        
+
+    def tearDown(self):
+        super().tearDown()
+        self.driver.quit()
+
         self.base.tearDown()

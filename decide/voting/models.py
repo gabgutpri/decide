@@ -4,7 +4,9 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import os
 import requests
+
 
 from base import mods
 from base.models import Auth, Key
@@ -51,6 +53,8 @@ class Voting(models.Model):
 
     tally = JSONField(blank=True, null=True)
     postproc = JSONField(blank=True, null=True)
+
+    file = models.FileField(blank=True)
 
     def create_pubkey(self):
         if self.pub_key or not self.auths.count():
@@ -132,7 +136,28 @@ class Voting(models.Model):
 
         self.postproc = postp
         self.save()
+
+        
+        #Guardamos en local la votación
+    def saveFile(self):
+        if self.postproc:
+            ruta= "ficheros/"+str(self.id)+ "-"+self.name + " - " +self.end_date.strftime('%d-%m-%y')+ ".txt"
+            file = open(ruta,"w")
+            file.write("Id: "+str(self.id)+os.linesep)
+            file.write("Nombre: "+self.name+os.linesep)
+            if self.desc:
+                file.write("Descripción: "+self.desc+os.linesep)
+            
+            file.write("Fecha de inicio: "+self.start_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+            file.write("Fecha de fin: "+self.end_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+            file.write("Resultado: "+str(self.postproc)+os.linesep)
+            file.close()
+            self.file=ruta
+            self.save()
+            
+
        # self.enviarTelegram(msn) Comentado por mantenimiento
+
 
     def __str__(self):
         return self.name
