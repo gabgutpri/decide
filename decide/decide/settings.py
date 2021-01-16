@@ -64,7 +64,8 @@ REST_FRAMEWORK = {
 #Authentication Backends
 
 AUTHENTICATION_BACKENDS = [
-    'base.backends.AuthBackend',
+    #'base.backends.AuthBackend',
+    'django.contrib.auth.backends',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
 ]
