@@ -486,6 +486,21 @@ class TestPodiumTraduccionEspañol():
     assert self.driver.find_element(By.ID, "winner").text == "2º puesto"
     assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(3) > #winner").text == "3º puesto"
 
+class TestTestBotonTelegram():
+  def setup(self):
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    options.add_argument("--no-sandbox")
+    self.driver = webdriver.Chrome(options=options)
+  
+  def teardown(self):
+    self.driver.quit()
+  
+  def testBotonTelegram(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+    self.driver.set_window_size(1295, 726)
+    self.driver.find_element(By.LINK_TEXT, "Telegram").click()
+    assert self.driver.find_element(By.CSS_SELECTOR, "span").text == "decide"
 """ Comentado porque estos cambios no estan todavia en heroku
 class TestHomeVisualizer():
     def setUp(self):
