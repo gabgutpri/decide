@@ -52,20 +52,13 @@
             <!-- Voting -->
             <div v-if="!signup">
                 <h2>[[ voting.question.desc ]]</h2>
-                <b-form-group v-for="q in voting.question" :key="q.desc">
-                    <h3>[[ q.desc ]]</h3>
-                <b-form-group v-for="opt in q.options" :key="opt.number">
-                    
-                        [[ opt.option ]] <select v-model="selected_{{opt.option}}" v-value="opt.pref_number">
-                            
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            </select>
-                    
-                </b-form-group>
+                <b-form-group v-for="opt in voting.question.options" :key="opt.number">
+                    <b-form-radio v-model="selected"
+                                  :id="'q' + opt.number"
+                                  name="question"
+                                  :value="opt.number">
+                        [[ opt.option ]]
+                    </b-form-radio>
                 </b-form-group>
                     
                 <b-button type="button" variant="primary" v-on:click="decideSend">
@@ -102,6 +95,11 @@
                 keybits: {{ KEYBITS }},
                 voting: voting,
                 selected: "",
+                // selected_op1: "",
+                // selected_op2: "",
+                // selected_op3: "",
+                // selected_op4: "",
+                // selected_op5: "",
                 signup: true,
                 alertShow: false,
                 alertMsg: "",
