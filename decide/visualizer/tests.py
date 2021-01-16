@@ -444,7 +444,7 @@ class TestGraficaTiempoReal():
         
     def tearDown(self):
         self.driver.quit()
-
+"""
 class TestGraficaTodasVotaciones():
     def setUp(self):
         options = webdriver.ChromeOptions()
@@ -468,6 +468,6 @@ class TestGraficaTodasVotaciones():
         
     def tearDown(self):
         self.driver.quit()
-
+"""
 # if __name__ == '__main__':
 #     unittest.main()
