@@ -29,6 +29,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
+import datetime
 
 class VotingTestCase(BaseTestCase):
 
@@ -227,7 +228,7 @@ class VotingTestCase(BaseTestCase):
     #Crear votacion con una fecha de finalizacion
     def create_voting_end_date(self):
         q = Question(desc='test end date')
-        end = "2025-02-15 14:30:59.993048Z"
+        end = "2025-02-15 14:30:59.792974Z"
         q.save()
         for i in range(5):
             opt = QuestionOption(question=q, option='option {}'.format(i+1))
@@ -247,13 +248,42 @@ class VotingTestCase(BaseTestCase):
 
         self.assertEquals(v.name, "test voting end date")
         self.assertEquals(v.question.desc, "test end date")
-        self.assertEqual(v.end_date,"2025-02-15 14:30:59.993048Z")
+        self.assertEqual(v.end_date,"2025-02-15 14:30:59.792974Z")
+
+        v.end_date = timezone.now() + timezone.timedelta(minutes=1)
+        v.save()
+
+        self.assertEquals(v.name, "test voting end date")
+        self.assertEquals(v.question.desc, "test end date")
+        self.assertEqual(v.end_date.day, (timezone.now() + timezone.timedelta(minutes=1)).day)
+        self.assertEqual(v.end_date.hour, (timezone.now() + timezone.timedelta(minutes=1)).hour)
+        self.assertEqual(v.end_date.minute, (timezone.now() + timezone.timedelta(minutes=1)).minute)
+        self.assertEqual(v.end_date.second, (timezone.now() + timezone.timedelta(minutes=1)).second)
+
+        v.end_date = timezone.now()
+        v.save()
+
+        self.assertEquals(v.name, "test voting end date")
+        self.assertEquals(v.question.desc, "test end date")
+        self.assertEqual(v.end_date.day, timezone.now().day)
+        self.assertEqual(v.end_date.hour, timezone.now().hour)
+        self.assertEqual(v.end_date.minute, timezone.now().minute)
+        self.assertEqual(v.end_date.second, timezone.now().second)
 
     #Test de modelo de fecha de finalizacion caso negativo
     #Se guarda una votacion con una fecha pasada
     def test_end_date_modelo_n(self):
         v = self.create_voting_end_date()
+
         v.end_date = timezone.now() - timezone.timedelta(days=1)
+        v.save()
+        self.assertRaises(ValidationError, end_date_past, v.end_date)
+
+        v.end_date = timezone.now() - timezone.timedelta(minutes=10)
+        v.save()
+        self.assertRaises(ValidationError, end_date_past, v.end_date)
+
+        v.end_date = timezone.now() - timezone.timedelta(minutes=1)
         v.save()
         self.assertRaises(ValidationError, end_date_past, v.end_date)
 
@@ -293,7 +323,7 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.base.setUp()
 
         options = webdriver.ChromeOptions()
-        options.headless = True
+        #options.headless = True
         self.driver = webdriver.Chrome(options=options)
         self.vars = {}
 
@@ -312,8 +342,11 @@ class EndDateTestCase(StaticLiveServerTestCase):
         
         #Iniciar sesion
         driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        time.sleep(1)
         self.driver.find_element_by_id('id_username').send_keys("practica")
+        time.sleep(1)
         self.driver.find_element_by_id('id_password').send_keys("practica", Keys.ENTER)
+        time.sleep(1)
 
         #Crear auths
         self.driver.find_element_by_link_text("Auths").click()
@@ -396,10 +429,11 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.ID, "password").click()
         self.driver.find_element(By.ID, "password").send_keys("practica")
         self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
+        time.sleep(1)
         self.driver.find_element(By.CSS_SELECTOR, "#\\__BVID__12 .custom-control-label").click()
-
-        #Cerrar sesion
+        time.sleep(1)
         self.driver.find_element(By.CSS_SELECTOR, ".btn:nth-child(4)").click()
+        time.sleep(1)
         self.driver.find_element(By.LINK_TEXT, "Logout").click()
 
     #Test de selenium de la fecha de finalizacion caso negativo
@@ -408,8 +442,11 @@ class EndDateTestCase(StaticLiveServerTestCase):
 
         #Iniciar sesion
         driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        time.sleep(1)
         self.driver.find_element_by_id('id_username').send_keys("practica")
+        time.sleep(1)
         self.driver.find_element_by_id('id_password').send_keys("practica", Keys.ENTER)
+        time.sleep(1)
 
         #Crear auths
         self.driver.find_element_by_link_text("Auths").click()
@@ -422,6 +459,7 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.driver.find_element(By.NAME, "_save").click()
 
         #Crear votacion
+        driver.get("http://localhost:8000/admin/login/?next=/admin/")
         driver.find_element_by_link_text("Votings").click()
         driver.find_element_by_link_text("AÑADIR VOTING").click()
         self.driver.find_element(By.ID, "id_name").click()
@@ -465,7 +503,7 @@ class EndDateTestCase(StaticLiveServerTestCase):
         self.assertEqual("prueba", d.get_attribute('value'))
 
         #Cerrar sesion
-        self.driver.find_element(By.CSS_SELECTOR, "a:nth-child(4)").click()
+        self.driver.find_element(By.CSS_SELECTOR, "a:nth-child(4)").click()    
 
     def tearDown(self):           
         super().tearDown()
