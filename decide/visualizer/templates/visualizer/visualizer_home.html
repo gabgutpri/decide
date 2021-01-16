@@ -45,11 +45,6 @@
                     <button class="btn btn-secondary" type="submit" onclick="window.location.href=getURLAboutUs();">{% trans "About us" %}</button>
                 </div>
 
-                <!-- Dark mode and light mode buttons -->
-                <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
-                    onclick="activateLightMode()">{% trans "Light mode" %}</button>
-                <button id="darkButton" type="button" class="btn btn-dark btn-sm pull-xs-right" style="display: inline"
-                    onclick="activateDarkMode()">{% trans "Dark mode" %}</button>
             </b-navbar-nav>
         </b-navbar>
 
@@ -95,6 +90,10 @@
                             <tr>
                                 <td><canvas id="myChart" width="1000" height="500"></canvas></td>
                             </tr>
+                            <tr>
+                                <td style="text-align: center;"><button class="btn btn-outline-dark" onclick="saveAsPNG();">
+                                    <i class="fa fa-file-photo-o"></i> {% trans "Save as PNG" %}</button></td>
+                            </tr>
                         </tbody>
                     </table>
                 </section>
@@ -112,6 +111,8 @@
 {% endblock %}
 
 {% block extrabody %}
+
+    
     <script>
        function setCookie(cookieName, cookieValue, expiresDays) {
             var today = new Date();
@@ -138,22 +139,10 @@
         function checkCookie() {
             if (getCookie("theme") == "dark") {
                 activateDarkMode();
-            }
+            } 
         }
         window.onload = checkCookie();
         
-        // URLs to ContactUs and AboutUs views
-        function getURLContactUs() {
-            var url = document.location.href;
-            var newURL = url+"contactUs"
-            return newURL
-        }
-        function getURLAboutUs() {
-            var url = document.location.href;
-            var newURL = url+"aboutUs"
-            return newURL
-        }
-
         // Light mode and dark mode scripts
         function activateLightMode() {
             document.body.className = "bg-light"
@@ -169,6 +158,39 @@
             document.getElementById("darkButton").style.display = "none"
             document.getElementById("text").style.color = "white"
             setCookie("theme", "dark", 365);
+        }
+    </script>
+    <script>
+        // URLs to ContactUs and AboutUs views
+        function getURLContactUs() {
+            var url = document.location.href;
+            var newURL = url+"contactUs"
+            return newURL
+        }
+        function getURLAboutUs() {
+            var url = document.location.href;
+            var newURL = url+"aboutUs"
+            return newURL
+        }
+
+        
+    </script>
+    <script>
+        // Pop up message when window load
+        function popUp() {
+            var mensaje='{% trans "This visualization page is pretty cool. Do you want to continue?" %}'
+            
+            if(confirm(mensaje)) {
+            } else {
+                    window.onload = popUp();
+                }
+        }
+        window.onload = popUp();
+    </script>
+    <script>
+        function saveAsPNG() {
+            var canvas = document.getElementById('myChart');
+            Canvas2Image.saveAsPNG(canvas);
         }
     </script>
 

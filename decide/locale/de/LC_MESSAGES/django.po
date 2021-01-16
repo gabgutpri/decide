@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-14 17:32+0000\n"
+"POT-Creation-Date: 2021-01-16 12:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,6 @@ msgstr "Decide Visualisierung"
 
 #: visualizer/templates/visualizer/aboutUs.html:20
 #: visualizer/templates/visualizer/contactUs.html:24
-#: visualizer/templates/visualizer/visualizer.html:46
 #: visualizer/templates/visualizer/visualizer.html:60
 #: visualizer/templates/visualizer/visualizer.html:93
 #: visualizer/templates/visualizer/visualizer.html:176
@@ -104,7 +103,7 @@ msgstr "GitHub-Profil"
 #: visualizer/templates/visualizer/aboutUs.html:86
 #: visualizer/templates/visualizer/contactUs.html:95
 #: visualizer/templates/visualizer/visualizer.html:181
-#: visualizer/templates/visualizer/visualizer_home.html:92
+#: visualizer/templates/visualizer/visualizer_home.html:106
 msgid "Evolution and Configuration Management"
 msgstr "Entwicklung und Konfiguration des Managements"
 
@@ -154,13 +153,17 @@ msgstr "Kontaktiere uns"
 msgid "About us"
 msgstr "Über uns"
 
+#: visualizer/templates/visualizer/visualizer.html:46
+#, fuzzy
+#| msgid "Visualization Team"
+msgid "Visualizer"
+msgstr "Anzeigegeräte"
+
 #: visualizer/templates/visualizer/visualizer.html:51
-#: visualizer/templates/visualizer/visualizer_home.html:50
 msgid "Light mode"
 msgstr "Licht Modus"
 
 #: visualizer/templates/visualizer/visualizer.html:53
-#: visualizer/templates/visualizer/visualizer_home.html:52
 msgid "Dark mode"
 msgstr "Dunkler Modus"
 
@@ -174,6 +177,7 @@ msgstr "Abstimmung läuft"
 
 #: visualizer/templates/visualizer/visualizer.html:78
 #: visualizer/templates/visualizer/visualizer.html:240
+#: visualizer/templates/visualizer/visualizer_home.html:224
 msgid "Number of votes"
 msgstr "Anzahl der Stimmen"
 
@@ -210,11 +214,13 @@ msgid "Donut Chart"
 msgstr "Kreisdiagramm"
 
 #: visualizer/templates/visualizer/visualizer.html:152
+#: visualizer/templates/visualizer/visualizer_home.html:86
 msgid "Bar Chart"
 msgstr "Balkendiagramm"
 
 #: visualizer/templates/visualizer/visualizer.html:162
 #: visualizer/templates/visualizer/visualizer.html:164
+#: visualizer/templates/visualizer/visualizer_home.html:95
 msgid "Save as PNG"
 msgstr "Als PNG speichern"
 
@@ -222,10 +228,19 @@ msgstr "Als PNG speichern"
 msgid "Save as PDF"
 msgstr "Als PDF speichern"
 
-#: visualizer/templates/visualizer/visualizer.html:394
+#: visualizer/templates/visualizer/visualizer.html:402
+#: visualizer/templates/visualizer/visualizer_home.html:181
 msgid "This visualization page is pretty cool. Do you want to continue?"
 msgstr "Diese Visualisierungsseite ist ziemlich cool. Wollen Sie fortfahren?"
 
-#: visualizer/templates/visualizer/visualizer_home.html:68
+#: visualizer/templates/visualizer/visualizer_home.html:63
 msgid "Votings"
 msgstr "Abstimmungen"
+
+#: visualizer/templates/visualizer/visualizer_home.html:64
+msgid "Start date"
+msgstr "Anfangsdatum"
+
+#: visualizer/templates/visualizer/visualizer_home.html:65
+msgid "End date"
+msgstr "Enddatum"

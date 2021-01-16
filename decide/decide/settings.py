@@ -225,3 +225,7 @@ INSTALLED_APPS = INSTALLED_APPS + MODULES
 
 import django_heroku
 django_heroku.settings(locals())
+
+# API KEY DE TELEGRAM
+
+TELEGRAM_API_KEY = os.environ.get('TELEGRAM_API_KEY')

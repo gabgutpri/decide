@@ -21,7 +21,9 @@ script:
 - rm geckodriver-v0.27.0-linux64.tar.gz
 - cd decide
 - cp travis_local_settings.py local_settings.py
-- coverage run --branch --source=. ./manage.py test authentication visualizer voting --keepdb
+- coverage run --branch --source=. ./manage.py test authentication --keepdb
+- python ./manage.py test visualizer --keepdb
+- coverage run --branch --source=. ./manage.py test voting --keepdb
 - coverage xml
 - python-codacy-coverage -r coverage.xml
 deploy:
