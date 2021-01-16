@@ -414,14 +414,14 @@ class TestGraficaDonut():
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
         self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
-        assert self.driver.find_element(By.CSS_SELECTOR, "th:first-child > .heading").text == "Donut Chart"
+        assert self.driver.find_element(By.CSS_SELECTOR, "section > #table th:nth-child(1) >  .heading").text == "Donut Chart"
         #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficadonut.png aparece esta gráfica.
         #Podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
         self.driver.find_element_by_id('myChart').screenshot('screenshotgraficadonut.png')
         
     def tearDown(self):
         self.driver.quit()
-
+"""
 class TestGraficaTiempoReal():
     def setUp(self):
         options = webdriver.ChromeOptions()
@@ -438,12 +438,14 @@ class TestGraficaTiempoReal():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficadonutreal.png aparece esta gráfica.
-        #Podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
-        self.driver.find_element_by_id('myChart3').screenshot('screenshotgraficadonutreal.png')
+        elements = self.driver.find_elements(By.ID, "myChart3")
+        assert len(elements) > 0
+        assert self.driver.find_element(By.CSS_SELECTOR, "section > #table .heading").text == "Donut Chart"
+
         
     def tearDown(self):
         self.driver.quit()
+"""
 """
 class TestGraficaTodasVotaciones():
     def setUp(self):
@@ -461,7 +463,8 @@ class TestGraficaTodasVotaciones():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        assert self.driver.find_element_by_id('myChart')
+        elements = self.driver.find_elements(By.ID, "myChart3")
+        assert len(elements) > 0
         #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficatodas.png aparece esta gráfica.
         #Podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
         self.driver.find_element_by_id('myChart').screenshot('screenshotgraficatodas.png')
