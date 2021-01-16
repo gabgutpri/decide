@@ -80,6 +80,10 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv("SOCIAL_AUTH_FACEBOOK_SECRET", "optional
 SOCIAL_AUTH_TWITTER_KEY = os.getenv("SOCIAL_AUTH_TWITTER_KEY", "optional-default")
 SOCIAL_AUTH_TWITTER_SECRET = os.getenv("SOCIAL_AUTH_TWITTER_SECRET", "optional-default")
 
+#Social Auth Config
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
+
 #Email Auth Backend (For testing and debugging purposes, not yet ready for production)
 #If emails doesn't show up in the command prompt when performing an email dependant operation (Such as email verification)
 #Try running the following line is a new command prompt: python3 -m smtpd -n -c DebuggingServer localhost:1025 > mail.log
