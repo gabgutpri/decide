@@ -395,6 +395,10 @@ class EndDateTestCase(StaticLiveServerTestCase):
 
         #Guardar la votacion
         self.driver.find_element(By.NAME, "_save").click()
+        time.sleep(1)
+        self.driver.find_element(By.CSS_SELECTOR, ".row1:nth-child(1) > .field-name").get_attribute('value')
+        self.assertEqual("prueba", driver.find_element(By.CSS_SELECTOR, ".row1:nth-child(1) > .field-name").text)
+        time.sleep(1)
 
         #Iniciar la votacion
         self.driver.find_element(By.NAME, "_selected_action").click()
@@ -424,10 +428,15 @@ class EndDateTestCase(StaticLiveServerTestCase):
 
         #Realizar la votacion
         driver.get("http://localhost:8000/booth/1")
+        time.sleep(1)
         self.driver.find_element(By.ID, "username").click()
+        time.sleep(1)
         self.driver.find_element(By.ID, "username").send_keys("practica")
+        time.sleep(1)
         self.driver.find_element(By.ID, "password").click()
+        time.sleep(1)
         self.driver.find_element(By.ID, "password").send_keys("practica")
+        time.sleep(1)
         self.driver.find_element(By.ID, "password").send_keys(Keys.ENTER)
         time.sleep(1)
         self.driver.find_element(By.CSS_SELECTOR, "#\\__BVID__12 .custom-control-label").click()
