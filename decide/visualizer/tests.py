@@ -1,4 +1,5 @@
 from django.test import TestCase
+from rest_framework.test import APITestCase
 
 import unittest, time, re
 from selenium import webdriver
@@ -14,7 +15,7 @@ from selenium.common.exceptions import NoAlertPresentException
 
 from PIL import Image
 
-class TestEmail():
+class VisualizerTestCase(APITestCase):
     def setup(self):
         options = webdriver.ChromeOptions()
         options.headless = True
