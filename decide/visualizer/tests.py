@@ -12,7 +12,10 @@ import time
 
 class TestGraficaDonut():
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
         
     def test_graficaDonut(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
@@ -20,6 +23,10 @@ class TestGraficaDonut():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         #Aquí se comprueba que se encuentra la gráfica circular
         assert self.driver.find_element(By.CSS_SELECTOR, "section > #table th:nth-child(1) > .heading").text == "Gráfico Circular"
         elements = self.driver.find_elements(By.ID, "myChart")
@@ -31,7 +38,10 @@ class TestGraficaDonut():
 
 class TestTablaResultados():
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
         
     def test_graficaDonut(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
@@ -39,6 +49,10 @@ class TestTablaResultados():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         assert self.driver.find_element(By.CLASS_NAME, "theTable")
         assert self.driver.find_element(By.ID, "exportarTab")
         #Aquí se comprueba que aparecen los resultados de la votación (se comprueba que aparecen 2 opciones de la votación
@@ -55,7 +69,10 @@ class TestTablaResultados():
 
 class TestBotonReturn():
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
         
     def test_graficaDonut(self):
         #Aqui se comprueba que si le das al botón return vuelve a la página anterior
@@ -64,6 +81,10 @@ class TestBotonReturn():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/contactUs")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/contactUs/"
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
         assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/5/"
@@ -77,7 +98,10 @@ class TestBotonReturn():
 
 class TestVotacionNoEmpezada():
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
         
     def test_graficaDonut(self):
         
@@ -86,6 +110,10 @@ class TestVotacionNoEmpezada():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/6/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
         assert self.driver.find_element(By.ID, "text").text == "Votación no comenzada"
         
@@ -96,7 +124,10 @@ class TestVotacionNoEmpezada():
 
 class TestVotacionNoFinalizada():
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
         
     def test_votacionEnCurso(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
@@ -104,6 +135,10 @@ class TestVotacionNoFinalizada():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
         assert self.driver.find_element(By.ID, "text").text == "Votación en curso"
 
@@ -114,6 +149,10 @@ class TestVotacionNoFinalizada():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         #Aquí se comprueba que la tabla con el número de votos existe y tiene la fila con el número de votos que hay
         elements = self.driver.find_elements(By.CSS_SELECTOR, "tbody > tr > th")
         assert len(elements) > 0
