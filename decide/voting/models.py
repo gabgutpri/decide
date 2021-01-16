@@ -3,10 +3,12 @@ from django.contrib.postgres.fields import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import requests
+from django.conf import settings
 
 from base import mods
 from base.models import Auth, Key
-
+from dotenv import load_dotenv
+import os
 
 class Question(models.Model):
     desc = models.TextField()
@@ -130,9 +132,10 @@ class Voting(models.Model):
     
     #Método para enviar datos de los resultados por telegram (Pablo Franco Sánchez, visualización)
     def enviarTelegram(self,msn):
+    
+        load_dotenv()
         id = "-1001460398324"
-        token = "1426657690:AAEmrAP5v4KFQvmzv5AyGdGvWwrbJbZup3M"
-        url = "https://api.telegram.org/bot" + token + "/sendMessage"
+        url = "https://api.telegram.org/bot" + str(os.getenv("TELEGRAM_API_KEY")) + "/sendMessage"
 
         params = {
         'chat_id': id,
