@@ -446,6 +446,7 @@ class TestGraficaBarras(APITestCase):
         
     def tearDown(self):
         self.driver.quit()
+        
 
 class TestPodium(APITestCase):
     def setUp(self):
@@ -569,7 +570,54 @@ class TestGraficaDonut(APITestCase):
 
     def tearDown(self):
         self.driver.quit()
+      
+      """
+class TestGraficaTiempoReal():
+    def setUp(self):
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
+        
+    def test_graficaBarras(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        elements = self.driver.find_elements(By.ID, "myChart3")
+        assert len(elements) > 0
+        assert self.driver.find_element(By.CSS_SELECTOR, "section > #table .heading").text == "Donut Chart"
 
+        
+    def tearDown(self):
+        self.driver.quit()
+"""
+"""
+class TestGraficaTodasVotaciones():
+    def setUp(self):
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.fullscreen_window()
+        
+    def test_grafica_todas(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        elements = self.driver.find_elements(By.ID, "myChart3")
+        assert len(elements) > 0
+        #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficatodas.png aparece esta gráfica.
+        #Podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
+        self.driver.find_element_by_id('myChart').screenshot('screenshotgraficatodas.png')
+        
+    def tearDown(self):
+        self.driver.quit()
+"""
 
 class TestTablaResultados(APITestCase):
     def setUp(self):
@@ -579,7 +627,7 @@ class TestTablaResultados(APITestCase):
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
-    def test_graficaDonut(self):
+    def test_tabla_resultados(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
@@ -611,7 +659,7 @@ class TestBotonReturn(APITestCase):
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
-    def test_graficaDonut(self):
+    def test_boton_return(self):
         #Aqui se comprueba que si le das al botón return vuelve a la página anterior
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
@@ -637,8 +685,7 @@ class TestVotacionNoEmpezada(APITestCase):
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
-    def test_graficaDonut(self):
-        
+    def test_vot_no_empezada(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
@@ -651,7 +698,6 @@ class TestVotacionNoEmpezada(APITestCase):
         #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
         assert self.driver.find_element(By.ID, "text").text == "Votación no comenzada"
         
-
     def tearDown(self):
         self.driver.quit()
 
@@ -745,6 +791,7 @@ class TestTestBotonTelegram(APITestCase):
     self.driver.set_window_size(1295, 726)
     self.driver.find_element(By.LINK_TEXT, "Telegram").click()
     assert self.driver.find_element(By.CSS_SELECTOR, "span").text == "decide"
+    
 """ Comentado porque estos cambios no estan todavia en heroku
 class TestHomeVisualizer():
     def setUp(self):
