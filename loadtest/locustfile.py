@@ -62,14 +62,42 @@ class DefVoters(SequentialTaskSet):
     def on_quit(self):
         self.voter = None
 
+
+class DefAuth(SequentialTaskSet):
+
+    def on_start(self):
+        with open('accounts.json') as f:
+            self.users = json.loads(f.read())
+        self.u = choice(list(self.users.items()))
+
+    @task
+    def login(self):
+        username, pwd = self.u
+        self.token = self.client.post("/authentication/login/", {
+            "username": username,
+            "password": pwd,
+        }).json()
+
+    @task
+    def logout(self):
+        username, pwd = self.u
+        self.token = self.client.get("/authentication/logoutgui/")
+
+    def on_quit(self):
+        self.voter = None
+
 class Visualizer(HttpUser):
     host = HOST
     tasks = [DefVisualizer]
     wait_time = between(3,5)
 
 
-
 class Voters(HttpUser):
     host = HOST
     tasks = [DefVoters]
+    wait_time= between(3,5)
+
+class Auth(HttpUser):
+    host = HOST
+    tasks = [DefAuth]
     wait_time= between(3,5)
