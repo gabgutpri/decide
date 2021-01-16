@@ -25,6 +25,10 @@ class TestEmail():
     self.driver.quit()
   
   def test_email(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+    self.driver.find_element_by_id('id_username').send_keys("admin")
+    self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+    self.driver.find_element_by_id('login-form').click()
     self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
     self.driver.set_window_size(1552, 840)
     self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary:nth-child(2)").click()
@@ -49,6 +53,10 @@ class TestTraduccionFrances():
     self.driver.quit()
   
   def test_traduccionFrances(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+    self.driver.find_element_by_id('id_username').send_keys("admin")
+    self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+    self.driver.find_element_by_id('login-form').click()
     self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
     self.driver.set_window_size(1552, 840)
     element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
@@ -88,6 +96,10 @@ class TestQuestion():
     self.driver.quit()
   
   def test_question(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+    self.driver.find_element_by_id('id_username').send_keys("admin")
+    self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+    self.driver.find_element_by_id('login-form').click()
     self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
     self.driver.set_window_size(1552, 840)
     elements = self.driver.find_elements(By.ID, "question")
@@ -104,6 +116,10 @@ class TestMaps():
     self.driver.quit()
   
   def test_maps(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+    self.driver.find_element_by_id('id_username').send_keys("admin")
+    self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+    self.driver.find_element_by_id('login-form').click()
     self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
     self.driver.set_window_size(1552, 840)
     self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary:nth-child(2)").click()
@@ -138,6 +154,7 @@ class TestContactUsBack():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -163,6 +180,7 @@ class TestDarkMode():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -187,6 +205,7 @@ class TestLightMode():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -212,6 +231,7 @@ class TestTraduccionEspanyol():
     def setup(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -234,6 +254,7 @@ class TestTraduccionIngles():
     def setup(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -261,6 +282,7 @@ class TestAboutUs():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -289,6 +311,7 @@ class TestAboutUsBack():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -319,6 +342,7 @@ class TestPNG1PNG2PDF():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
  
@@ -343,6 +367,7 @@ class TestDarkModeCookies():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
   
@@ -369,6 +394,7 @@ class TestLightModeCookies():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
@@ -399,6 +425,7 @@ class TestGraficaBarras():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
@@ -424,6 +451,7 @@ class TestPodium():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
     
@@ -478,6 +506,10 @@ class TestTraduccionAleman():
     self.driver.quit()
   
   def test_traduccionAleman(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+    self.driver.find_element_by_id('id_username').send_keys("admin")
+    self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+    self.driver.find_element_by_id('login-form').click()
     self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
     self.driver.set_window_size(1552, 840)
     element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
@@ -486,7 +518,7 @@ class TestTraduccionAleman():
     self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(4) img").click()
     assert self.driver.find_element(By.ID, "text").text == "Ergebnisse"
 
-class TestPodiumTraduccionEspañol():
+class TestPodiumTraduccionEspanol():
   def setup(self):
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -497,6 +529,10 @@ class TestPodiumTraduccionEspañol():
     self.driver.quit()
   
   def test_podiumTraduccionEspañol(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+    self.driver.find_element_by_id('id_username').send_keys("admin")
+    self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+    self.driver.find_element_by_id('login-form').click()
     self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
     self.driver.set_window_size(1552, 840)
     element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
@@ -508,10 +544,11 @@ class TestPodiumTraduccionEspañol():
     assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(3) > #winner").text == "3º puesto"
     
     
- class TestGraficaDonut():
+class TestGraficaDonut():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
@@ -524,7 +561,7 @@ class TestPodiumTraduccionEspañol():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) img").click()
         #Aquí se comprueba que se encuentra la gráfica circular
         assert self.driver.find_element(By.CSS_SELECTOR, "section > #table th:nth-child(1) > .heading").text == "Gráfico Circular"
         elements = self.driver.find_elements(By.ID, "myChart")
@@ -538,6 +575,7 @@ class TestTablaResultados():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
@@ -550,7 +588,7 @@ class TestTablaResultados():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) img").click()
         assert self.driver.find_element(By.CLASS_NAME, "theTable")
         assert self.driver.find_element(By.ID, "exportarTab")
         #Aquí se comprueba que aparecen los resultados de la votación (se comprueba que aparecen 2 opciones de la votación
@@ -569,6 +607,7 @@ class TestBotonReturn():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
@@ -579,10 +618,6 @@ class TestBotonReturn():
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/contactUs")
-        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
-        actions = ActionChains(self.driver)
-        actions.move_to_element(element).perform()
-        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
         assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/contactUs/"
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
         assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/5/"
@@ -598,6 +633,7 @@ class TestVotacionNoEmpezada():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
@@ -611,7 +647,7 @@ class TestVotacionNoEmpezada():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) img").click()
         #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
         assert self.driver.find_element(By.ID, "text").text == "Votación no comenzada"
         
@@ -624,6 +660,7 @@ class TestVotacionNoFinalizada():
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.headless = True
+        options.add_argument("--no-sandbox")
         self.driver = webdriver.Chrome(options=options)
         self.driver.fullscreen_window()
         
@@ -636,7 +673,7 @@ class TestVotacionNoFinalizada():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) img").click()
         #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
         assert self.driver.find_element(By.ID, "text").text == "Votación en curso"
 
@@ -650,7 +687,7 @@ class TestVotacionNoFinalizada():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) > .pmd-floating-action-btn > img").click()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(1) img").click()
         #Aquí se comprueba que la tabla con el número de votos existe y tiene la fila con el número de votos que hay
         elements = self.driver.find_elements(By.CSS_SELECTOR, "tbody > tr > th")
         assert len(elements) > 0
@@ -693,6 +730,21 @@ class TestVotacionNoFinalizada():
 # if __name__ == '__main__':
 #     unittest.main()
 
+class TestTestBotonTelegram():
+  def setup(self):
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    options.add_argument("--no-sandbox")
+    self.driver = webdriver.Chrome(options=options)
+  
+  def teardown(self):
+    self.driver.quit()
+  
+  def testBotonTelegram(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+    self.driver.set_window_size(1295, 726)
+    self.driver.find_element(By.LINK_TEXT, "Telegram").click()
+    assert self.driver.find_element(By.CSS_SELECTOR, "span").text == "decide"
 """ Comentado porque estos cambios no estan todavia en heroku
 class TestHomeVisualizer():
     def setUp(self):
