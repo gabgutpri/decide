@@ -293,7 +293,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.set_window_size(1295, 726)
         self.driver.find_element(By.LINK_TEXT, "Telegram").click()
         assert self.driver.find_element(By.CSS_SELECTOR, "span").text == "decide"
-""" Comentado porque estos cambios no estan todavia en heroku
+    """ Comentado porque estos cambios no estan todavia en heroku
 
   
     def test_home_visualizer(self):
@@ -328,6 +328,6 @@ class VisualizerTestCase(APITestCase):
 
     def tearDown(self):
         self.driver.quit()
-"""
+    """
 # if __name__ == '__main__':
 #     unittest.main()
