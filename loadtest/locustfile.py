@@ -79,6 +79,11 @@ class DefAuth(SequentialTaskSet):
         }).json()
 
     @task
+    def profile(self):
+        username, pwd = self.u
+        self.token = self.client.get("/authentication/profile/" + username)
+
+    @task
     def logout(self):
         username, pwd = self.u
         self.token = self.client.get("/authentication/logoutgui/")
