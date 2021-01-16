@@ -288,6 +288,12 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
 
         super().setUp()     
 
+    def tearDown(self):
+        super().tearDown()
+        self.driver.quit()
+
+        self.base.tearDown()
+
     # Verify if a Yes/No question is created correctly
     def test_create_yes_no_question(self):       
         driver = self.driver
@@ -351,3 +357,50 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
         self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
         self.assertEqual("", driver.find_element_by_id("id_options-2-option").text)
         self.assertEqual("", driver.find_element_by_id("id_options-3-option").text)
+
+    def test_create_yes_no_voting(self):
+        driver = self.driver
+        # Creation of a super user to being able to create questions
+        User.objects.create_superuser('egcVotacion', 'votacion@decide.com', 'egcVotacion')
+        driver.get(f'{self.live_server_url}/admin/')
+        # Web log in
+        driver.find_element_by_id('id_username').send_keys("egcVotacion")
+        driver.find_element_by_id('id_password').send_keys("egcVotacion", Keys.ENTER)
+        time.sleep(3)
+
+        # Access to add question form
+        driver.find_element_by_link_text("Questions").click()
+        time.sleep(1)
+        driver.find_element_by_link_text("Add question").click()
+        time.sleep(1)
+
+        # Creation of a yes/no question example
+        driver.find_element_by_id('id_desc').send_keys("Si/No prueba")
+        driver.find_element_by_xpath("//form[@id='question_form']/div/fieldset/div[3]/div/label").click()
+        driver.find_element_by_name("_save").click()
+        time.sleep(3)
+
+       # Creation of auth
+        driver.get(f'{self.live_server_url}/admin/')
+        driver.find_element_by_link_text("Auths").click()
+        driver.find_element_by_link_text("Add auth").click()
+        driver.find_element(By.ID, "id_name").click()
+        driver.find_element(By.ID, "id_name").send_keys("localhost")
+        driver.find_element(By.ID, "id_url").click()
+        driver.find_element(By.ID, "id_url").send_keys("http://localhost:8000")
+        driver.find_element(By.ID, "id_me").click()
+        driver.find_element_by_name("_save").click()
+
+        # Creation of a yes/no voting example
+        driver.get(f'{self.live_server_url}/admin/')
+        driver.find_element_by_link_text("Votings").click()
+        driver.find_element_by_link_text("Add voting").click()
+        driver.find_element(By.ID, "id_name").send_keys("Votacion de Si/No")
+        driver.find_element(By.ID, "id_desc").send_keys("votacion con preguntas de Si")
+        self.dropdown = driver.find_element(By.NAME, "question")
+        self.dropdown.find_element(By.XPATH, "//option[. = 'Si/No prueba']").click()
+        self.dropdown = driver.find_element(By.NAME, "auths")
+        self.dropdown.find_element(By.XPATH, "//option[. = 'http://localhost:8000']").click()
+        driver.find_element_by_name("_save").click()
+        self.assertEqual("Votacion de Si/No", driver.find_element_by_xpath("(//a[contains(text(),'Votacion de Si/No')])[2]").text)
+
