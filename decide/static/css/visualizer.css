@@ -60,12 +60,12 @@
     border-radius: 20px;
     box-shadow: 0 50px 50px rgba(0, 0, 0, 0.5);
 }
-.podio {
+.podio{
     height: 300px;
     vertical-align: bottom;
     padding: 5px;
-     }
-    #response {
+    }
+    #response{
     font-family: courier-new, courier;
     }
     #podium0, #podium1, #podium2{
