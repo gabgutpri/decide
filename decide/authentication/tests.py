@@ -220,7 +220,7 @@ class EditProfileTests(TestCase):
 
     #Creamos usuarios de prueba que usaremos
     def setUp(self) -> None:
-        usertest = User(username="testouser", password="password1234", first_name= "pablo", last_name= "elro bot", email="testouseremail@gmail.com",is_active=True)
+        usertest = User(username="testouser", password="password1234", first_name= "pablo", last_name= "elro bot", email="testuseremail@gmail.com",is_active=True)
         usertest.save()
         self.username = 'testouser'
         self.email = 'testuseremail@gmail.com'
@@ -237,9 +237,20 @@ class EditProfileTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name = 'user_profile.html')
 
+        #Probamos que los datos de perfil que se visualizan son correctos
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_correct_profile(self):
+        response = self.client.get("/authentication/profile/testouser")
+        self.assertEqual(response.context['username'], 'testouser')
+        self.assertEqual(response.context['first_name'], 'pablo')
+        self.assertEqual(response.context['last_name'], 'elro bot')
+        self.assertEqual(response.context['email'], 'testuseremail@gmail.com')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'user_profile.html')
+
         #Probamos que no se puede acceder al perfil personal de otra persona
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
-    def test_profile_access(self):
+    def test_profile_not_access(self):
         usertest2 = User(username="testouser2", password="password1234", first_name= "pablo2", last_name= "elrom bot", email="testouseremail2@gmail.com",is_active=True)
         usertest2.save()
         response = self.client.get("/authentication/profile/testouser2")
@@ -297,6 +308,17 @@ class EditProfileTests(TestCase):
         messages = list(response.context['messages'])
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), 'El nombre de usuario ya está en uso.')
+
+    #Probamos que los datos que se muestran en la página de editar perfil antes de actualizar son correctos
+    @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
+    def test_correct_edit_profile(self):
+        response = self.client.get("/authentication/editprofile/testouser")
+        self.assertEqual(response.context['username'], 'testouser')
+        self.assertEqual(response.context['first_name'], 'pablo')
+        self.assertEqual(response.context['last_name'], 'elro bot')
+        self.assertEqual(response.context['email'], 'testuseremail@gmail.com')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name = 'edit_user_profile.html')
     
     #Probamos que el perfil se actualiza correctamente
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
@@ -327,13 +349,13 @@ class EditProfileTests(TestCase):
 
     #Probamos que no se puede acceder a la página de edición de perfil de otra persona
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
-    def test_profile_access(self):
+    def test_edit_profile_access(self):
         usertest2 = User(username="testouser2", password="password1234", first_name= "pablo2", last_name= "elrom bot", email="testouseremail2@gmail.com",is_active=True)
         usertest2.save()
         response = self.client.get("/authentication/editprofile/testouser2")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, b'You are not authorized to see this page.')
-   
+
 
     #Testing a post request with bad pass confirmation (not the same password1 that password2)
     @override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage') 
