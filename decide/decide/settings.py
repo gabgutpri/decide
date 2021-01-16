@@ -101,7 +101,7 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'https://picaro-decide.herokuapp.com'
+BASEURL = 'https://picaro-decide-authentication.herokuapp.com'
 
 APIS = {
     'authentication': BASEURL ,
