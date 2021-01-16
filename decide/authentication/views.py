@@ -219,11 +219,34 @@ class EditProfileView(APIView):
 
 class DeleteProfile:
     def delete(request, username):
-        try:
-            user = User.objects.get(username=username)
-            user.delete() 
-            return redirect('../../')
-        except User.DoesNotExist:
-            messages.error(request, "El usuario no existe")
+        user = User.objects.get(username=username)
+        username = user.username
+        selfusername = request.user.username
+        if not username == selfusername:
+            return HttpResponse('You are not authorized to see this page.')
+        if request.method == 'POST':
+            form = UpdateProfile(request.POST, instance=request.user)
+            form.actual_user = request.user
+            if request.POST.get('deleteprofile') == 'BORRAR':
+                try:
+                    user = User.objects.get(username=username)
+                    user.delete()
+                    return redirect('../../')
+                except User.DoesNotExist:
+                    messages.error(request, "El usuario no existe")
+            elif request.POST.get('deleteprofile') != 'BORRAR':         
+                messages.error(request, 'Por favor, escriba la parabra solicitada.')
+        return render(request, 'delete_profile.html')
 
-        
+class DeleteProfileView(APIView):
+    def post(self, request):
+        key = request.data.get('token', '')
+        tk = get_object_or_404(Token, key=key)
+        if not tk.user.is_superuser:
+            return Response({}, status=HTTP_401_UNAUTHORIZED)
+
+        username = user.profile.username
+        if not username:
+            return Response({}, status=HTTP_400_BAD_REQUEST)
+
+        return Response(request, 'logingui.html')

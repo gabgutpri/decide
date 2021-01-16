@@ -4,8 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
-from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation, ProfileView, UserProfile, EditUserProfile, EditProfileView, DeleteProfile
-
+from .views import GetUserView, LogoutView, RegisterView, RegisterGUI, LogOutTestView, AccountActivation, ProfileView, UserProfile, EditUserProfile, EditProfileView, DeleteProfile, DeleteProfileView
 
 
 urlpatterns = [
@@ -15,6 +14,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view()),
     path('profile/', ProfileView.as_view()),
     path('editprofile/', EditProfileView.as_view()),
+    path('deleteprofile/', DeleteProfileView.as_view()),
     #Register URL
     path('registergui/', RegisterGUI.register, name='account_activation_sent'),
     #Login URL Built In
@@ -32,7 +32,7 @@ urlpatterns = [
     #Edit Profile
     path('editprofile/<username>', EditUserProfile.edit_user_profile, name='edit_user_profile'),
     #Delete user
-    path('deleteprofile/<username>', DeleteProfile.delete, name='delete'),
+    path('deleteprofile/<username>', DeleteProfile.delete, name='delete_profile'),
 
 
 
