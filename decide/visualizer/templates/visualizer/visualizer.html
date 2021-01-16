@@ -90,6 +90,20 @@
                         </tbody>
                     </table>
                 </div>
+                <section>
+                    <table class="tb table-responsive" id="table">
+                        <thead>
+                            <tr>
+                                <th><h5 class="heading" style="text-align: center;"><i class="fa fa-bar-chart"></i> {% trans "Donut Chart" %}</h5>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><canvas id="myChart3" width="1000" height="500"></canvas></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
                 <button class="btn btn-secondary" type="submit" style="position: fixed; bottom: 10%; right: 5%" onclick="window.history.go(-1);">{% trans "Return" %}</button>
             </div>
 
@@ -250,6 +264,37 @@
                     }]
                 }
                }
+            });
+    </script>
+
+    <script>
+        // Gráfica en tiempo real (gabgutpri, visualización)
+        var votosOpcion = {{votosOpcion|safe}};
+        var options = {{options|safe}};
+        var labls=[]; var dat=[];
+
+        function getColoresRandom(){
+            var colorRandom='#'+Math.random().toString(16).substr(-6);
+           return colorRandom;
+        }
+        
+        for(var i=0;i<options.length;i++){
+            dat.push(votosOpcion[i])
+            labls.push(options[i].option)
+            color= getColoresRandom()
+            colores.push(color)
+        }
+        var ctx3 = document.getElementById('myChart3').getContext('2d');
+
+        var chart = new Chart(ctx3, {
+            type: 'doughnut',
+            data:{
+                datasets: [{
+                    data: dat,
+                    backgroundColor: colores,
+                    label: 'Número de votos'}],
+                    labels: labls},
+            options: {responsive: true}
             });
     </script>
 
