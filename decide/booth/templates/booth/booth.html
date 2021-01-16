@@ -16,7 +16,7 @@
             <b-navbar-brand tag="h1">Decide</b-navbar-brand>
                 <b-navbar-nav class="ml-auto" v-if="!signup">
                     <b-nav-item href="#" v-on:click="decideLogout">
-                        {% trans "Logout" %}
+                        {% trans "logout" %}
                     </b-nav-item>
                 </b-navbar-nav>
         </b-navbar>
@@ -60,6 +60,7 @@
                         [[ opt.option ]]
                     </b-form-radio>
                 </b-form-group>
+                    
                 <b-button type="button" variant="primary" v-on:click="decideSend">
                     {% trans "Vote" %}
                 </b-button>
@@ -94,6 +95,11 @@
                 keybits: {{ KEYBITS }},
                 voting: voting,
                 selected: "",
+                // selected_op1: "",
+                // selected_op2: "",
+                // selected_op3: "",
+                // selected_op4: "",
+                // selected_op5: "",
                 signup: true,
                 alertShow: false,
                 alertMsg: "",

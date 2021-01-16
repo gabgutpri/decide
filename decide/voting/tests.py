@@ -15,6 +15,11 @@ from mixnet.mixcrypt import MixCrypt
 from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+import unittest, time, re
+
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 # Selenium imports
@@ -23,7 +28,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-import time
+
 
 class VotingTestCase(BaseTestCase):
 
@@ -351,3 +356,146 @@ class YesNoQuestionViewTestCase(StaticLiveServerTestCase):
         self.assertEqual("NO", driver.find_element_by_id("id_options-1-option").text)
         self.assertEqual("", driver.find_element_by_id("id_options-2-option").text)
         self.assertEqual("", driver.find_element_by_id("id_options-3-option").text)
+
+        
+#TESTS MODELO FLOR
+class VotingModelTestCase(BaseTestCase):
+    def setUp(self):
+        q=Question(desc="Description")
+        q.save()
+
+        opt1=QuestionOption(question=q,option='option 1')
+        opt1.save()
+
+        opt2=QuestionOption(question=q,option='option 2')
+        opt2.save()
+
+        self.v =Voting(name="Votacion",question=q)
+        self.v.save()
+        super().setUp()
+    def tearDown(self):
+        super().tearDown()
+        self.v = None
+    
+    def testExiste(self):
+        v=Voting.objects.get(name="Votacion")
+        self.assertEquals(v.name,"Votacion")
+        self.assertEquals(v.question.desc,"Description")
+        self.assertEquals(v.question.options.all()[0].option,"option 1")
+        self.assertEquals(v.question.options.all()[1].option,"option 2")
+
+        self.assertNotEquals(v.name,"Hola")
+        self.assertNotEquals(v.question.desc,"Hola")
+        self.assertNotEquals(v.question.options.all()[0].option,"Hello")
+        self.assertNotEquals(v.question.options.all()[1].option,"Hello")
+  
+        
+class VotacionPrefModelTestCase(BaseTestCase):
+
+    def setUp(self):
+        q=Question(desc="Pregunta de preferencia futbol",question_options=2)
+        q.save()
+
+        opt1=QuestionOption(number="1", question=q,option='betis')
+        opt1.save()
+
+        opt2=QuestionOption(number="2",question=q,option='sevilla')
+        opt2.save()
+
+        vp = Voting(name="Votacion de preferencia 1",desc="derbi de futbol",question=q )
+        vp.save()
+        super().setUp()
+
+    def tearDown(self):
+        super().tearDown()
+        self.vp = None
+    
+    def testExiste(self):
+        vp = Voting.objects.get(name="Votacion de preferencia 1")
+        self.assertEquals(vp.name,"Votacion de preferencia 1")
+        self.assertEquals(vp.desc,"derbi de futbol")
+        self.assertEquals(vp.question.desc,"Pregunta de preferencia futbol")
+        self.assertEquals(vp.question.question_options,2)
+        self.assertEquals(vp.question.options.all()[0].option,"betis")
+        self.assertEquals(vp.question.options.all()[0].number,1)
+        self.assertEquals(vp.question.options.all()[1].option,"sevilla")
+        self.assertEquals(vp.question.options.all()[1].number,2)
+
+        self.assertNotEquals(vp.name,"Votacion de prueba")
+        self.assertNotEquals(vp.desc,"Descripcion de prueba")
+        self.assertNotEquals(vp.question.desc,"Pregunta de prueba")
+        self.assertNotEquals(vp.question.question_options,1)
+        self.assertNotEquals(vp.question.options.all()[0].option,"ordenador")
+        self.assertNotEquals(vp.question.options.all()[0].number,3)
+        self.assertNotEquals(vp.question.options.all()[1].option,"movil")
+        self.assertNotEquals(vp.question.options.all()[1].number,4)
+              
+
+#TEST CON SELENIUM MODELO
+class TestQues(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(30)
+        self.base_url = "https://www.google.com/"
+        self.verificationErrors = []
+        self.accept_next_alert = True
+    
+    def test_ques(self):
+        driver = self.driver
+        driver.get("http://localhost:8000/admin/login/?next=/admin/")
+        driver.find_element_by_id("id_username").click()
+        driver.find_element_by_id("id_username").clear()
+        driver.find_element_by_id("id_username").send_keys("admin")
+        driver.find_element_by_id("id_password").click()
+        driver.find_element_by_id("id_password").clear()
+        driver.find_element_by_id("id_password").send_keys("flocorlop")
+        driver.find_element_by_xpath("//input[@value='Log in']").click()
+        driver.find_element_by_link_text("Questions").click()
+        driver.find_element_by_class_name("addlink").click()
+        driver.find_element_by_id("id_desc").click()
+        driver.find_element_by_id("id_desc").clear()
+        driver.find_element_by_id("id_desc").send_keys("Test modelo")
+        driver.find_element_by_id("id_question_options").click()
+        Select(driver.find_element_by_id("id_question_options")).select_by_visible_text("Preference question")
+        driver.find_element_by_id("id_question_options").click()
+        driver.find_element_by_id("id_options-0-option").click()
+        driver.find_element_by_id("id_options-0-option").clear()
+        driver.find_element_by_id("id_options-0-option").send_keys("intel")
+        driver.find_element_by_id("id_options-0-number").click()
+        driver.find_element_by_id("id_options-0-number").clear()
+        driver.find_element_by_id("id_options-0-number").send_keys("1")
+        driver.find_element_by_id("id_options-1-option").click()
+        driver.find_element_by_id("id_options-1-option").clear()
+        driver.find_element_by_id("id_options-1-option").send_keys("amd")
+        driver.find_element_by_id("id_options-1-number").click()
+        driver.find_element_by_id("id_options-1-number").clear()
+        driver.find_element_by_id("id_options-1-number").send_keys("2")
+        driver.find_element_by_name("_save").click()
+    
+    def is_element_present(self, how, what):
+        try: self.driver.find_element(by=how, value=what)
+        except NoSuchElementException as e: return False
+        return True
+    
+    def is_alert_present(self):
+        try: self.driver.switch_to_alert()
+        except NoAlertPresentException as e: return False
+        return True
+    
+    def close_alert_and_get_its_text(self):
+        try:
+            alert = self.driver.switch_to_alert()
+            alert_text = alert.text
+            if self.accept_next_alert:
+                alert.accept()
+            else:
+                alert.dismiss()
+            return alert_text
+        finally: self.accept_next_alert = True
+    
+    def tearDown(self):
+        self.driver.quit()
+        self.assertEqual([], self.verificationErrors)
+
+if __name__ == "__main__":
+    unittest.main()
