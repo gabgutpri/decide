@@ -241,42 +241,43 @@ class VotingTestCase(BaseTestCase):
 
         return v
 
-    def test_end_date_p(self):
+    def test_end_date_modelo_p(self):
         v = self.create_voting_end_date()
 
         self.assertEquals(v.name, "test voting end date")
         self.assertEquals(v.question.desc, "test end date")
         self.assertEqual(v.end_date,"2021-02-15 14:30:59.993048Z")
 
-    def test_end_date_n(self):
+    def test_end_date_modelo_n(self):
         v = self.create_voting_end_date()
         v.end_date = timezone.now() - timezone.timedelta(days=1)
         v.save()
         self.assertRaises(ValidationError, end_date_past, v.end_date)
 
-    def test_end_date_past(self):
-            f = timezone.now() - timezone.timedelta(days=10)
-            self.assertRaises(ValidationError, end_date_past, f)
-            f = timezone.now() - timezone.timedelta(days=1)
-            self.assertRaises(ValidationError, end_date_past, f)
-            f = timezone.now() - timezone.timedelta(minutes=10)
-            self.assertRaises(ValidationError, end_date_past, f)
-            f = timezone.now() - timezone.timedelta(minutes=1)
-            self.assertRaises(ValidationError, end_date_past, f)
-            
-            raised = False
-            try:
-                f = timezone.now() + timezone.timedelta(minutes=1)
-                end_date_past(f)
-                f = timezone.now() + timezone.timedelta(minutes=10)
-                end_date_past(f)
-                f = timezone.now() + timezone.timedelta(days=1)
-                end_date_past(f)
-                f = timezone.now() + timezone.timedelta(days=10)
-                end_date_past(f)
-            except:
-                raised = True
-            self.assertFalse(raised, 'Exception raised')
+    def test_end_date_past_p(self):
+        raised = False
+        try:
+            f = timezone.now() + timezone.timedelta(minutes=1)
+            end_date_past(f)
+            f = timezone.now() + timezone.timedelta(minutes=10)
+            end_date_past(f)
+            f = timezone.now() + timezone.timedelta(days=1)
+            end_date_past(f)
+            f = timezone.now() + timezone.timedelta(days=10)
+            end_date_past(f)
+        except:
+            raised = True
+        self.assertFalse(raised, 'Exception raised')
+
+    def test_end_date_past_n(self):
+        f = timezone.now() - timezone.timedelta(days=10)
+        self.assertRaises(ValidationError, end_date_past, f)
+        f = timezone.now() - timezone.timedelta(days=1)
+        self.assertRaises(ValidationError, end_date_past, f)
+        f = timezone.now() - timezone.timedelta(minutes=10)
+        self.assertRaises(ValidationError, end_date_past, f)
+        f = timezone.now() - timezone.timedelta(minutes=1)
+        self.assertRaises(ValidationError, end_date_past, f)
 
 class EndDateTestCase(StaticLiveServerTestCase):
 
