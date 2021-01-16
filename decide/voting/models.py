@@ -90,7 +90,7 @@ class Voting(models.Model):
     desc = models.TextField(blank=True, null=True)
     question =  models.ManyToManyField(Question, related_name='voting')
     alpha = RegexValidator("^[0-9a-zA-Z]*$", "Sólo se permiten letras y números.")
-    link = models.CharField(max_length=30, default="", unique=True ,validators=[alpha])
+    link = models.CharField(max_length=30, default="", unique=True ,validators=[alpha],blank=True, null=True)
 
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True, validators=[no_past])
