@@ -102,3 +102,4 @@ ENV/
 
 .vagrant
 .vscode/settings.json
+.vscode/settings.json
