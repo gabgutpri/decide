@@ -224,36 +224,41 @@ class VotingTestCase(BaseTestCase):
         self.assertEqual(response.json(), 'Voting already tallied')
 
     #Test Javi
+    #Crear votacion con una fecha de finalizacion
     def create_voting_end_date(self):
         q = Question(desc='test end date')
-        end = "2021-02-15 14:30:59.993048Z"
+        end = "2025-02-15 14:30:59.993048Z"
         q.save()
         for i in range(5):
             opt = QuestionOption(question=q, option='option {}'.format(i+1))
             opt.save()
         v = Voting(name='test voting end date', question=q, end_date=end)
         v.save()
-
         a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
                                           defaults={'me': True, 'name': 'test auth'})
         a.save()
         v.auths.add(a)
-
         return v
 
+    #Test de modelo de fecha de finalizacion caso positivo
+    #Se guarda una votacion con parametros correctos
     def test_end_date_modelo_p(self):
         v = self.create_voting_end_date()
 
         self.assertEquals(v.name, "test voting end date")
         self.assertEquals(v.question.desc, "test end date")
-        self.assertEqual(v.end_date,"2021-02-15 14:30:59.993048Z")
+        self.assertEqual(v.end_date,"2025-02-15 14:30:59.993048Z")
 
+    #Test de modelo de fecha de finalizacion caso negativo
+    #Se guarda una votacion con una fecha pasada
     def test_end_date_modelo_n(self):
         v = self.create_voting_end_date()
         v.end_date = timezone.now() - timezone.timedelta(days=1)
         v.save()
         self.assertRaises(ValidationError, end_date_past, v.end_date)
 
+    #Test de modelo de la restriccion end_date_past caso positivo
+    #Se comprueba que la restriccion no devuelve ninguna excepcion cuando recibe fechas correctas
     def test_end_date_past_p(self):
         raised = False
         try:
@@ -269,6 +274,8 @@ class VotingTestCase(BaseTestCase):
             raised = True
         self.assertFalse(raised, 'Exception raised')
 
+    #Test de modelo de la restriccion end_date_past caso negativo
+    #Se comprueba que la restriccion devuelve un ValidationError cuando recibe fechas pasadas
     def test_end_date_past_n(self):
         f = timezone.now() - timezone.timedelta(days=10)
         self.assertRaises(ValidationError, end_date_past, f)
