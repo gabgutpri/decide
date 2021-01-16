@@ -65,6 +65,26 @@ class TestTraduccionFrances():
     self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(3) img").click()
     assert self.driver.find_element(By.ID, "text").text == "Résultats"
 
+class TestTraduccionContactUs():
+  def setup(self):
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    options.add_argument("--no-sandbox")
+    self.driver = webdriver.Chrome(options=options)
+  
+  def teardown(self):
+    self.driver.quit()
+  
+  def test_traduccionContactUs(self):
+    self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+    self.driver.set_window_size(1552, 840)
+    element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+    actions = ActionChains(self.driver)
+    actions.move_to_element(element).perform()
+    self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(3) img").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary:nth-child(2)").click()
+    assert self.driver.find_element(By.CSS_SELECTOR, ".contactForm > h2").text == "Envoyer en méssage"
+
 class TestQuestion():
   def setup(self):
     options = webdriver.ChromeOptions()
@@ -766,5 +786,6 @@ class TestHomeVisualizer():
     def tearDown(self):
         self.driver.quit()
 """
+
 # if __name__ == '__main__':
 #     unittest.main()
