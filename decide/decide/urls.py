@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('doc/', schema_view),
     path('gateway/', include('gateway.urls')),
+    #Agregamos las dos rutas 'default' para que el sistema cargue en home
     path('', Home.home),
     path('home/', Home.home)
 ]
