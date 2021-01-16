@@ -20,7 +20,7 @@ class VisualizerTestCase(APITestCase):
         options = webdriver.ChromeOptions()
         options.headless = True
         options.add_argument("--no-sandbox")
-        self.driver = webdriver.Chrome("chromedriver",options=options)
+        self.driver = webdriver.Chrome('chromedriver',options=options)
   
     def test_email(self):
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
