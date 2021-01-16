@@ -16,7 +16,7 @@ from mixnet.models import Auth
 from voting.models import Voting, Question, QuestionOption
 
 
-class VotingTestCase(BaseTestCase):
+class VotingTestCase(APITestCase):
 
     def setUp(self):
         super().setUp()
