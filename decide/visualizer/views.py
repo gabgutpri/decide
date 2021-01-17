@@ -28,7 +28,6 @@ class VisualizerView(TemplateView):
 
                 numero_votos = get_numero_votos(vid)
                 context['numero_votos'] = numero_votos
-                
         except:
             raise Http404
 

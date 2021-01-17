@@ -95,6 +95,19 @@ class VotingUpdate(generics.RetrieveUpdateDestroyAPIView):
             else:
                 voting.tally_votes(request.auth.key)
                 msg = 'Voting tallied'
+        elif action == 'save':
+            if not voting.start_date:
+                msg = 'Voting is not started'
+                st = status.HTTP_400_BAD_REQUEST
+            elif not voting.end_date:
+                msg = 'Voting is not stopped'
+                st = status.HTTP_400_BAD_REQUEST
+            elif not voting.tally:
+                msg = 'Voting has not being tallied' 
+                st = status.HTTP_400_BAD_REQUEST
+            else: 
+                voting.saveFile()
+                msg = 'Voting has been saved in local'
         else:
             msg = 'Action not found, try with start, stop or tally'
             st = status.HTTP_400_BAD_REQUEST

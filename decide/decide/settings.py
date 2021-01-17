@@ -47,6 +47,12 @@ INSTALLED_APPS = [
     'gateway',
 ]
 
+#Authentication Apps
+
+AUTH_APPS = [
+    'social_django',
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
@@ -55,9 +61,41 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning'
 }
 
+#Authentication Backends
+
 AUTHENTICATION_BACKENDS = [
     'base.backends.AuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
 ]
+
+#Social Login Keys
+#Facebook App Keys
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET')
+
+#Twitter App keys
+SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET')
+
+#Email Auth Backend (For testing and debugging purposes, not yet ready for production)
+#If emails doesn't show up in the command prompt when performing an email dependant operation (Such as email verification)
+#Try running the following line is a new command prompt: python3 -m smtpd -n -c DebuggingServer localhost:1025 > mail.log
+#This command will run a dummy smtpd server in the port 1025 of your machine, note that this server may already been enabled
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Email Auth Configuration for Production
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+DEFAULT_FROM_EMAIL = 'noreply<no_reply@domain.com>'
+
+#Url to redirect after successfull login
+LOGIN_REDIRECT_URL = '/'
 
 MODULES = [
     'authentication',
@@ -94,6 +132,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware', #Authentication Social Middleware
 ]
 
 ROOT_URLCONF = 'decide.urls'
@@ -101,7 +141,7 @@ ROOT_URLCONF = 'decide.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["decide/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -220,8 +260,9 @@ if os.path.exists("config.jsonnet"):
     for k, v in config.items():
         vars()[k] = v
 
-
-INSTALLED_APPS = INSTALLED_APPS + MODULES
+#All the apps are loaded from here, it's better to divide the apps of each team in different arrays so we can identify
+#which are the newly added ones, for example: All the needed Apps for Authentication are under the array: AUTH_APPS
+INSTALLED_APPS = INSTALLED_APPS + MODULES + AUTH_APPS
 
 import django_heroku
 django_heroku.settings(locals())

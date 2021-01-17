@@ -15,3 +15,5 @@ selenium
 pillow
 python-dotenv
 chromedriver
+social-auth-app-django
+
