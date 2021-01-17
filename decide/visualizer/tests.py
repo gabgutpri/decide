@@ -23,7 +23,7 @@ class VisualizerTestCase(APITestCase):
         self.driver = webdriver.Chrome('chromedriver',options=options)
   
     def test_email(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1552, 840)
         self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary:nth-child(2)").click()
         self.driver.find_element(By.NAME, "name").click()
@@ -38,7 +38,7 @@ class VisualizerTestCase(APITestCase):
 
   
     def test_traduccionFrances(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1552, 840)
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
@@ -47,7 +47,7 @@ class VisualizerTestCase(APITestCase):
         assert self.driver.find_element(By.ID, "text").text == "Résultats"
 
     def test_traduccionContactUs(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1552, 840)
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
@@ -57,13 +57,13 @@ class VisualizerTestCase(APITestCase):
         assert self.driver.find_element(By.CSS_SELECTOR, ".contactForm > h2").text == "Envoyer en méssage"
 
     def test_question(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1552, 840)
         elements = self.driver.find_elements(By.ID, "question")
         assert len(elements) > 0
 
     def test_maps(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1552, 840)
         self.driver.find_element(By.CSS_SELECTOR, ".btn-secondary:nth-child(2)").click()
         elements = self.driver.find_elements(By.CSS_SELECTOR, "a > img")
@@ -87,7 +87,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -102,7 +102,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.find_element(By.ID, "darkButton").click()
         assert self.driver.find_element_by_tag_name('body').get_attribute("class") == "bg-dark"
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
@@ -116,7 +116,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.find_element(By.ID, "darkButton").click()
         self.driver.find_element(By.ID, "lightButton").click()
         assert self.driver.find_element_by_tag_name('body').get_attribute("class") == "bg-light"
@@ -131,7 +131,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -143,7 +143,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -160,7 +160,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -178,7 +178,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -198,7 +198,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -213,7 +213,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -229,7 +229,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -250,7 +250,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -265,7 +265,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -277,7 +277,7 @@ class VisualizerTestCase(APITestCase):
 
   
     def test_traduccionAleman(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1552, 840)
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
@@ -287,7 +287,7 @@ class VisualizerTestCase(APITestCase):
 
   
     def test_podiumTraduccionEspañol(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1552, 840)
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
@@ -298,7 +298,7 @@ class VisualizerTestCase(APITestCase):
         assert self.driver.find_element(By.CSS_SELECTOR, ".podio:nth-child(3) > #winner").text == "3º puesto"
   
     def testBotonTelegram(self):
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         self.driver.set_window_size(1295, 726)
         self.driver.find_element(By.LINK_TEXT, "Telegram").click()
         assert self.driver.find_element(By.CSS_SELECTOR, "span").text == "decide"
@@ -308,7 +308,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -323,7 +323,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -345,11 +345,12 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/contactUs")
         assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/contactUs/"
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/5/")
-        assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/5/"
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/1/")
+        assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/1/"
         self.driver.find_element(By.CSS_SELECTOR, "#app-visualizer > .btn").click()
         assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/contactUs/"
     
+    """
     def test_votacionEnCurso(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
@@ -376,7 +377,7 @@ class VisualizerTestCase(APITestCase):
         #Aquí se comprueba que la tabla con el número de votos existe y tiene la fila con el número de votos que hay
         elements = self.driver.find_elements(By.CSS_SELECTOR, "tbody > tr > th")
         assert len(elements) > 0  
-
+    """
     #def test_aumentaNumeroVotos(self):
 #        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
 #        self.driver.find_element_by_id('id_username').send_keys("admin")
