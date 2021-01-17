@@ -5,11 +5,11 @@
 {% block extrahead %}
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
-    <link type="text/css" rel="stylesheet" href="{% static 'booth/style.css' %}" />
+    <link type="text/css" rel="stylesheet" href="../../static/booth/style.css" />
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/contactUs.css' %}" >
+    <link rel="stylesheet" href="../../static/css/contactUs.css/" >
 {% endblock %}
 
 {% block content %}
@@ -34,17 +34,18 @@
                         <ul class="info">
                             <li>
                                 <span><a href="https://www.google.es/maps/place/Escuela+T%C3%A9cnica+Superior+de+Ingenier%C3%ADa+Inform%C3%A1tica/@37.358389,-5.9901688,17z/data=!3m1!4b1!4m5!3m4!1s0xd126dd4a3055555:0x29c3f634f8a021b8!8m2!3d37.358389!4d-5.9879801" target="_blank"><img src="{% static '/images/location.png' %}"></a></span>
-                                <span>{% trans "Higher Technical School of Computer Engineering," %}<br>
+                                <span><a href="https://www.google.es/maps/place/Escuela+T%C3%A9cnica+Superior+de+Ingenier%C3%ADa+Inform%C3%A1tica/@37.358389,-5.9901688,17z/data=!3m1!4b1!4m5!3m4!1s0xd126dd4a3055555:0x29c3f634f8a021b8!8m2!3d37.358389!4d-5.9879801" target="_blank" style="color:white">{% trans "Higher Technical School of Computer Engineering," %}<br>
                                     {% trans "Sevilla University, 41012" %}<br>
                                     Sevilla
+                                </a>    
                                 </span>  
                             </li>
                             <li>
-                                <span><img src="{% static '/images/mail.png' %}"></span>
+                                <span><img src="../../static/images/mail.png"></span>
                                 <span>decideVisualizacion@picaro.es</span>
                             </li>
                             <li>
-                                <span><img src="{% static '/images/phone.png' %}"></span>
+                                <span><img src="../../static/images/phone.png"></span>
                                 <span>+34 954 55 38 66 (David)</span>
                             </li>
                         </ul>
@@ -89,12 +90,12 @@
         </section>
 
         <!-- Footer -->
-        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; margin-top: 20px;">
+        <b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:0px;">
             <div class="container">
                 <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
                 <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro · Visualización &copy; 2021</span>
             </div>
-        </b-navbar> 
+        </b-navbar>
     </div>
 {% endblock %}
 
@@ -116,7 +117,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="{% static 'js/mfb.js' %}"></script>
+    <script src="../../static/js/mfb.js"></script>
 
     <script>
         // Web site cookies
