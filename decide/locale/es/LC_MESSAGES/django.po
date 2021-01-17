@@ -110,14 +110,10 @@ msgid "Username:"
 msgstr "Nombre de usuario:"
 
 #: authentication/templates/user_profile.html:23
-#, fuzzy
-#| msgid "Name"
 msgid "Name:"
 msgstr "Nombre:"
 
 #: authentication/templates/user_profile.html:27
-#, fuzzy
-#| msgid "Surnames"
 msgid "Surnames:"
 msgstr "Nombre de usuario:"
 
@@ -129,13 +125,11 @@ msgstr "Email:"
 #, fuzzy
 #| msgid "My profile"
 msgid "Edit profile"
-msgstr "Mi perfil"
+msgstr "Editar perfil"
 
 #: authentication/templates/user_profile.html:40
-#, fuzzy
-#| msgid "Create user"
 msgid "Delete user"
-msgstr "Crear usuario"
+msgstr "Borrar usuario"
 
 #: booth/templates/booth/booth.html:19 decide/templates/home_auth.html:18
 #, fuzzy

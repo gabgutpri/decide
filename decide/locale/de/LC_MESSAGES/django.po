@@ -125,16 +125,12 @@ msgid "Email:"
 msgstr "Email:"
 
 #: authentication/templates/user_profile.html:36
-#, fuzzy
-#| msgid "My profile"
 msgid "Edit profile"
-msgstr "Mein Profil"
+msgstr "Bearbeiten Profil"
 
 #: authentication/templates/user_profile.html:40
-#, fuzzy
-#| msgid "Create user"
 msgid "Delete user"
-msgstr "Benutzer erstellen"
+msgstr "Benutzer löschen"
 
 #: booth/templates/booth/booth.html:19 decide/templates/home_auth.html:18
 msgid "Logout"
