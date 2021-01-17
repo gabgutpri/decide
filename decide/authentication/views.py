@@ -220,7 +220,7 @@ class EditUserProfile:
                 username = form.actual_user.username
                 first_name = form.actual_user.first_name
                 last_name = form.actual_user.last_name
-                email = form.actual_user.email
+                email = user.email
                 return render(request, 'user_profile.html', context={'username': username,'first_name': first_name, 'last_name': last_name, 'email': email}) 
          elif request.POST.get('username') == '':         
              messages.error(request, 'El nombre de usuario no puede estar vacío.')
