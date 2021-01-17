@@ -350,26 +350,40 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element(By.CSS_SELECTOR, "#app-visualizer > .btn").click()
         assert self.driver.current_url == "https://picaro-decide.herokuapp.com/visualizer/contactUs/"
     
-    """
+    
     def test_votacionEnCurso(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/2/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
         self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) img").click()
-        #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
+        #Comprueba que efectivamente es una votación que no ha finalizado, ya que la página de visualización de una votación no finalizada, solo contiene ese texto
         assert self.driver.find_element(By.ID, "text").text == "Votación en curso"
+
+        
+    def test_graficaDonut(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/3/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > .pmd-floating-action-btn > img").click()
+        #Comprueba que efectivamente es una votación que no ha empezado, ya que la página de visualización de una votación no empezada, solo contiene ese texto
+        assert self.driver.find_element(By.ID, "text").text == "Votación no comenzada"
 
     def test_tabla(self): 
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/2/")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -377,31 +391,6 @@ class VisualizerTestCase(APITestCase):
         #Aquí se comprueba que la tabla con el número de votos existe y tiene la fila con el número de votos que hay
         elements = self.driver.find_elements(By.CSS_SELECTOR, "tbody > tr > th")
         assert len(elements) > 0  
-    """
-    #def test_aumentaNumeroVotos(self):
-#        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
-#        self.driver.find_element_by_id('id_username').send_keys("admin")
-#        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
-#        self.driver.find_element_by_id('login-form').click()
-#        self.driver.get("https://picaro-decide.herokuapp.com/admin")
-#        
-#        time.sleep(5)
-#        
-#       
-#        self.driver.find_element(By.ID, "id_voting_id").send_keys("7")
-#        self.driver.find_element(By.ID, "id_voter_id").send_keys("1")
-#        self.driver.find_element(By.ID, "id_a").send_keys("1")
-#        self.driver.find_element(By.ID, "id_b").send_keys("1")
-#        self.driver.find_element(By.NAME, "_addanother").click()
-#        self.driver.find_element(By.ID, "id_voting_id").send_keys("7")
-#        self.driver.find_element(By.ID, "id_voter_id").send_keys("2")
-#        self.driver.find_element(By.ID, "id_a").send_keys("1")
-#        self.driver.find_element(By.ID, "id_b").send_keys("3")
-#        self.driver.find_element(By.NAME, "_save").click()
-#        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
-#        assert self.driver.find_element(By.CSS_SELECTOR, "tbody > tr > th").text =="4" 
-    """ Comentado porque estos cambios no estan todavia en heroku
-
     
     def test_grafica_todas(self):
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer/")
@@ -419,7 +408,7 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_username').send_keys("admin")
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
-        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/2")
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
@@ -433,9 +422,8 @@ class VisualizerTestCase(APITestCase):
         self.driver.find_element_by_id('id_password').send_keys("picarodecide")
         self.driver.find_element_by_id('login-form').click()
         self.driver.get("https://picaro-decide.herokuapp.com/visualizer")
-        try: self.assertEqual("Votings", self.driver.find_element_by_id("question").text)
-        except AssertionError as e: self.verificationErrors.append(str(e))
+        assert self.driver.find_element(By.ID, "question").text == "Votings"
     
-    """
+
 # if __name__ == '__main__':
 #     unittest.main()
