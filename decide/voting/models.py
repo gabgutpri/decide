@@ -1,28 +1,84 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import os
 import requests
+from django.core.validators import RegexValidator
 
 from base import mods
 from base.models import Auth, Key
 
+#Javi
+#Restriccion para que no se pueda crear una votacion con una fecha de finalizacion pasada
+def end_date_past(value):
+    now = timezone.now()
+    if value < now:
+        raise ValidationError('End date past')
+
 
 class Question(models.Model):
     desc = models.TextField()
+    yes_no_question = models.BooleanField(default=False)
+    QUESTION_TYPE= ((1,"Simple question"),(2,"Preference question"))
+    question_options = models.PositiveIntegerField(choices=QUESTION_TYPE,default=1)
+
+    def save(self):
+
+        super().save()
+        # In case of being a Yes/No question, we use the yesNoQuestionCreation method
+        if self.yes_no_question:
+
+            yesNoQuestionCreation(self)
 
     def __str__(self):
         return self.desc
 
+# Method that creates the 'Yes' and 'No' options
+def yesNoQuestionCreation(self):
+    # Boolean that checks if the 'Yes' and 'No' options are created
+    exists_yes = False
+    exists_no = False
+    # Try/except in case of not existing options
+    try:
+        # Search through all the options in the current question to verify the existence of the options
+        options = QuestionOption.objects.all().filter(question = self)
+        for element in options:
+            if element.option == 'YES':
+                exists_yes = True
+            elif element.option == 'NO':    
+                exists_no = True
+            # If both are found, exit the search before finishing it
+            if exists_yes and exists_no:
+                break
+    except:
+        pass
+
+    # Creation of 'Yes' option
+    if not exists_yes:
+        QuestionOption(option = 'YES', number = 1, question = self).save()
+
+    # Creation of 'No' option
+    if not exists_no:
+        QuestionOption(option = 'NO', number = 2, question = self).save()
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    pref_number = models.PositiveIntegerField(blank=True, null=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     option = models.TextField()
 
     def save(self):
-        if not self.number:
-            self.number = self.question.options.count() + 2
+        # In the case of the Yes/No question, we make sure that only the 'Yes' and 'No' options are saved
+        if self.question.yes_no_question:
+            if not self.option == 'YES' and not self.option == 'NO':
+                return ""
+        # In the case of a normal question, we proceed as usual
+        else:
+            if not self.number:
+                self.number = self.question.options.count() + 2
         return super().save()
 
     def __str__(self):
@@ -33,15 +89,19 @@ class Voting(models.Model):
     name = models.CharField(max_length=200)
     desc = models.TextField(blank=True, null=True)
     question = models.ForeignKey(Question, related_name='voting', on_delete=models.CASCADE)
+    alpha = RegexValidator("^[0-9a-zA-Z]*$", "Sólo se permiten letras y números.")
+    link = models.CharField(max_length=30, default="", unique=True ,validators=[alpha],blank=True, null=True)
 
     start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True, validators=[end_date_past])
 
     pub_key = models.OneToOneField(Key, related_name='voting', blank=True, null=True, on_delete=models.SET_NULL)
     auths = models.ManyToManyField(Auth, related_name='votings')
 
     tally = JSONField(blank=True, null=True)
     postproc = JSONField(blank=True, null=True)
+
+    file = models.FileField(blank=True)
 
     def create_pubkey(self):
         if self.pub_key or not self.auths.count():
@@ -123,7 +183,28 @@ class Voting(models.Model):
 
         self.postproc = postp
         self.save()
+
+        
+        #Guardamos en local la votación
+    def saveFile(self):
+        if self.postproc:
+            ruta= "ficheros/"+str(self.id)+ "-"+self.name + " - " +self.end_date.strftime('%d-%m-%y')+ ".txt"
+            file = open(ruta,"w")
+            file.write("Id: "+str(self.id)+os.linesep)
+            file.write("Nombre: "+self.name+os.linesep)
+            if self.desc:
+                file.write("Descripción: "+self.desc+os.linesep)
+            
+            file.write("Fecha de inicio: "+self.start_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+            file.write("Fecha de fin: "+self.end_date.strftime('%d/%m/%y %H:%M:%S')+os.linesep)
+            file.write("Resultado: "+str(self.postproc)+os.linesep)
+            file.close()
+            self.file=ruta
+            self.save()
+            
+
        # self.enviarTelegram(msn) Comentado por mantenimiento
+
 
     def __str__(self):
         return self.name
