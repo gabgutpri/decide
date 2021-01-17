@@ -287,7 +287,6 @@ class EditProfileTests(TestCase):
         login = self.client.force_login(usertest2)
         response = self.client.post("/authentication/editprofile/testouser2", follow=True, data={
             'username' : '',
-            'email' : self.email,
             'first_name': self.first_name,
             'last_name' : self.last_name,
         })
@@ -313,7 +312,6 @@ class EditProfileTests(TestCase):
         login = self.client.force_login(usertest2)
         response = self.client.post("/authentication/editprofile/testouser2", follow=True, data={
             'username' : 'testouser',
-            'email' : self.email,
             'first_name': self.first_name,
             'last_name' : self.last_name,
         })
@@ -333,7 +331,6 @@ class EditProfileTests(TestCase):
         self.assertEqual(response.context['username'], 'testouser')
         self.assertEqual(response.context['first_name'], 'pablo')
         self.assertEqual(response.context['last_name'], 'elro bot')
-        self.assertEqual(response.context['email'], 'testuseremail@gmail.com')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name = 'edit_user_profile.html')
     
@@ -351,7 +348,6 @@ class EditProfileTests(TestCase):
         login = self.client.force_login(usertest2)
         response = self.client.post("/authentication/editprofile/testouser2", follow=True, data={
             'username' : 'exito',
-            'email' : self.email,
             'first_name': 'prueba',
             'last_name' : 'su perada'
         })
@@ -360,7 +356,6 @@ class EditProfileTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name = 'user_profile.html')
         self.assertEqual(usertest2.username, "exito")
-        self.assertEqual(usertest2.email, 'testuseremail2@gmail.com')
         self.assertEqual(usertest2.first_name, 'prueba')
         self.assertEqual(usertest2.last_name, 'su perada')
 
