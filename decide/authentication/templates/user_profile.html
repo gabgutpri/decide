@@ -1,46 +1,97 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% block extrahead %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{% extends 'base.html' %}
+{% endblock %}
+
 {% block content %}
 <div class="container d-flex p-2 justify-content-center">
 <aside class="col-sm-4">
- 
     <div class="card">
-        <h4 class="card-title mb-4 mt-1 text-center">  Datos de {{username}}</h4>
+        <h4 class="card-title mb-4 mt-1 text-center">  {% trans "Data of" %} {{username}}</h4>
     <article class="card-body">	
         <hr>
         <form method="GET">
 			{% csrf_token %}
         <div class="form-group">
-            <h6>Nombre de usuario:</h6>
+            <h6>{% trans "Username:" %}</h6>
             <input readonly name="username" class="form-control" placeholder="" type="text" value="{{username}}">
         </div> <!-- form-group// -->
         <div class="form-group">
-            <h6>Nombre:</h6>
+            <h6>{% trans "Name:" %}</h6>
             <input readonly name="first_name" class="form-control" placeholder="" type="text" value="{{first_name}}">
         </div> <!-- form-group// -->    
         <div class="form-group">
-            <h6>Apellidos:</h6>
+            <h6>{% trans "Surnames:" %}</h6>
             <input readonly name="last_name" class="form-control" placeholder="" type="text" value="{{last_name}}">
         </div> <!-- form-group// -->   
         <div class="form-group">
-            <h6>Email:</h6>
+            <h6>{% trans "Email:" %}</h6>
             <input readonly name="email" class="form-control" placeholder="" type="text" value="{{email}}">
         </div> <!-- form-group// -->
         <div class="col-md-5">
             <div class="form-group">
-                <a href="../editprofile/{{username}}" class="btn btn-outline-primary">Editar Perfil</a>
+                <a href="../editprofile/{{username}}" class="btn btn-outline-primary">{% trans "Edit profile" %}</a>
             </div>
         </div>
         <div class="col-md-5">
-            <a href="../deleteprofile/{{username}}" class="btn btn-outline-danger">Borrar usuario</a>    
+            <a href="../deleteprofile/{{username}}" class="btn btn-outline-danger">{% trans "Delete user" %}</a>    
         </div>                                                                                                                                                                                                
     </form>
     </article>
     </div> <!-- card.// -->
     </aside> <!-- col.// -->
 	</div> <!-- container.// -->
- 
- 
 {% endblock %}
+{% block extrabody %}
+<!-- VIEW MODES WITH COOKIES -->
+<script>
+    function setCookie(cookieName, cookieValue, expiresDays) {
+         var today = new Date();
+         today.setTime(today.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+         var expires = "expires=" + today.toGMTString();
+         document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+     }
+
+     function getCookie(cookieName) {
+         var name = cookieName + "=";
+         var cookies = decodeURIComponent(document.cookie).split(';');
+         for (var i = 0; i < cookies.length; i++) {
+             var c = cookies[i];
+             while (c.charAt(0) == ' ') {
+                 c = c.substring(1);
+             }
+             if (c.indexOf(name) == 0) {
+                 return c.substring(name.length, c.length);
+             }
+         }
+         return "";
+     }
+
+     function checkCookie() {
+         if (getCookie("theme") == "dark") {
+             activateDarkMode();
+         } 
+     }
+     window.onload = checkCookie();
+
+     // Light mode and dark mode scripts
+     function activateLightMode() {
+         document.body.className = "bg-light"
+         document.getElementById("lightButton").style.display = "none"
+         document.getElementById("darkButton").style.display = "inline"
+         document.getElementById("text").style.color = "black"
+         setCookie("theme", "light", 365);
+     }
+
+     function activateDarkMode() {
+         document.body.className = "bg-dark"
+         document.getElementById("lightButton").style.display = "inline"
+         document.getElementById("darkButton").style.display = "none"
+         document.getElementById("text").style.color = "white"
+         setCookie("theme", "dark", 365);
+     }
+ </script>
+ {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-17 18:32+0000\n"
+"POT-Creation-Date: 2021-01-17 20:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,90 +18,126 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: authentication/templates/login.html:6 authentication/templates/login.html:19
-#: authentication/templates/login.html:37
-#: authentication/templates/register.html:143 decide/templates/home.html:18
+#: authentication/templates/login.html:7 authentication/templates/login.html:20
+#: authentication/templates/login.html:38
+#: authentication/templates/register.html:160 decide/templates/home.html:18
 msgid "Log in"
 msgstr "S'identifier"
 
-#: authentication/templates/login.html:22
+#: authentication/templates/login.html:23
 msgid "Login via Twitter"
 msgstr "Connectez-vous via Twitter"
 
-#: authentication/templates/login.html:23
+#: authentication/templates/login.html:24
 msgid "Login via Facebook"
 msgstr "Connectez-vous via Facebook"
 
-#: authentication/templates/login.html:41
+#: authentication/templates/login.html:42
 msgid "Register user"
 msgstr "Enregistrer l'utilisateur"
 
-#: authentication/templates/register.html:6
-#: authentication/templates/register.html:21 decide/templates/home.html:19
+#: authentication/templates/register.html:23
+#: authentication/templates/register.html:38 decide/templates/home.html:19
 msgid "Sing up"
 msgstr "Chanter"
 
-#: authentication/templates/register.html:36
+#: authentication/templates/register.html:53
 #: booth/templates/booth/booth.html:33
 msgid "Username"
 msgstr "Utilisateur"
 
-#: authentication/templates/register.html:45
+#: authentication/templates/register.html:62
 #: booth/templates/booth/booth.html:41
 msgid "Password"
 msgstr "Mot de passe"
 
-#: authentication/templates/register.html:69
+#: authentication/templates/register.html:86
 msgid "Your password can't be too similar to your other personal information"
-msgstr "Votre mot de passe ne peut pas être trop similaire à vos autres informations personnelles"
+msgstr ""
+"Votre mot de passe ne peut pas être trop similaire à vos autres informations "
+"personnelles"
 
-#: authentication/templates/register.html:72
+#: authentication/templates/register.html:89
 msgid "Your password must contain at least 8 characters"
 msgstr "Votre mot de passe doit contenir au moins 8 caractères"
 
-#: authentication/templates/register.html:75
+#: authentication/templates/register.html:92
 msgid "Your password can't be a commonly used password"
 msgstr "Votre mot de passe ne peut pas être un mot de passe couramment utilisé"
 
-#: authentication/templates/register.html:78
+#: authentication/templates/register.html:95
 msgid "Your password can't be entirely numeric"
 msgstr "Votre mot de passe ne peut pas être entièrement numérique"
 
-#: authentication/templates/register.html:90
+#: authentication/templates/register.html:107
 #, fuzzy
 #| msgid "Password"
 msgid "Password Confirm"
 msgstr "Mot de passe"
 
-#: authentication/templates/register.html:107
+#: authentication/templates/register.html:124
 #, fuzzy
 #| msgid "Full name"
 msgid "First name"
 msgstr "Nom et prénom"
 
-#: authentication/templates/register.html:114
+#: authentication/templates/register.html:131
 msgid "Last name"
 msgstr "Le nom"
 
-#: authentication/templates/register.html:121
+#: authentication/templates/register.html:138
 #, fuzzy
 #| msgid "Email address"
 msgid "E-mail Address"
 msgstr "Adresse email"
 
-#: authentication/templates/register.html:128
+#: authentication/templates/register.html:145
 msgid "Create user"
 msgstr "Créer un utilisateur"
 
-#: authentication/templates/register.html:134
+#: authentication/templates/register.html:151
 msgid "Remember me"
 msgstr "Souviens-toi de moi"
 
-#: authentication/templates/register.html:143
+#: authentication/templates/register.html:160
 msgid "Are you user?"
 msgstr "Êtes-vous utilisateur?"
 
-#: booth/templates/booth/booth.html:19 decide/templates/home_auth.html:17
+#: authentication/templates/user_profile.html:13
+msgid "Data of"
+msgstr "Données de"
+
+#: authentication/templates/user_profile.html:19
+msgid "Username:"
+msgstr "Utilisateur:"
+
+#: authentication/templates/user_profile.html:23
+msgid "Name:"
+msgstr "Nom:"
+
+#: authentication/templates/user_profile.html:27
+#, fuzzy
+#| msgid "Username"
+msgid "Surnames:"
+msgstr "Utilisateur"
+
+#: authentication/templates/user_profile.html:31
+msgid "Email:"
+msgstr "Email:"
+
+#: authentication/templates/user_profile.html:36
+#, fuzzy
+#| msgid "My profile"
+msgid "Edit profile"
+msgstr "Mon profil"
+
+#: authentication/templates/user_profile.html:40
+#, fuzzy
+#| msgid "Create user"
+msgid "Delete user"
+msgstr "Créer un utilisateur"
+
+#: booth/templates/booth/booth.html:19 decide/templates/home_auth.html:18
 #, fuzzy
 #| msgid "logout"
 msgid "Logout"
@@ -140,21 +176,11 @@ msgstr "Français"
 msgid "German"
 msgstr "Deutsch"
 
-#: decide/templates/home.html:24 decide/templates/home_auth.html:22
-#: visualizer/templates/visualizer/visualizer.html:51
-msgid "Light mode"
-msgstr "Mode clair"
-
-#: decide/templates/home.html:26 decide/templates/home_auth.html:24
-#: visualizer/templates/visualizer/visualizer.html:53
-msgid "Dark mode"
-msgstr "Mode sombre"
-
-#: decide/templates/home.html:32 decide/templates/home_auth.html:30
+#: decide/templates/home.html:26 decide/templates/home_auth.html:26
 msgid "Home - Welcome to Decide Picaro!"
 msgstr "Page d'accueil - Bienvenue chez Decide Pícaro!"
 
-#: decide/templates/home.html:33 decide/templates/home_auth.html:31
+#: decide/templates/home.html:27 decide/templates/home_auth.html:27
 msgid ""
 "This is the home page of the project done for the subject Evolution and "
 "Configuration Management, more commonly know as EGC"
@@ -162,35 +188,35 @@ msgstr ""
 "Ceci est la page initiale du travail effectué pour le cours Évolution et "
 "Gestion de la Configuration, plus communément appelé EGC."
 
-#: decide/templates/home.html:36
+#: decide/templates/home.html:30 decide/templates/home_auth.html:30
 msgid "View results:"
 msgstr "Voir les résultatss"
 
-#: decide/templates/home.html:37
+#: decide/templates/home.html:31 decide/templates/home_auth.html:31
 msgid "Display"
 msgstr "Afficher"
 
-#: decide/templates/home.html:45 decide/templates/home_auth.html:42
+#: decide/templates/home.html:39 decide/templates/home_auth.html:38
 #: visualizer/templates/visualizer/aboutUs.html:86
-#: visualizer/templates/visualizer/contactUs.html:95
+#: visualizer/templates/visualizer/contactUs.html:96
 #: visualizer/templates/visualizer/visualizer.html:195
 #: visualizer/templates/visualizer/visualizer_home.html:106
 msgid "Evolution and Configuration Management"
 msgstr "Évolution et Gestion de la Configuration"
 
-#: decide/templates/home_auth.html:34
+#: decide/templates/home_auth.html:19
 msgid "My profile"
 msgstr "Mon profil"
 
 #: visualizer/templates/visualizer/aboutUs.html:16
-#: visualizer/templates/visualizer/contactUs.html:20
+#: visualizer/templates/visualizer/contactUs.html:21
 #: visualizer/templates/visualizer/visualizer.html:38
 #: visualizer/templates/visualizer/visualizer_home.html:37
 msgid "Decide Visualization"
 msgstr "Decide Visualization"
 
 #: visualizer/templates/visualizer/aboutUs.html:20
-#: visualizer/templates/visualizer/contactUs.html:24
+#: visualizer/templates/visualizer/contactUs.html:25
 #: visualizer/templates/visualizer/visualizer.html:60
 #: visualizer/templates/visualizer/visualizer.html:107
 #: visualizer/templates/visualizer/visualizer.html:190
@@ -219,39 +245,39 @@ msgstr "Etudiant en Ingénierie Informatique en Ingénerie de Software"
 msgid "GitHub Profile"
 msgstr "Profile GitHub"
 
-#: visualizer/templates/visualizer/contactUs.html:33
+#: visualizer/templates/visualizer/contactUs.html:34
 msgid "Contact Info"
 msgstr "Information de contact"
 
-#: visualizer/templates/visualizer/contactUs.html:37
+#: visualizer/templates/visualizer/contactUs.html:38
 msgid "Higher Technical School of Computer Engineering,"
 msgstr "Ecole Technique Supérieur d'Ingénerie Informatique,"
 
-#: visualizer/templates/visualizer/contactUs.html:38
+#: visualizer/templates/visualizer/contactUs.html:39
 msgid "Sevilla University, 41012"
 msgstr "Universiter de Seville, 41012"
 
-#: visualizer/templates/visualizer/contactUs.html:64
+#: visualizer/templates/visualizer/contactUs.html:65
 msgid "Send a Message"
 msgstr "Envoyer en méssage"
 
-#: visualizer/templates/visualizer/contactUs.html:69
+#: visualizer/templates/visualizer/contactUs.html:70
 msgid "Full name"
 msgstr "Nom et prénom"
 
-#: visualizer/templates/visualizer/contactUs.html:73
+#: visualizer/templates/visualizer/contactUs.html:74
 msgid "Subject"
 msgstr "Sujet"
 
-#: visualizer/templates/visualizer/contactUs.html:77
+#: visualizer/templates/visualizer/contactUs.html:78
 msgid "Email address"
 msgstr "Adresse email"
 
-#: visualizer/templates/visualizer/contactUs.html:81
+#: visualizer/templates/visualizer/contactUs.html:82
 msgid "Write your message here"
 msgstr "Ecrivez votre méssage ici"
 
-#: visualizer/templates/visualizer/contactUs.html:84
+#: visualizer/templates/visualizer/contactUs.html:85
 msgid "Send"
 msgstr "Evoyer"
 
@@ -270,6 +296,14 @@ msgstr "A propos de nous"
 #| msgid "Visualization Team"
 msgid "Visualizer"
 msgstr "Equipe de visualization"
+
+#: visualizer/templates/visualizer/visualizer.html:51
+msgid "Light mode"
+msgstr "Mode clair"
+
+#: visualizer/templates/visualizer/visualizer.html:53
+msgid "Dark mode"
+msgstr "Mode sombre"
 
 #: visualizer/templates/visualizer/visualizer.html:59
 msgid "Voting not started"
