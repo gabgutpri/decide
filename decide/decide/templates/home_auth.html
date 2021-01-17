@@ -15,6 +15,7 @@
         <!-- Links to contactUs and aboutUs views -->
         <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
             <a href="/authentication/logoutgui" class="btn btn-secondary">{% trans "Logout" %}</a>
+            <a href="{{ profileUrl }}" class="btn btn-secondary">{% trans "My profile" %}</a>
         </div>
 
         <!-- Dark mode and light mode buttons -->
@@ -31,9 +32,9 @@
       <p class="lead">{% trans "This is the home page of the project done for the subject Evolution and Configuration Management, more commonly know as EGC" %}</p>
       <hr class="my-4">
       <div style="text-align: center;">
-        <a href="{{ profileUrl }}" class="btn btn-primary btn-outline-block btn-lg mb-4">{% trans "My profile" %}</a>
+        <p class="lead">{% trans "View results:" %}</p>
+        <a class="btn btn-secondary" type="submit" href="/visualizer">{% trans "Display" %}</a>
       </div>
-      
     </div>
 </div>
 <!-- Footer -->
