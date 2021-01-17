@@ -295,6 +295,30 @@ class VisualizerTestCase(APITestCase):
         assert self.driver.find_element(By.CSS_SELECTOR, "span").text == "decide"
     """ Comentado porque estos cambios no estan todavia en heroku
 
+    
+def test_grafica_todas(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        elements = self.driver.find_elements(By.ID, "myChart3")
+        assert len(elements) > 0
+        #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficatodas.png aparece esta gráfica.
+        #Podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
+        self.driver.find_element_by_id('myChart').screenshot('screenshotgraficatodas.png')
+
+    def test_graficaBarras_tiempo_real(self):
+        self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
+        self.driver.find_element_by_id('id_username').send_keys("admin")
+        self.driver.find_element_by_id('id_password').send_keys("picarodecide")
+        self.driver.find_element_by_id('login-form').click()
+        self.driver.get("https://picaro-decide.herokuapp.com/visualizer/7/")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        elements = self.driver.find_elements(By.ID, "myChart3")
+        assert len(elements) > 0
+        assert self.driver.find_element(By.CSS_SELECTOR, "section > #table .heading").text == "Donut Chart"
   
     def test_home_visualizer(self):
         self.driver.get("https://picaro-decide.herokuapp.com/admin/login/?next=/admin/")
@@ -305,29 +329,6 @@ class VisualizerTestCase(APITestCase):
         try: self.assertEqual("Votings", self.driver.find_element_by_id("question").text)
         except AssertionError as e: self.verificationErrors.append(str(e))
     
-    def is_element_present(self, how, what):
-        try: self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e: return False
-        return True
-    
-    def is_alert_present(self):
-        try: self.driver.switch_to_alert()
-        except NoAlertPresentException as e: return False
-        return True
-    
-    def close_alert_and_get_its_text(self):
-        try:
-            alert = self.driver.switch_to_alert()
-            alert_text = alert.text
-            if self.accept_next_alert:
-                alert.accept()
-            else:
-                alert.dismiss()
-            return alert_text
-        finally: self.accept_next_alert = True
-
-    def tearDown(self):
-        self.driver.quit()
     """
 # if __name__ == '__main__':
 #     unittest.main()
