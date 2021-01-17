@@ -178,7 +178,7 @@ msgstr "Entwicklung und Konfiguration des Managements"
 
 #: decide/templates/home_auth.html:34
 msgid "My profile"
-msgstr ""
+msgstr "Mein Profil"
 
 #: visualizer/templates/visualizer/aboutUs.html:16
 #: visualizer/templates/visualizer/contactUs.html:20
