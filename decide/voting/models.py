@@ -6,10 +6,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import os
 import requests
-from django.core.validators import RegexValidator
-
+from django.conf import settings
 from base import mods
 from base.models import Auth, Key
+from dotenv import load_dotenv
+
+from django.core.validators import RegexValidator
 
 #Javi
 #Restriccion para que no se pueda crear una votacion con una fecha de finalizacion pasada
@@ -183,6 +185,8 @@ class Voting(models.Model):
 
         self.postproc = postp
         self.save()
+        self.enviarTelegram(msn)
+
 
         
         #Guardamos en local la votación
@@ -201,22 +205,23 @@ class Voting(models.Model):
             file.close()
             self.file=ruta
             self.save()
-            
-
-       # self.enviarTelegram(msn) Comentado por mantenimiento
 
 
     def __str__(self):
         return self.name
     
     #Método para enviar datos de los resultados por telegram (Pablo Franco Sánchez, visualización)
-    def enviarTelegram(self,msn): 
-        id = "-406420323"
-        token = "1426657690:AAEmrAP5v4KFQvmzv5AyGdGvWwrbJbZup3M"
-        url = "https://api.telegram.org/bot" + token + "/sendMessage"
+    def enviarTelegram(self,msn):
+    
+        load_dotenv()
+        id = "-1001460398324"
+        url = "https://api.telegram.org/bot" + str(os.getenv("TELEGRAM_API_KEY")) + "/sendMessage"
 
         params = {
         'chat_id': id,
         'text' : str(msn)
         }
-        requests.post(url, params=params)
+        try:
+            requests.post(url, params=params)
+        except:
+            pass
