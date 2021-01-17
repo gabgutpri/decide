@@ -1,23 +1,101 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+{% extends 'base.html' %}
+{% load i18n static %}
+{% block extrahead %}
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{% extends 'base.html' %}
-{% block content %}
-<div class="container d-flex p-4 justify-content-center">
-    <aside class="col-sm-8">
-        <div class="card">
-            <h1 class="card-title mb-4 mt-5 text-center">Bienvenido a Decide-Pícaro</h1>
-
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <div class="form-group">
-                        <a href="/authentication/logingui" class="btn btn-primary btn-outline-block btn-lg mb-4">Iniciar sesión</a>
-                    </div> <!-- form-group// -->
-                </div>
-                <div class="col-md-4 text-center">
-                    <a href="/authentication/registergui" class="float-right btn btn-outline-primary btn-lg">Registrar usuario</a>
-                </div>                                            
-            </div>
-    </aside>
-</div>
 {% endblock %}
+
+{% block content %}
+<!-- Header -->
+<b-navbar class="navbar navbar-dark" style="background-color: #6c757d;">
+    <a class="navbar-brand navbar-dark">Decide Pícaro</a>
+
+    <b-navbar-nav class="ml-auto">
+        <!-- Links to contactUs and aboutUs views -->
+        <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 4px;">
+            <a href="/authentication/logingui" class="btn btn-secondary">{% trans "Log in" %}</a>
+            <a href="/authentication/registergui" class="btn btn-secondary">{% trans "Sing up" %}</a>
+        </div>
+
+        <!-- Dark mode and light mode buttons -->
+        <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
+            onclick="activateLightMode()">{% trans "Light mode" %}</button>
+        <button id="darkButton" type="button" class="btn btn-dark btn-sm pull-xs-right" style="display: inline"
+            onclick="activateDarkMode()">{% trans "Dark mode" %}</button>
+    </b-navbar-nav>
+</b-navbar>
+
+<div class="card-body" style="margin-top: 11%;">
+    <div class="jumbotron">
+      <h1 class="display-4">{% trans "Home - Welcome to Decide Picaro!" %}</h1>
+      <p class="lead">{% trans "This is the home page of the project done for the subject Evolution and Configuration Management, more commonly know as EGC" %}</p>
+      <hr class="my-4">
+      <div style="text-align: center;">
+        <p class="lead">{% trans "View results:" %}</p>
+        <a class="btn btn-secondary" type="submit" href="/visualizer">{% trans "Display" %}</a>
+      </div>
+      
+    </div>
+</div>
+<!-- Footer -->
+<b-navbar class="navbar navbar-dark" style="background-color: #6c757d; width: 100%; position: fixed; bottom:0px;">
+    <div class="container">
+        <span class="navbar-text" style="color: white;">{% trans "Evolution and Configuration Management" %} · <em>Decide</em></span>
+        <span class="navbar-text navbar-right" style="color: white;">Decide Pícaro &copy; 2021</span>
+    </div>
+</b-navbar>
+
+{% endblock %}
+
+{% block extrabody %}
+<!-- VIEW MODES WITH COOKIES -->
+<script>
+    function setCookie(cookieName, cookieValue, expiresDays) {
+         var today = new Date();
+         today.setTime(today.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+         var expires = "expires=" + today.toGMTString();
+         document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+     }
+
+     function getCookie(cookieName) {
+         var name = cookieName + "=";
+         var cookies = decodeURIComponent(document.cookie).split(';');
+         for (var i = 0; i < cookies.length; i++) {
+             var c = cookies[i];
+             while (c.charAt(0) == ' ') {
+                 c = c.substring(1);
+             }
+             if (c.indexOf(name) == 0) {
+                 return c.substring(name.length, c.length);
+             }
+         }
+         return "";
+     }
+
+     function checkCookie() {
+         if (getCookie("theme") == "dark") {
+             activateDarkMode();
+         } 
+     }
+     window.onload = checkCookie();
+
+     // Light mode and dark mode scripts
+     function activateLightMode() {
+         document.body.className = "bg-light"
+         document.getElementById("lightButton").style.display = "none"
+         document.getElementById("darkButton").style.display = "inline"
+         document.getElementById("text").style.color = "black"
+         setCookie("theme", "light", 365);
+     }
+
+     function activateDarkMode() {
+         document.body.className = "bg-dark"
+         document.getElementById("lightButton").style.display = "inline"
+         document.getElementById("darkButton").style.display = "none"
+         document.getElementById("text").style.color = "white"
+         setCookie("theme", "dark", 365);
+     }
+ </script>
+ {% endblock %}
