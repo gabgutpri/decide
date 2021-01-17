@@ -28,49 +28,45 @@ class VisualizerView(TemplateView):
 
                 numero_votos = get_numero_votos(vid)
                 context['numero_votos'] = numero_votos
-                
         except:
             raise Http404
 
         return context
 
-# Método para obtener los votos por opción en una votación
-def votos_opcion(vid, voting):
-    opciones = voting['question']['options']
-    numOp=[]
-    for i in range(len(opciones)):
-        numOp.append(opciones[i]['number'])
-    votos = mods.get('store',params={'voting_id':vid})
-    votosPorOpcion = []
-    for op in numOp:
-        cuenta = 0
-        for v in votos:
-            if(op==v['b']):
-                cuenta = cuenta + 1
-        votosPorOpcion.append(cuenta)
-    return votosPorOpcion
+  # Método para obtener los votos por opción en una votación
+  def votos_opcion(vid, voting):
+      opciones = voting['question']['options']
+      numOp=[]
+      for i in range(len(opciones)):
+          numOp.append(opciones[i]['number'])
+      votos = mods.get('store',params={'voting_id':vid})
+      votosPorOpcion = []
+      for op in numOp:
+          cuenta = 0
+          for v in votos:
+              if(op==v['b']):
+                  cuenta = cuenta + 1
+          votosPorOpcion.append(cuenta)
+      return votosPorOpcion
 
+  def get_numero_votos (vid):
+          #census = mods.get('admin', entry_point= '/census/census', params={'voting_id': vid})
+          #print('asd')
+          numero_votos=0
+          voters = mods.get('store',params={'voting_id':vid})
+          voters_id = [v['voting_id'] for v in voters]
+          numero_votos= len(voters_id)
 
-def get_numero_votos (vid):
-    
-    
-    #census = mods.get('admin', entry_point= '/census/census', params={'voting_id': vid})
-    #print('asd')
-    numero_votos=0
-    voters = mods.get('store',params={'voting_id':vid})
-    voters_id = [v['voting_id'] for v in voters]
-    numero_votos= len(voters_id)
+          return numero_votos    
 
-    return numero_votos
-
-# Método para obtener los votos de todas las votaciones (gabgutpri, visualización)
-def get_todos_votos(votings):
-    listaVotos = []
-    for voting in votings:
-        votos = mods.get('store',params={'voting_id':voting.id})
-        cuenta = [v['voting_id'] for v in votos]
-        listaVotos.append(len(cuenta))
-    return listaVotos
+  # Método para obtener los votos de todas las votaciones (gabgutpri, visualización)
+  def get_todos_votos(votings):
+      listaVotos = []
+      for voting in votings:
+          votos = mods.get('store',params={'voting_id':voting.id})
+          cuenta = [v['voting_id'] for v in votos]
+          listaVotos.append(len(cuenta))
+      return listaVotos
 
 class ContactUs(TemplateView):
     try:
