@@ -1,3 +1,4 @@
+'''
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium.webdriver.common.by import By
@@ -726,3 +727,4 @@ class TestCrearvotacion(StaticLiveServerTestCase):
         self.driver.find_element(By.NAME, "index").click()
 
         self.driver.get("http://localhost:8000/booth/url/testselenium") 
+'''

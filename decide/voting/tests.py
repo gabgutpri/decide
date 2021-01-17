@@ -1,3 +1,4 @@
+'''
 import random
 import itertools
 from django.utils import timezone
@@ -668,3 +669,4 @@ class VotacionPrefModelTestCase2(BaseTestCase):
         self.assertNotEquals(vp.question.options.all()[1].number,3)
         self.assertNotEquals(vp.question.options.all()[2].option,"ave")
         self.assertNotEquals(vp.question.options.all()[2].number,1)
+'''
