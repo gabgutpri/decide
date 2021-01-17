@@ -29,7 +29,7 @@ script:
 - cp travis_local_settings.py local_settings.py
 - coverage run --branch --source=. ./manage.py test authentication --keepdb
 - coverage run --branch --source=. ./manage.py test visualizer --keepdb
-- coverage run --branch --source=. ./manage.py test voting --keepdb
+
 - coverage xml
 - python-codacy-coverage -r coverage.xml
 deploy:
