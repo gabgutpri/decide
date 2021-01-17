@@ -397,7 +397,7 @@ class VisualizerTestCase(APITestCase):
         element = self.driver.find_element(By.CSS_SELECTOR, ".fa-language")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        elements = self.driver.find_elements(By.ID, "myChart3")
+        elements = self.driver.find_elements(By.ID, "myChart")
         assert len(elements) > 0
         #Sacamos una captura de pantalla de la gráfica de barras para comprobar que esta existe, dentro de la imagen screenshotgraficatodas.png aparece esta gráfica.
         #Podemos comprobar que existe la gráfica y que tiene el número correcto de opciones.
