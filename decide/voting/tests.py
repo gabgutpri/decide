@@ -36,7 +36,7 @@ import time
 import datetime
 
 
-class VotingTestCase(BaseTestCase):
+class VotingTestCase(APITestCase):
 
     def setUp(self):
         super().setUp()

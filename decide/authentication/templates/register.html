@@ -1,3 +1,4 @@
+
 <!--Used Snippets license notice-->
 <!-- 
   Copyright (c) 2013 Bootsnipp.com
@@ -11,147 +12,208 @@ The above copyright notice and this permission notice shall be included in all c
 or substantial portions of the Software.-->
 
 
-{% extends 'base.html' %}
 
 
 {% block content %}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-5">
-      <div class="card cardbox">
-        <div class="card-header">Register</div>
-        <div class="card-body">
-          <script type="text/javascript" src="../../static/js/functions.js"></script>
-      
-    	  <!-- socail media group -->
-          <div class="social-buttons">
-            <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-outline-info"> <i class="fab fa-twitter"></i>   Twitter</a>
-            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i>   Facebook</a>
-          </div>
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load i18n static %}
+        <meta charset="utf-8" />
+        <title>Decide Pícaro - {% trans "Sing up" %}</title>
+        <link rel="shortcut icon" type="image/png" href="../../static/favicon/picaro.png" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../../static/css/mfb.css" >
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    </head>
+    <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-5">
+          <div class="card cardbox">
+            <div class="card-header">{% trans "Sing up" %}</div>
+            <div class="card-body">
+              <script type="text/javascript" src="../../static/js/functions.js"></script>
           
-          <div class="form-group">
-            <br>
-            <form method="post" class="form">
-              {% csrf_token %}
-              <div class="form-group">
-                <label class="sr-only">Username</label>
-                <input type="text" id="id_username" name="username" class="form-control"
-                value="" placeholder="Username" required>
+            <!-- socail media group -->
+              <div class="social-buttons">
+                <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-outline-info"> <i class="fa fa-twitter"></i> Twitter</a>
+                <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-outline-primary"> <i class="fa fa-facebook-f"></i> Facebook</a>
               </div>
               
-              <!-- password group -->
               <div class="form-group">
-                
-                <!-- password label -->
-                <label class="sr-only">Password</label>
-                <!-- password input -->
-                <div class="input-group">
-                  <input type="password" id="id_password1" name="password1" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
-				  data-html="true" value="" placeholder="Password" required>
-
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
-                      <i class="fa fa-eye" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-                <!-- password progresbar -->
-                <div class="progress mt-1" id="reg-password-strength">
-                    <div id="password-strength" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                    </div>
-                  </div>
-
-                <!-- Password Rules -->
-                <div id="reg_passwordrules" class="">
-
-                  <br>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                    Your password can't be too similar to your other personal information.
-                    </li>
-                    <li class="list-group-item">
-                    Your password must contain at least 8 characters.
-                    </li>
-                    <li class="list-group-item">
-                    Your password can't be a commonly used password.
-                    </li>
-                    <li class="list-group-item">
-                    Your password can't be entirely numeric.
-                    </li>
-                  </ul>
-                  <br>
-                </div>
-
-              </div>
-              
-              <!-- password-confirm group -->
-              <div class="form-group">
-
-                <!-- password-confirm label -->
-                <label class="sr-only">Password Confirm</label>
-                <!-- password-confirm input -->
-                <div class="input-group">
-                  <input type="password" id="id_password2" name="password2" class="form-control" data-placement="bottom" 
-				  data-toggle="popover" data-container="body" data-html="true" placeholder="Password Confirm" required>
-
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-append2" onclick="togglePassword()">
-                      <i class="fa fa-eye" aria-hidden="true"></i>
-                    </button>
+                <br>
+                <form method="post" class="form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label class="sr-only">{% trans "Username" %}</label>
+                    <input type="text" id="id_username" name="username" class="form-control"
+                    value="" placeholder="Username" required>
                   </div>
                   
-                </div>
-              </div>
-			  
-			  <!-- *First name group -->
-              <div class="form-group">
-                <label class="sr-only">First name</label>
-                <input type="text" id="id_first_name" name="first_name" class="form-control" 
-				value="" placeholder="First name" maxlength="30">
-              </div>
-			  
-			  <!-- *Last name group -->
-              <div class="form-group">
-                <label class="sr-only">Last name</label>
-                <input type="text" id="id_last_name" name="last_name" class="form-control" 
-				value="" placeholder="Last name" maxlength="100">
-              </div>
-           
-			  <!-- email group -->
-              <div class="form-group">
-                <label class="sr-only">E-mail Address</label>
-                <input type="email" id="id_email" required name="email" class="form-control" 
-				value="" placeholder="email@dominio.com" maxlength="254">
-              </div>
-       
-              <!-- Submit -->
-              <div class="form-group">
-                <button id="id_submit" type="submit" class="btn btn-block btn-primary">Create user</button>
-              </div>
-             
-			  <!-- Remember -->
-              <div class="form-check">
-                <input type="checkbox" id="reg_remember" name="user_remember" class="form-check-input" value="1">
-                <label class="form-check-label">Remember me</label>
-              </div>
+                  <!-- password group -->
+                  <div class="form-group">
+                    
+                    <!-- password label -->
+                    <label class="sr-only">{% trans "Password" %}</label>
+                    <!-- password input -->
+                    <div class="input-group">
+                      <input type="password" id="id_password1" name="password1" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
+              data-html="true" value="" placeholder="Password" required>
 
-            </form>
-          </div>
-		  
-          <div class="login-or"><hr class="hr-or"></div>
-		  <!-- Links -->
-          <div class="bottom text-center">
-            Are you user? <a href="../logingui"><b>Login</b></a>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
+                          <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- password progresbar -->
+                    <div class="progress mt-1" id="reg-password-strength">
+                        <div id="password-strength" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                        </div>
+                      </div>
+
+                    <!-- Password Rules -->
+                    <div id="reg_passwordrules" class="">
+
+                      <br>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                          {% trans "Your password can't be too similar to your other personal information" %}
+                        </li>
+                        <li class="list-group-item">
+                          {% trans "Your password must contain at least 8 characters" %}
+                        </li>
+                        <li class="list-group-item">
+                          {% trans "Your password can't be a commonly used password" %}
+                        </li>
+                        <li class="list-group-item">
+                          {% trans "Your password can't be entirely numeric" %}
+                        </li>
+                      </ul>
+                      <br>
+                    </div>
+
+                  </div>
+                  
+                  <!-- password-confirm group -->
+                  <div class="form-group">
+
+                    <!-- password-confirm label -->
+                    <label class="sr-only">{% trans "Password Confirm" %}</label>
+                    <!-- password-confirm input -->
+                    <div class="input-group">
+                      <input type="password" id="id_password2" name="password2" class="form-control" data-placement="bottom" 
+              data-toggle="popover" data-container="body" data-html="true" placeholder="Password Confirm" required>
+
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-append2" onclick="togglePassword()">
+                          <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                      
+                    </div>
+                  </div>
+            
+            <!-- *First name group -->
+                  <div class="form-group">
+                    <label class="sr-only">{% trans "First name" %}</label>
+                    <input type="text" id="id_first_name" name="first_name" class="form-control" 
+            value="" placeholder="First name" maxlength="30">
+                  </div>
+            
+            <!-- *Last name group -->
+                  <div class="form-group">
+                    <label class="sr-only">{% trans "Last name" %}</label>
+                    <input type="text" id="id_last_name" name="last_name" class="form-control" 
+            value="" placeholder="Last name" maxlength="100">
+                  </div>
+              
+            <!-- email group -->
+                  <div class="form-group">
+                    <label class="sr-only">{% trans "E-mail Address" %}</label>
+                    <input type="email" id="id_email" required name="email" class="form-control" 
+                      value="" placeholder="email@dominio.com" maxlength="254">
+                  </div>
+          
+                  <!-- Submit -->
+                  <div class="form-group">
+                    <button id="id_submit" type="submit" class="btn btn-block btn-primary">{% trans "Create user" %}</button>
+                  </div>
+                
+            <!-- Remember -->
+                  <div class="form-check">
+                    <input type="checkbox" id="reg_remember" name="user_remember" class="form-check-input" value="1">
+                    <label class="form-check-label">{% trans "Remember me" %}</label>
+                  </div>
+
+                </form>
+              </div>
+          
+              <div class="login-or"><hr class="hr-or"></div>
+          <!-- Links -->
+              <div class="bottom text-center">
+                {% trans "Are you user?" %} <a href="../logingui"><b>{% trans "Log in" %}</b></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </body>
+</html>
 {% endblock %}
+{% block extrabody %}
+<!-- VIEW MODES WITH COOKIES -->
+<script>
+    function setCookie(cookieName, cookieValue, expiresDays) {
+         var today = new Date();
+         today.setTime(today.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+         var expires = "expires=" + today.toGMTString();
+         document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+     }
+
+     function getCookie(cookieName) {
+         var name = cookieName + "=";
+         var cookies = decodeURIComponent(document.cookie).split(';');
+         for (var i = 0; i < cookies.length; i++) {
+             var c = cookies[i];
+             while (c.charAt(0) == ' ') {
+                 c = c.substring(1);
+             }
+             if (c.indexOf(name) == 0) {
+                 return c.substring(name.length, c.length);
+             }
+         }
+         return "";
+     }
+
+     function checkCookie() {
+         if (getCookie("theme") == "dark") {
+             activateDarkMode();
+         } 
+     }
+     window.onload = checkCookie();
+
+     // Light mode and dark mode scripts
+     function activateLightMode() {
+         document.body.className = "bg-light"
+         document.getElementById("lightButton").style.display = "none"
+         document.getElementById("darkButton").style.display = "inline"
+         document.getElementById("text").style.color = "black"
+         setCookie("theme", "light", 365);
+     }
+
+     function activateDarkMode() {
+         document.body.className = "bg-dark"
+         document.getElementById("lightButton").style.display = "inline"
+         document.getElementById("darkButton").style.display = "none"
+         document.getElementById("text").style.color = "white"
+         setCookie("theme", "dark", 365);
+     }
+ </script>
+ {% endblock %}
