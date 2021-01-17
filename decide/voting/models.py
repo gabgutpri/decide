@@ -22,6 +22,8 @@ def end_date_past(value):
 class Question(models.Model):
     desc = models.TextField()
     yes_no_question = models.BooleanField(default=False)
+    QUESTION_TYPE= ((1,"Simple question"),(2,"Preference question"))
+    question_options = models.PositiveIntegerField(choices=QUESTION_TYPE,default=1)
 
     def save(self):
 
@@ -64,6 +66,7 @@ def yesNoQuestionCreation(self):
 
 class QuestionOption(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    pref_number = models.PositiveIntegerField(blank=True, null=True)
     number = models.PositiveIntegerField(blank=True, null=True)
     option = models.TextField()
 
