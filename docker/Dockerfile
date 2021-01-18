@@ -1,7 +1,7 @@
-from python:3.7-alpine
+from python:alpine
 
 RUN apk add --no-cache git postgresql-dev gcc libc-dev
-RUN apk add --no-cache gcc g++ make libffi-dev python3-dev build-base
+RUN apk add --no-cache gcc g++ make libffi-dev zlib-dev jpeg-dev python3-dev build-base
 
 RUN pip install gunicorn
 RUN pip install psycopg2
