@@ -67,6 +67,7 @@ AUTHENTICATION_BACKENDS = [
     'base.backends.AuthBackend',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.github.GithubOAuth2',
 ]
 
 #Social Login Keys
@@ -77,6 +78,10 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET')
 #Twitter App keys
 SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET')
+
+#GitHub App Keys
+SOCIAL_AUTH_GITHUB_KEY= os.getenv('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET= os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
 
 #Email Auth Backend (For testing and debugging purposes, not yet ready for production)
 #If emails doesn't show up in the command prompt when performing an email dependant operation (Such as email verification)
