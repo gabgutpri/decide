@@ -103,6 +103,8 @@ class Voting(models.Model):
     tally = JSONField(blank=True, null=True)
     postproc = JSONField(blank=True, null=True)
 
+    tag = models.TextField(blank=True, null=True)
+
     file = models.FileField(blank=True)
 
     def create_pubkey(self):

@@ -1,4 +1,4 @@
-'''
+
 import random
 import itertools
 from django.utils import timezone
@@ -235,6 +235,25 @@ class VotingTestCase(BaseTestCase):
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
+
+    def create_voting_withTag(self):
+        q = Question(desc='test tag')
+        tag = "Delegacion"
+        q.save()
+        for i in range(5):
+            opt = QuestionOption(question=q, option='option {}'.format(i+1))
+            opt.save()
+        v = Voting(name='test voting tag', question=q, tag=tag)
+        v.save()
+        a, _ = Auth.objects.get_or_create(url=settings.BASEURL,
+                                          defaults={'me': True, 'name': 'test auth'})
+        a.save()
+        v.auths.add(a)
+        return v
+
+    def test_voting_withTag(self):
+        v = self.create_voting_withTag()
+        self.assertEqual(v.tag,'Delegacion')
 
 	#Test Gonzalo URL custom
     def create_voting_withurl(self):
@@ -669,4 +688,3 @@ class VotacionPrefModelTestCase2(BaseTestCase):
         self.assertNotEquals(vp.question.options.all()[1].number,3)
         self.assertNotEquals(vp.question.options.all()[2].option,"ave")
         self.assertNotEquals(vp.question.options.all()[2].number,1)
-'''
