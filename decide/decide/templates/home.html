@@ -18,6 +18,11 @@
             <a href="/authentication/logingui" class="btn btn-secondary">{% trans "Log in" %}</a>
             <a href="/authentication/registergui" class="btn btn-secondary">{% trans "Sing up" %}</a>
         </div>
+
+        <button id="lightButton" type="button" class="btn btn-light btn-sm pull-xs-right" style="display: none"
+        onclick="activateLightMode()">{% trans "Light mode" %}</button>
+        <button id="darkButton" type="button" class="btn btn-dark btn-sm pull-xs-right" style="display: inline"
+        onclick="activateDarkMode()">{% trans "Dark mode" %}</button>
     </b-navbar-nav>
 </b-navbar>
 
@@ -77,19 +82,21 @@
 
      // Light mode and dark mode scripts
      function activateLightMode() {
-         document.body.className = "bg-light"
-         document.getElementById("lightButton").style.display = "none"
-         document.getElementById("darkButton").style.display = "inline"
-         document.getElementById("text").style.color = "black"
-         setCookie("theme", "light", 365);
+        setCookie("theme", "light", 365);
+        document.body.className = "bg-light"
+        document.getElementById("lightButton").style.display = "none"
+        document.getElementById("darkButton").style.display = "inline"
+        document.getElementById("text").style.color = "black"
+         
      }
 
      function activateDarkMode() {
-         document.body.className = "bg-dark"
-         document.getElementById("lightButton").style.display = "inline"
-         document.getElementById("darkButton").style.display = "none"
-         document.getElementById("text").style.color = "white"
-         setCookie("theme", "dark", 365);
+        setCookie("theme", "dark", 365);
+        document.body.className = "bg-dark"
+        document.getElementById("lightButton").style.display = "inline"
+        document.getElementById("darkButton").style.display = "none"
+        document.getElementById("text").style.color = "white"
+         
      }
  </script>
  {% endblock %}
