@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Pos va a ser que no.......
 import os
 import sys
 
